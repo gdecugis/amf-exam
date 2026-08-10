@@ -3482,5 +3482,460 @@
     "explanation": "Le fractionnement d'opérations pour rester sous le seuil de déclaration constitue un indice de blanchiment imposant la déclaration.",
     "theme": "Déontologie et conformité",
     "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "En application de la réglementation LCB-FT, quelle obligation s'impose aux personnes soumises lors d'une relation d'affaires avec une personne politiquement exposée (PPE) ?",
+    "choices": [
+      "Mettre en place des mesures de vigilance simples",
+      "Mettre en place des mesures de vigilance renforcées",
+      "S'abstenir de toute relation d'affaires"
+    ],
+    "correctIndex": 1,
+    "explanation": "Les PPE exigent des mesures de vigilance renforcées, notamment pour identifier l'origine des fonds.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la conséquence d'un ordre de gel des avoirs sur un compte bancaire ?",
+    "choices": [
+      "Le compte est clôturé définitivement",
+      "Les fonds sont bloqués, mais les intérêts continuent de courir",
+      "Le compte peut être utilisé pour des opérations courantes jusqu'à un certain montant"
+    ],
+    "correctIndex": 2,
+    "explanation": "Le gel bloque les fonds mais n'empêche pas la capitalisation des intérêts.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Selon la réglementation LCB-FT, quelle est l'obligation d'une entreprise du secteur financier lorsqu'elle constate une opération suspecte ?",
+    "choices": [
+      "La déclarer à Tracfin",
+      "La déclarer à l'AMF",
+      "La signaler à la Banque de France"
+    ],
+    "correctIndex": 0,
+    "explanation": "Toute opération suspecte doit être déclarée à Tracfin, la cellule de renseignement financier française.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Dans le cadre des mesures d'embargo, quel organe est chargé de la mise en œuvre des sanctions financières ciblées en France ?",
+    "choices": [
+      "L'Autorité des marchés financiers (AMF)",
+      "Le ministère de l'Économie et des Finances",
+      "Le Conseil des marchés financiers"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le ministère de l'Économie (Direction générale du Trésor) est responsable de la mise en œuvre des sanctions financières.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "C",
+    "question": "Quel est le seuil de transaction occasionnelle à partir duquel une entreprise assujettie doit procéder à l'identification du client en application de la LCB-FT ?",
+    "choices": [
+      "10 000 euros",
+      "20 000 euros",
+      "15 000 euros"
+    ],
+    "correctIndex": 2,
+    "explanation": "Le seuil est fixé à 15 000 euros pour les transactions occasionnelles selon l'article R561-16 du Code monétaire et financier.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Selon la réglementation LCB-FT, quelle est la règle applicable à la déclaration de soupçon ?",
+    "choices": [
+      "Elle doit être faite après exécution de l'opération",
+      "Elle doit être faite avant l'exécution de l'opération, sauf impossibilité",
+      "Elle est facultative pour les opérations inférieures à 10 000 euros"
+    ],
+    "correctIndex": 1,
+    "explanation": "La déclaration doit précéder l'opération, sauf impossibilité de la différer.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la différence entre le gel des avoirs et la confiscation ?",
+    "choices": [
+      "Le gel est une mesure conservatoire, la confiscation est une sanction définitive",
+      "Le gel est définitif, la confiscation est temporaire",
+      "Ils sont identiques"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le gel bloque temporairement les fonds, la confiscation les transfère définitivement à l'État.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "C",
+    "question": "Dans le cadre de l'approche par les risques, quel élément constitue un facteur de risque élevé ?",
+    "choices": [
+      "Un client effectuant des opérations de faible montant",
+      "Un client ayant une activité commerciale régulière",
+      "Un client résidant dans un pays non coopératif"
+    ],
+    "correctIndex": 2,
+    "explanation": "Les pays non coopératifs sont considérés à haut risque selon les recommandations du GAFI.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Quelle obligation incombe à une société de gestion en cas de suspicion d'abus de marché ?",
+    "choices": [
+      "Signaler immédiatement à l'AMF toute transaction suspecte",
+      "Attendre la fin de la journée de cotation avant tout signalement",
+      "Informer uniquement l'émetteur concerné de la suspicion"
+    ],
+    "correctIndex": 0,
+    "explanation": "Les sociétés de gestion doivent déclarer sans délai les transactions suspectes à l'AMF.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "C",
+    "question": "Quelle opération constitue une manipulation de marché ?",
+    "choices": [
+      "Passer des ordres sans intention d'exécution pour créer une fausse liquidité",
+      "Acheter des titres après une publication de résultats positifs",
+      "Vendre des titres pour rééquilibrer un portefeuille"
+    ],
+    "correctIndex": 0,
+    "explanation": "Les ordres fictifs ou annulés visant à tromper le marché sont une manipulation typique.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la conséquence d'une information privilégiée non publiée sur un ordre ?",
+    "choices": [
+      "L'ordre est interdit si l'information est déterminante pour la décision",
+      "L'ordre est autorisé si l'information est positive",
+      "L'ordre est toléré si l'exécution est immédiate"
+    ],
+    "correctIndex": 0,
+    "explanation": "Utiliser une information privilégiée pour négocier constitue un délit d'initié, même en cas d'exécution rapide.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "A",
+    "question": "Selon le règlement MAR, quelle est l'obligation d'une personne exerçant des responsabilités dirigeantes (PMDR) concernant ses transactions sur les titres de son émetteur ?",
+    "choices": [
+      "Les notifier à l'émetteur et à l'autorité compétente sous 3 jours ouvrés",
+      "Les déclarer uniquement à l'émetteur sous 5 jours calendaires",
+      "Les publier sur le site de l'émetteur le jour même de la transaction"
+    ],
+    "correctIndex": 0,
+    "explanation": "Les PMDR doivent notifier leurs transactions dans un délai de 3 jours ouvrés.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "C",
+    "question": "Quel est l'effet d'une opération de 'wash trade' (transaction fictive) sur le marché ?",
+    "choices": [
+      "Elle garantit un profit à l'initiateur",
+      "Elle constitue une couverture légitime",
+      "Elle crée un volume artificiel sans transfert de propriété"
+    ],
+    "correctIndex": 2,
+    "explanation": "Les wash trades donnent une fausse indication de liquidité, sans changement de bénéficiaire.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "A",
+    "question": "Selon le règlement MAR, quelle proposition définit correctement une information privilégiée ?",
+    "choices": [
+      "Information précise, non publique, susceptible d'influencer sensiblement le cours.",
+      "Information publique mais susceptible d'influencer le cours.",
+      "Information confidentielle sans impact potentiel sur le cours."
+    ],
+    "correctIndex": 0,
+    "explanation": "La définition exige précision, non-publicité et impact potentiel sur le cours.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "C",
+    "question": "Quelle pratique est un exemple de manipulation de marché selon le règlement MAR ?",
+    "choices": [
+      "Publier une information privilégiée après sa diffusion publique.",
+      "Passer des ordres sans intention de les exécuter.",
+      "Exécuter un ordre à cours limité sur un marché réglementé."
+    ],
+    "correctIndex": 1,
+    "explanation": "Le spoofing, ordres sans intention d'exécution, est une manipulation de marché.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "C",
+    "question": "Quel est l'effet d'un programme de rachat d'actions conforme au règlement MAR ?",
+    "choices": [
+      "Il est toujours considéré comme une manipulation de marché.",
+      "Il est soumis à une autorisation préalable de l'AMF.",
+      "Il bénéficie d'une présomption de conformité."
+    ],
+    "correctIndex": 2,
+    "explanation": "Les rachats conformes au MAR bénéficient d'une présomption de conformité.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "A",
+    "question": "Selon MiFID II, quelle est l'obligation d'une entreprise d'investissement concernant les informations sur les coûts et charges ?",
+    "choices": [
+      "Les informations ne sont requises qu'après l'exécution de la transaction.",
+      "Les informations doivent être fournies avant la prestation du service, en incluant les coûts liés au service et à l'instrument.",
+      "Les informations ne sont nécessaires que pour les clients professionnels."
+    ],
+    "correctIndex": 1,
+    "explanation": "MiFID II impose une information précontractuelle complète sur les coûts et charges, avant la prestation.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "A",
+    "question": "Quelle est la définition d'un 'client professionnel sur demande' ?",
+    "choices": [
+      "Un client de détail qui demande à être traité comme un professionnel, sous réserve de critères quantitatifs et qualitatifs.",
+      "Un client qui a signé un contrat de conseil avec l'entreprise.",
+      "Un client qui détient un portefeuille supérieur à 500 000 euros."
+    ],
+    "correctIndex": 0,
+    "explanation": "Le client professionnel sur demande est un client de détail qui, sur sa demande, est traité comme professionnel s'il satisfait à des critères.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "C",
+    "question": "Qu'est-ce que l'indicateur synthétique de risque et de rendement (SRRI) d'un OPCVM ?",
+    "choices": [
+      "Le ratio de frais totaux du fonds.",
+      "La performance annualisée sur 10 ans.",
+      "Une échelle de 1 à 7 qui classe le fonds selon son niveau de risque."
+    ],
+    "correctIndex": 2,
+    "explanation": "Le SRRI est un indicateur réglementaire allant de 1 (risque faible) à 7 (risque élevé).",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "C",
+    "question": "Dans le cadre de la commercialisation d'un produit structuré, que signifie 'capital garanti' ?",
+    "choices": [
+      "Le capital est garanti en cas de faillite de l'émetteur.",
+      "Le capital est restitué à l'échéance, quelle que soit l'évolution du sous-jacent.",
+      "Le capital est investi sans risque de perte en cours de vie."
+    ],
+    "correctIndex": 1,
+    "explanation": "Le capital garanti signifie que l'investisseur récupère sa mise à l'échéance, mais pas nécessairement en cas de défaut de l'émetteur.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "A",
+    "question": "Quelle est l'obligation d'un conseiller en investissements financiers (CIF) lors de la commercialisation d'instruments financiers ?",
+    "choices": [
+      "Il doit garantir la performance des instruments proposés.",
+      "Il doit fournir une information exacte, claire et non trompeuse sur les caractéristiques des instruments.",
+      "Il doit uniquement proposer des instruments recommandés par son réseau."
+    ],
+    "correctIndex": 1,
+    "explanation": "Le CIF doit respecter une obligation d'information loyale et non trompeuse, sans garantie de performance.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "A",
+    "question": "Selon la directive MIFID II, que doit faire un prestataire de services d'investissement avant de fournir un service de conseil en investissement ?",
+    "choices": [
+      "Évaluer l'adéquation de l'instrument au client (test d'adéquation).",
+      "Obtenir l'accord écrit du client sur chaque transaction.",
+      "Vérifier la solvabilité du client."
+    ],
+    "correctIndex": 0,
+    "explanation": "Le conseil en investissement exige une évaluation de l'adéquation (suitability) pour le client.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "C",
+    "question": "Lors d'une augmentation de capital avec maintien du droit préférentiel de souscription (DPS), que se passe-t-il pour un actionnaire qui ne souhaite pas souscrire ?",
+    "choices": [
+      "Il perd automatiquement ses droits sans compensation.",
+      "Il doit obligatoirement souscrire pour éviter la dilution.",
+      "Il peut vendre ses DPS sur le marché, ce qui compense partiellement la dilution."
+    ],
+    "correctIndex": 2,
+    "explanation": "L'actionnaire peut céder ses DPS, ce qui lui permet de monétiser la valeur du droit.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "A",
+    "question": "Quelle obligation s'impose à un conseiller en investissements financiers (CIF) lors de la fourniture d'un service de conseil en investissement ?",
+    "choices": [
+      "Fournir un rapport écrit sur l'adéquation du conseil à la situation du client.",
+      "Vérifier que le client est un investisseur professionnel avant de le conseiller.",
+      "Transmettre l'ordre au marché dans les meilleurs délais."
+    ],
+    "correctIndex": 0,
+    "explanation": "Le CIF doit évaluer l'adéquation et fournir un rapport écrit conformément à la réglementation MIFID.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "A",
+    "question": "Quelle est la durée de validité d'un prospectus approuvé par l'AMF pour une offre au public de titres financiers ?",
+    "choices": [
+      "6 mois",
+      "12 mois",
+      "24 mois"
+    ],
+    "correctIndex": 1,
+    "explanation": "Selon le règlement Prospectus, un prospectus est valable 12 mois après son approbation.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "C",
+    "question": "Un investisseur passe un ordre à cours limité d'achat à 50 € pour une action cotée à 52 €. Si le marché ne descend pas à ce niveau, que se passe-t-il ?",
+    "choices": [
+      "L'ordre est exécuté au prix du marché.",
+      "L'ordre est automatiquement annulé en fin de séance.",
+      "L'ordre n'est pas exécuté et reste en attente."
+    ],
+    "correctIndex": 2,
+    "explanation": "Un ordre à cours limité n'est exécuté que si le prix atteint le niveau fixé ; sinon, il reste actif.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "A",
+    "question": "Dans le cadre de la relation avec un client, quelle est l'obligation d'un prestataire de services d'investissement en matière de conflits d'intérêts ?",
+    "choices": [
+      "Il doit identifier les conflits d'intérêts et, si nécessaire, les prévenir ou les gérer, et informer le client si la gestion ne suffit pas.",
+      "Il doit les ignorer car ils sont inhérents à l'activité.",
+      "Il doit les déclarer systématiquement à l'AMF avant chaque transaction."
+    ],
+    "correctIndex": 0,
+    "explanation": "Le prestataire doit gérer les conflits d'intérêts et informer le client si la gestion ne suffit pas.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "A",
+    "question": "Lors de la fourniture d'un service de conseil en investissement, quelle information le prestataire doit-il recueillir pour évaluer l'adéquation ?",
+    "choices": [
+      "Uniquement le profil de risque du client.",
+      "Les connaissances et l'expérience, la situation financière et les objectifs d'investissement.",
+      "Uniquement les objectifs de rendement."
+    ],
+    "correctIndex": 1,
+    "explanation": "L'évaluation de l'adéquation nécessite ces trois éléments.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "C",
+    "question": "Dans le carnet d'ordres, un ordre d'achat à cours limité sera prioritaire si :",
+    "choices": [
+      "il a le prix le plus élevé et la date de saisie la plus ancienne.",
+      "il a le prix le plus bas et la date de saisie la plus ancienne.",
+      "il a le prix le plus élevé et la date de saisie la plus récente."
+    ],
+    "correctIndex": 0,
+    "explanation": "La priorité est donnée au prix le plus élevé pour un achat, puis à l'antériorité.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "A",
+    "question": "Selon MiFID II, quelle est la durée minimale de conservation des enregistrements des communications téléphoniques avec les clients ?",
+    "choices": [
+      "3 ans",
+      "5 ans",
+      "10 ans"
+    ],
+    "correctIndex": 1,
+    "explanation": "La réglementation impose une conservation minimale de 5 ans pour ces enregistrements.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "A",
+    "question": "Quelle est la fréquence minimale de transmission aux clients du rapport sur la qualité d'exécution des ordres ?",
+    "choices": [
+      "Annuelle",
+      "Semestrielle",
+      "Trimestrielle"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le rapport doit être fourni au moins une fois par an aux clients.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "C",
+    "question": "Un client vend 100 actions au marché. Le carnet d'ordres affiche un meilleur prix acheteur de 50 € pour 50 actions, puis 49,95 € pour 50 actions. Quel est le prix moyen d'exécution ?",
+    "choices": [
+      "49,95 €",
+      "50,00 €",
+      "49,975 €"
+    ],
+    "correctIndex": 2,
+    "explanation": "Le prix moyen est calculé en pondérant les quantités : (50*50 + 49,95*50)/100 = 49,975 €.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "A",
+    "question": "Dans le cadre de la relation client, pour quel service d'investissement le test de caractère approprié est-il obligatoire ?",
+    "choices": [
+      "Le conseil en investissement",
+      "L'exécution d'ordres",
+      "La gestion sous mandat"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le test de caractère approprié s'applique aux services autres que le conseil et la gestion, comme l'exécution d'ordres.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "C",
+    "question": "Un ordre à cours limité d'achat est passé à 100 € alors que le cours est de 105 €. Que se passe-t-il ?",
+    "choices": [
+      "L'ordre est exécuté immédiatement à 105 €",
+      "L'ordre est exécuté à 100 €",
+      "L'ordre reste en attente"
+    ],
+    "correctIndex": 2,
+    "explanation": "Un ordre à cours limité d'achat ne s'exécute que si le cours est inférieur ou égal à la limite.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "C",
+    "question": "Un client investit 5 000 € dans un fonds avec des frais d'entrée de 3 %. Quel est le montant net investi ?",
+    "choices": [
+      "4 850 €",
+      "5 150 €",
+      "4 500 €"
+    ],
+    "correctIndex": 0,
+    "explanation": "Les frais d'entrée de 3 % sur 5 000 € représentent 150 €, donc le montant net est de 4 850 €.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
   }
 ]
