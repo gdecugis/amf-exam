@@ -75,7 +75,7 @@ async function generateBatch(batch) {
   const userMsg = `Thème : "${batch.theme}".
 Génère exactement ${batch.aCount} question(s) de type A et ${batch.cCount} question(s) de type C sur ce thème (total ${batch.aCount + batch.cCount} questions).`;
 
-  const response = await fetch("http://localhost:3000/api/generate", {
+  const response = await fetch("/api/generate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -262,7 +262,7 @@ function AMFExam() {
 
   useEffect(() => {
     // Fetch database size from the server on load
-    fetch("http://localhost:3000/api/db")
+    fetch("/api/db")
       .then(res => res.json())
       .then(data => {
         if (data && Array.isArray(data.questions)) {
@@ -313,7 +313,7 @@ function AMFExam() {
     // 1. Fetch the full questions database
     let dbQuestions = [];
     try {
-      const res = await fetch("http://localhost:3000/api/db");
+      const res = await fetch("/api/db");
       const data = await res.json();
       dbQuestions = data.questions || [];
     } catch (e) {
