@@ -1,0 +1,29 @@
+{
+  "routes": [
+    {
+      "routePath": "/api/db",
+      "mountPath": "/api",
+      "method": "GET",
+      "module": [
+        "api/db.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/generate",
+      "mountPath": "/api",
+      "method": "OPTIONS",
+      "module": [
+        "api/generate.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/generate",
+      "mountPath": "/api",
+      "method": "POST",
+      "module": [
+        "api/generate.js:onRequestPost"
+      ]
+    }
+  ],
+  "baseURL": "/"
+}
