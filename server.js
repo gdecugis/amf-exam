@@ -20,7 +20,8 @@ const THEMES = [
 ];
 
 // Load env
-const envContent = fs.readFileSync('.env', 'utf-8');
+const envPath = path.join(__dirname, '.env');
+const envContent = fs.readFileSync(envPath, 'utf-8');
 const env = {};
 envContent.split('\n').forEach(line => {
   const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
