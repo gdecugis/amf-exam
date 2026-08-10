@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examen AMF - Entraînement Standalone</title>
+  <!-- Load React, ReactDOM, Babel, and Lucide Icons -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- Expose Lucide icons globally to match the React components imports -->
+  <script>
+    window.process = { env: { NODE_ENV: 'development' } };
+  </script>
+
+  <!-- Load Lucide Icon Script -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script type="text/babel">
+    // Expose React hooks globally
+    window.useState = React.useState;
+    window.useEffect = React.useEffect;
+    window.useRef = React.useRef;
+    window.useMemo = React.useMemo;
+    
+    window.CheckCircle2 = ({ className, style }) => <i data-lucide="check-circle-2" className={className} style={style}></i>;
+    window.XCircle = ({ className, style }) => <i data-lucide="x-circle" className={className} style={style}></i>;
+    window.Clock = ({ className, style }) => <i data-lucide="clock" className={className} style={style}></i>;
+    window.LayoutGrid = ({ className, style }) => <i data-lucide="layout-grid" className={className} style={style}></i>;
+    window.ChevronLeft = ({ className, style }) => <i data-lucide="chevron-left" className={className} style={style}></i>;
+    window.ChevronRight = ({ className, style }) => <i data-lucide="chevron-right" className={className} style={style}></i>;
+    window.Loader2 = ({ className, style }) => <i data-lucide="loader-2" className={`${className}`} style={style}></i>;
+    window.X = ({ className, style }) => <i data-lucide="x" className={className} style={style}></i>;
+  </script>
+
+  <script type="text/babel" src="examen-amf.jsx"></script>
+
+  <script type="text/babel">
+    const container = document.getElementById('root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<AMFExam />);
+    
+    // Periodically run lucide.createIcons to render any icons loaded after mounting
+    setInterval(() => {
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    }, 500);
+  </script>
+</body>
+</html>
