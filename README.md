@@ -1,0 +1,65 @@
+# AMF Mock Exam - Standalone Practice App
+
+A standalone, local web application to practice for the French Financial Markets Authority (AMF - Autorité des Marchés Financiers) certification. The app generates custom mock exams (in French) adhering to the official 12-theme syllabus, powered by artificial intelligence (Deepseek V4 via Baseten) and a persistent local JSON database.
+
+## Features
+
+- **Official Syllabus Distribution**: Adheres to the official exam structure (12 official themes, proportional distribution of regulatory Type A and technical Type C questions).
+- **Custom Exam Sizes**: Practice with rapid 10-question sessions, or simulate a full-length 120-question official mock exam.
+- **Hybrid DB / AI Sourcing**: Use a slider on the home screen to choose how many questions to generate via AI (Deepseek) versus how many to retrieve randomly from your local database (`questions_db.json`).
+- **Instant Correction & Feedback**: Instantly reveals the correct answer (in green), your selected answer (in red if incorrect), and the explanation block right after clicking a choice.
+- **Zero Complex Build Tools**: Designed as a standalone Single Page App (SPA) compiled directly in the browser via Babel CDN.
+
+---
+
+## Quick Start (Local Development)
+
+### 1. Prerequisites
+- [Node.js](https://nodejs.org/) (version 18+) installed.
+
+### 2. Configure Environment Variables
+Create a `.env` file at the root of the project and specify your Baseten credentials:
+```env
+LLM_API_KEY="your_api_key"
+OPENAI_API_BASE="https://inference.baseten.co/v1" # Or any OpenAI-compatible base URL (e.g. Local Ollama, OpenRouter, etc.)
+LLM_MODEL="deepseek-ai/DeepSeek-V4-Flash-0731"    # (Optional) Customize the model name
+```
+
+### 3. Installation & Run
+Install the dependencies and start the local development server:
+```bash
+# Install packages
+npm install
+
+# Start development server
+npm run dev
+```
+Open your browser and navigate to **[http://localhost:3000](http://localhost:3000)**.
+
+---
+
+## Project Architecture
+
+- `index.html`: The main page harness loading React, Babel CDN, and Lucide Icons.
+- `examen-amf.jsx`: The React component containing the app view layouts, quiz state, and API fetching logic.
+- `server.js`: A lightweight Node.js proxy server that securely forwards requests to the Deepseek model (preventing API key exposure to the client) and persists new questions locally in real time.
+- `questions_db.json`: Local JSON database containing your pool of saved questions.
+- `functions/api/`: Cloudflare Pages serverless Function files for production deployment.
+
+---
+
+## Production Deployment (Cloudflare Pages)
+
+This project is configured and ready to be deployed to **Cloudflare Pages** using serverless **Pages Functions**.
+
+1. **Deploy the application** using Wrangler (prepend `npx` if Wrangler is not installed globally):
+   ```bash
+   npx wrangler pages deploy . --project-name amf-exam
+   ```
+2. **Add Environment Variables**:
+   In your Cloudflare Dashboard:
+   - Navigate to **Workers & Pages** -> **amf-exam** -> **Settings** -> **Environment variables**.
+   - Add the two API keys from your `.env` file:
+     - `LLM_API_KEY`
+     - `OPENAI_API_BASE`
+3. **Re-deploy** to apply variables.

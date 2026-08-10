@@ -13,7 +13,7 @@ export async function onRequestPost(context) {
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: 'deepseek-ai/DeepSeek-V4-Flash-0731',
+        model: env.LLM_MODEL || 'deepseek-ai/DeepSeek-V4-Flash-0731',
         messages: payload.messages,
         temperature: payload.temperature || 0.1
       })

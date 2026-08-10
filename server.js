@@ -58,7 +58,7 @@ const server = http.createServer((req, res) => {
             'Authorization': `Bearer ${env.LLM_API_KEY}`
           },
           body: JSON.stringify({
-            model: 'deepseek-ai/DeepSeek-V4-Flash-0731',
+            model: env.LLM_MODEL || 'deepseek-ai/DeepSeek-V4-Flash-0731',
             messages: payload.messages,
             temperature: payload.temperature || 0.1
           })
