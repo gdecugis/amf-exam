@@ -8,7 +8,9 @@ A standalone, local web application to practice for the French Financial Markets
 - **Custom Exam Sizes**: Practice with rapid 10-question sessions, or simulate a full-length 120-question official mock exam.
 - **Hybrid DB / AI Sourcing**: Use a slider on the home screen to choose how many questions to generate via AI (Deepseek) versus how many to retrieve randomly from your local database (`questions_db.json`).
 - **Instant Correction & Feedback**: Instantly reveals the correct answer (in green), your selected answer (in red if incorrect), and the explanation block right after clicking a choice.
-- **Zero Complex Build Tools**: Designed as a standalone Single Page App (SPA) compiled directly in the browser via Babel CDN.
+- **Zero Complex Build Tools**: Designed as a standalone Single Page App (SPA) compiled directly in the browser.
+- **AI Sourcing**: Custom exam questions are AI-generated using Deepseek V4 or any OpenAI-compatible API and stored in a local JSON database.
+
 
 ---
 
