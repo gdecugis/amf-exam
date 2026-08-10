@@ -1,5 +1,4 @@
-export async function onRequestGet() {
-  const questions = [
+export async function onRequestGet() { return new Response(JSON.stringify({ questions: [
   {
     "type": "A",
     "question": "Quelle est la sanction maximale que peut prononcer la commission des sanctions de l'AMF à l'encontre d'une personne morale ?",
@@ -1742,11 +1741,4 @@ export async function onRequestGet() {
     "theme": "Déontologie et conformité",
     "themeId": 2
   }
-];
-  return new Response(JSON.stringify({ questions }), {
-    headers: { 
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    }
-  });
-}
+] }), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }); }
