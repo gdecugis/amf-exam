@@ -3,8 +3,8 @@
 A standalone web application to practice for the French Financial Markets Authority (AMF - Autorité des Marchés Financiers) certification. The app generates custom mock exams (in French) adhering to the official 12-theme syllabus.
 
 Question generation and test-taking are separate flows:
-- **Passer un examen** (take a test) is fast and never calls an LLM — it draws only from a stored question pool.
-- **Générer vos propres questions** (generate your own questions) is slow and LLM-backed — you bring your own OpenAI-compatible API key, and the results are saved only in your browser.
+- **Passer un examen** (take a test) is fast and never calls an LLM — it draws only from stored questions (canonical + your own, if signed in).
+- **Générer vos propres questions** (generate your own questions) is slow and LLM-backed — you bring your own OpenAI-compatible API key, sign in with Google, and the results are saved to your account.
 
 ## Features
 
@@ -12,7 +12,7 @@ Question generation and test-taking are separate flows:
 - **Custom Exam Sizes**: Practice with rapid 10-question sessions, or simulate a full-length 120-question official mock exam.
 - **Decoupled generation**: Taking a test is instant, reading only from stored questions. Generating new questions is a separate, deliberate action.
 - **Canonical + personal question pools**: Tests blend the shared canonical database with any questions you've personally generated, with a slider capped by how many personal questions you actually have.
-- **BYO-key generation**: Anyone can generate their own additional questions using their own OpenAI-compatible API key/base URL — no cost to the app owner, and personal questions never get written to the shared canonical database.
+- **BYO-key generation, synced by account**: Sign in with Google, then generate your own additional questions with your own OpenAI-compatible API key/base URL — no cost to the app owner. Your questions are stored in D1 keyed by your verified email, so they follow you across sessions and devices. The app owner's own account is special-cased: anything they generate while signed in is written straight into the shared canonical pool instead of a personal one.
 - **Instant Correction & Feedback**: Instantly reveals the correct answer (in green), your selected answer (in red if incorrect), and the explanation block right after clicking a choice.
 - **Zero Complex Build Tools**: Designed as a standalone Single Page App (SPA) compiled directly in the browser.
 
@@ -20,14 +20,17 @@ Question generation and test-taking are separate flows:
 
 ## Project Architecture
 
-- `index.html`: The main page harness loading React, Babel CDN, and Lucide Icons.
+- `index.html`: The main page harness loading React, Babel CDN, Lucide Icons, and Google Identity Services.
 - `examen-amf.jsx`: The React component containing the app view layouts (home, test setup, generation, exam, results), quiz state, and API fetching logic.
-- `idb.js`: Browser IndexedDB wrapper (`window.PersonalDB`) storing each user's personally-generated questions locally, per-device.
-- `server.js`: Lightweight Node.js dev server. Proxies `/api/generate` (forwarding either the server's own `.env` credentials, or a caller-supplied BYO key) and serves `/api/db` from `questions_db.json` locally.
-- `questions_db.json`: Versioned, curated source of the canonical question set. This is the file that seeds Cloudflare D1 in production (see below) — it is not read directly by the deployed app.
-- `functions/api/`: Cloudflare Pages Functions for production — `db.js` queries D1 for the canonical pool, `generate.js` proxies LLM calls (BYO key or server env).
-- `d1/schema.sql`, `d1/seed.sql`: D1 table schema and a generated seed file (from `questions_db.json`) for the canonical store.
-- `scripts/generate-d1-seed.js`: Regenerates `d1/seed.sql` from `questions_db.json`.
+- `auth.js`: Thin wrapper (`window.GoogleAuth`) around Google Identity Services — renders the sign-in button, decodes the returned ID token client-side for display, and persists it in `localStorage` so sign-in survives reloads.
+- `server.js`: Lightweight Node.js dev server. Proxies `/api/generate` (forwarding either the server's own `.env` credentials, or a caller-supplied BYO key) and serves `/api/db` from `questions_db.json` locally. Sign-in and personal-question sync require the deployed Cloudflare + D1 environment (no local equivalent of `/api/personal`).
+- `questions_db.json`: Versioned, curated source of the canonical question set. This is the file that seeds Cloudflare D1 in production — it is not read directly by the deployed app.
+- `functions/api/db.js`: Returns canonical questions from D1 (`owner_email IS NULL`).
+- `functions/api/personal.js`: Authenticated (Google ID token) read/write of a signed-in user's own questions. Writes from the app owner's account (`CANONICAL_OWNER_EMAIL`) land with `owner_email = NULL`, i.e. straight into canonical.
+- `functions/api/generate.js`: Proxies LLM calls (BYO key or server env) — never writes to D1 itself.
+- `functions/_googleAuth.js`: Shared server-side helper that verifies a Google ID token via Google's `tokeninfo` endpoint (checks audience + `email_verified`). Not a route (`_`-prefixed).
+- `d1/schema.sql`: Table schema (fresh installs). `d1/migrate-001-owner-email.sql`: adds the `owner_email` column to an already-seeded database. `d1/seed.sql` / `d1/seed-chunks/*.sql`: canonical seed data generated from `questions_db.json`.
+- `scripts/generate-d1-seed.js`, `scripts/split-d1-seed.js`: Regenerate the seed file(s) from `questions_db.json`.
 - `wrangler.toml`: Cloudflare Pages/D1 project configuration.
 
 ---
@@ -56,7 +59,7 @@ npm run dev
 ```
 Open your browser and navigate to **[http://localhost:3000](http://localhost:3000)**.
 
-In local dev, `/api/db` reads directly from `questions_db.json` and owner-side `/api/generate` calls (no BYO key in the request) get appended back to that file — same as before. BYO-key generation calls are proxied but never persisted server-side; they land only in the browser's IndexedDB.
+In local dev, `/api/db` reads directly from `questions_db.json` and owner-side `/api/generate` calls (no BYO key in the request) get appended back to that file — same as before. Google sign-in and `/api/personal` (synced personal questions) only work in the deployed Cloudflare environment, since they depend on D1 and Pages Functions routing.
 
 ---
 
@@ -66,14 +69,18 @@ In local dev, `/api/db` reads directly from `questions_db.json` and owner-side `
 ```bash
 npx wrangler d1 create amf-questions
 ```
-Copy the returned `database_id` into `wrangler.toml` (`database_id = "..."`).
+Copy the returned `database_id` into `wrangler.toml` (`database_id = "..."`). (Already done for this project — see `wrangler.toml`.)
 
 ### 2. Apply the schema and seed data
 ```bash
 npx wrangler d1 execute amf-questions --file=d1/schema.sql --remote
 npx wrangler d1 execute amf-questions --file=d1/seed.sql --remote
 ```
-If you've edited `questions_db.json`, regenerate the seed file first with `node scripts/generate-d1-seed.js`.
+If your account only has D1 dashboard **Console** access (no file import, no CLI), paste `d1/schema.sql` first, then paste each `d1/seed-chunks/00N.sql` file in order.
+
+If you've edited `questions_db.json`, regenerate seed files first with `node scripts/generate-d1-seed.js` (and `node scripts/split-d1-seed.js` if you need console-sized chunks again).
+
+**Already-seeded database?** Run `d1/migrate-001-owner-email.sql` once (Console or CLI) to add the `owner_email` column used for personal question ownership.
 
 ### 3. Deploy the application
 ```bash
@@ -81,16 +88,20 @@ npx wrangler pages deploy . --project-name amf-exam
 ```
 This also gives you a free `amf-exam.pages.dev` URL — no custom domain required.
 
-### 4. Add Environment Variables (optional — owner-side generation only)
-In the Cloudflare Dashboard, under **Workers & Pages** → **amf-exam** → **Settings** → **Environment variables**, add:
-- `LLM_API_KEY`
-- `OPENAI_API_BASE`
-- `LLM_MODEL` (optional)
+### 4. Bind D1 to the Pages project
+**Settings → Functions → D1 database bindings** → add binding named `DB` → database `amf-questions`.
 
-These are only used as a fallback when a request doesn't supply its own BYO key — regular visitors generating their own questions never need this configured.
+### 5. Add Environment Variables
+In the Cloudflare Dashboard, under **Workers & Pages** → your project → **Settings** → **Environment variables**:
+- `LLM_API_KEY`, `OPENAI_API_BASE`, `LLM_MODEL` (optional) — fallback for owner-side generation only; regular visitors' BYO-key generation never needs these.
+- `CANONICAL_OWNER_EMAIL` (optional) — the Google account whose generated questions get written straight to canonical. Defaults to `gdecugis@gmail.com` if unset.
+- `GOOGLE_CLIENT_ID` (optional) — must match the client ID hardcoded in `auth.js`/`examen-amf.jsx` (`...apps.googleusercontent.com`). Only needed if you rotate the OAuth client; the server falls back to the same default.
 
-### 5. Restrict canonical-DB writes to yourself (optional)
-If you later add an owner-only endpoint to write directly into the canonical D1 pool, gate it with **Cloudflare Access** (Zero Trust): create an Access application over that path with a policy allowing only your Google account. This requires no application code — Cloudflare handles the Google OAuth flow at the edge. Free tier covers up to 50 users.
+### 6. Configure the Google OAuth client
+In [Google Cloud Console](https://console.cloud.google.com/apis/credentials), your OAuth 2.0 Client ID (Web application) needs your Pages URL(s) listed under **Authorized JavaScript origins** (e.g. `https://amf-exam.pages.dev` and any preview `*.pages.dev` URLs you use). No redirect URI or client secret is needed — Google Identity Services runs entirely client-side and issues a signed ID token that the server verifies per-request.
+
+### 7. Redeploy
+Trigger a redeploy so the D1 binding and env vars take effect.
 
 ---
 

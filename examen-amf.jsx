@@ -268,6 +268,15 @@ function Seal({ label, tone = "ink" }) {
 }
 
 const shuffleArray = (arr) => arr.sort(() => Math.random() - 0.5);
+const GOOGLE_CLIENT_ID = "39593401062-8631alu4ia2ev60jmjdrs23qd6ku8hm2.apps.googleusercontent.com";
+
+async function fetchPersonalQuestions(idToken) {
+  if (!idToken) return [];
+  const res = await fetch("/api/personal", { headers: { Authorization: `Bearer ${idToken}` } });
+  if (!res.ok) return [];
+  const data = await res.json();
+  return data.questions || [];
+}
 
 function AMFExam() {
   const [screen, setScreen] = useState("home");
@@ -280,8 +289,29 @@ function AMFExam() {
   const [remaining, setRemaining] = useState(7200);
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const timerRef = useRef(null);
+  const googleButtonRef = useRef(null);
 
-  // Canonical pool (Cloudflare D1, via /api/db) and personal pool (IndexedDB)
+  // Google sign-in state — personal questions are synced to D1, keyed by
+  // the signed-in user's verified email, so they follow the user across
+  // sessions/devices instead of living only in this browser.
+  const [auth, setAuth] = useState(() => (window.GoogleAuth ? window.GoogleAuth.getState() : { idToken: null, email: null }));
+
+  useEffect(() => {
+    if (window.GoogleAuth) {
+      window.GoogleAuth.init(GOOGLE_CLIENT_ID);
+      window.GoogleAuth.onChange(setAuth);
+    }
+  }, []);
+
+  useEffect(() => {
+    const showsSignIn = (screen === "home" || screen === "generate-setup") && !auth.email;
+    if (showsSignIn && googleButtonRef.current && window.GoogleAuth) {
+      window.GoogleAuth.renderButton(googleButtonRef.current);
+    }
+  }, [screen, auth.email]);
+
+  // Canonical pool (Cloudflare D1, via /api/db) and personal pool (D1, via
+  // /api/personal, scoped to the signed-in user)
   const [canonicalCount, setCanonicalCount] = useState(0);
   const [personalCount, setPersonalCount] = useState(0);
   const [examSize, setExamSize] = useState(120);
@@ -292,6 +322,7 @@ function AMFExam() {
   const [byoApiBase, setByoApiBase] = useState("");
   const [byoModel, setByoModel] = useState("");
   const [generateSize, setGenerateSize] = useState(30);
+  const [generatedCanonical, setGeneratedCanonical] = useState(false);
 
   const personalMax = Math.min(examSize, personalCount);
 
@@ -319,13 +350,13 @@ function AMFExam() {
         }
       })
       .catch((err) => console.error("Could not fetch canonical DB info", err));
-    window.PersonalDB.count()
-      .then(setPersonalCount)
+    fetchPersonalQuestions(auth.idToken)
+      .then((qs) => setPersonalCount(qs.length))
       .catch((err) => console.error("Could not read personal question store", err));
-  }, [screen]);
+  }, [screen, auth.idToken]);
 
   // Assemble a test purely from stored questions (canonical D1 + personal
-  // IndexedDB) — no LLM calls happen on this path.
+  // D1, scoped to the signed-in user) — no LLM calls happen on this path.
   const startTest = async () => {
     setGenError(null);
 
@@ -339,7 +370,7 @@ function AMFExam() {
       console.warn("Could not load canonical database", e);
     }
     try {
-      personalQuestions = await window.PersonalDB.getAll();
+      personalQuestions = await fetchPersonalQuestions(auth.idToken);
     } catch (e) {
       console.warn("Could not load personal question store", e);
     }
@@ -401,9 +432,15 @@ function AMFExam() {
     setScreen("exam");
   };
 
-  // BYO-key generation — writes results to the browser's personal IndexedDB
-  // pool only. Never touches the canonical D1 store.
+  // BYO-key generation — writes results to D1 via the authenticated
+  // /api/personal endpoint. The server decides where they land: the app
+  // owner's account writes straight into the canonical pool, everyone
+  // else's stay scoped to their own email and sync across sessions/devices.
   const startPersonalGeneration = async () => {
+    if (!auth.idToken) {
+      setGenError("Connectez-vous avec Google avant de générer des questions.");
+      return;
+    }
     if (!byoApiKey.trim() || !byoApiBase.trim()) {
       setGenError("Merci de renseigner votre clé API et l'URL de base.");
       return;
@@ -425,7 +462,15 @@ function AMFExam() {
         generated.push(...qs);
       }
       setProgress({ done: batches.length, total: batches.length, label: "Terminé" });
-      await window.PersonalDB.addMany(generated);
+
+      const res = await fetch("/api/personal", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${auth.idToken}` },
+        body: JSON.stringify({ questions: generated }),
+      });
+      if (!res.ok) throw new Error(`Échec de l'enregistrement (HTTP ${res.status})`);
+      const saved = await res.json();
+      setGeneratedCanonical(Boolean(saved.canonical));
       setScreen("generate-done");
     } catch (e) {
       setGenError(`Échec de la génération — ${e.message || e}`);
@@ -475,6 +520,25 @@ function AMFExam() {
             </div>
             <Seal label="Spécimen d'examen" tone="ink" />
           </div>
+
+          <div style={{ marginBottom: "20px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
+            {auth.email ? (
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+                <span className="amf-secondary" style={{ fontSize: "13px" }}>Connecté : <strong className="amf-ink">{auth.email}</strong></span>
+                <button onClick={() => window.GoogleAuth.signOut()} className="amf-btn-outline" style={{ padding: "6px 12px", borderRadius: "3px", fontSize: "12px" }}>
+                  Déconnexion
+                </button>
+              </div>
+            ) : (
+              <div>
+                <p className="amf-secondary" style={{ fontSize: "13px", marginBottom: "10px" }}>
+                  Connectez-vous avec Google pour retrouver vos questions personnelles d'une session à l'autre.
+                </p>
+                <div ref={googleButtonRef}></div>
+              </div>
+            )}
+          </div>
+
           <button onClick={() => setScreen("test-setup")} className="amf-btn-primary" style={{ width: "100%", padding: "14px", borderRadius: "3px", fontSize: "14px", letterSpacing: "0.02em", marginBottom: "12px" }}>
             Passer un examen
           </button>
@@ -524,6 +588,12 @@ function AMFExam() {
             </select>
           </div>
 
+          {!auth.email && (
+            <p className="amf-muted" style={{ fontSize: "12px", marginBottom: "16px", fontStyle: "italic" }}>
+              Connectez-vous avec Google depuis l'accueil pour inclure vos questions personnelles.
+            </p>
+          )}
+
           {personalCount > 0 && (
             <div style={{ marginBottom: "24px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
               <label className="amf-ink" style={{ fontSize: "13px", fontWeight: "600", display: "block", marginBottom: "8px" }}>
@@ -568,12 +638,23 @@ function AMFExam() {
           <p className="amf-accent" style={{ fontSize: "12px", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "4px" }}>Génération personnelle</p>
           <h1 className="amf-serif amf-ink" style={{ fontSize: "22px", lineHeight: 1.2, marginTop: 0, marginBottom: "16px" }}>Générer vos propres questions</h1>
           <p className="amf-secondary" style={{ fontSize: "13px", marginBottom: "20px" }}>
-            Utilisez votre propre clé API (compatible OpenAI). Les questions générées sont enregistrées uniquement dans votre navigateur et ne sont jamais envoyées à la base canonique.
+            Utilisez votre propre clé API (compatible OpenAI). Les questions générées sont associées à votre compte Google et vous suivent d'une session à l'autre.
           </p>
+
+          {!auth.email && screen === "generate-setup" && (
+            <div style={{ marginBottom: "20px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
+              <p className="amf-secondary" style={{ fontSize: "13px", marginBottom: "10px" }}>Connexion Google requise avant de générer.</p>
+              <div ref={googleButtonRef}></div>
+            </div>
+          )}
 
           {screen === "generate-done" ? (
             <div style={{ marginBottom: "20px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
-              <p className="amf-success" style={{ fontSize: "13px", margin: 0 }}>Questions générées et enregistrées localement.</p>
+              <p className="amf-success" style={{ fontSize: "13px", margin: 0 }}>
+                {generatedCanonical
+                  ? "Questions générées et ajoutées à la base canonique (compte propriétaire)."
+                  : "Questions générées et enregistrées sur votre compte."}
+              </p>
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
@@ -664,7 +745,7 @@ function AMFExam() {
           <div className="amf-fill-accent" style={{ height: "100%", width: `${((current + 1) / questions.length) * 100}%` }} />
         </div>
 
-        <div style={{ maxWidth: "640px", margin: "0 auto", padding: "20px", paddingBottom: "128px" }}>
+        <div style={{ maxWidth: "640px", margin: "0 auto", padding: "20px", paddingBottom: "12px" }}>
           <div className="amf-card" style={{ padding: "24px", marginTop: "16px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
               <span className="amf-badge amf-mono" style={{ fontSize: "11px", padding: "2px 8px", borderRadius: "3px" }}>Type {q.type}</span>
@@ -725,7 +806,7 @@ function AMFExam() {
           </p>
         </div>
 
-        <div className="amf-card" style={{ position: "fixed", bottom: 0, left: 0, right: 0, borderRadius: 0, padding: "12px 16px", display: "flex", alignItems: "center", gap: "8px" }}>
+        <div className="amf-card" style={{ position: "sticky", bottom: 0, maxWidth: "640px", margin: "0 auto", borderRadius: 0, padding: "12px 16px", display: "flex", alignItems: "center", gap: "8px" }}>
           <button onClick={() => setCurrent((c) => Math.max(0, c - 1))} disabled={current === 0} className="amf-icon-btn" style={{ padding: "10px", borderRadius: "3px" }}>
             <ChevronLeft style={{ width: "16px", height: "16px" }} />
           </button>

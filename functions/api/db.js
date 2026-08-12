@@ -12,7 +12,7 @@ export async function onRequestGet(context) {
 
   try {
     const { results } = await env.DB.prepare(
-      "SELECT id, type, question, choices, correctIndex, explanation, themeId, theme FROM questions"
+      "SELECT id, type, question, choices, correctIndex, explanation, themeId, theme FROM questions WHERE owner_email IS NULL"
     ).all();
 
     const questions = results.map((row) => ({
