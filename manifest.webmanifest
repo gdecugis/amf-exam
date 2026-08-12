@@ -1,0 +1,13 @@
+{
+  "name": "Examen AMF",
+  "short_name": "Examen AMF",
+  "description": "Entraînement à la certification AMF",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#EDEFEF",
+  "theme_color": "#16233F",
+  "icons": [
+    { "src": "/assets/amf-exam-icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/amf-exam-icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

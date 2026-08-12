@@ -566,7 +566,7 @@ function AMFExam() {
               <p className="amf-accent" style={{ fontSize: "12px", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "4px" }}>Examen blanc</p>
               <h1 className="amf-serif amf-ink" style={{ fontSize: "26px", lineHeight: 1.2, margin: 0 }}>Certification AMF</h1>
             </div>
-            <Seal label="Spécimen d'examen" tone="ink" />
+            <img src="/assets/amf-exam-icon-192.png" alt="" width="56" height="56" style={{ borderRadius: "12px", flexShrink: 0 }} />
           </div>
 
           <div style={{ marginBottom: "20px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
@@ -683,8 +683,13 @@ function AMFExam() {
       <div className="amf-app" style={{ padding: "24px" }}>
         <GlobalStyles />
         <div className="amf-card" style={{ maxWidth: "480px", margin: "24px auto", padding: "32px" }}>
-          <p className="amf-accent" style={{ fontSize: "12px", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "4px" }}>Génération personnelle</p>
-          <h1 className="amf-serif amf-ink" style={{ fontSize: "22px", lineHeight: 1.2, marginTop: 0, marginBottom: "16px" }}>Générer vos propres questions</h1>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "16px" }}>
+            <div>
+              <p className="amf-accent" style={{ fontSize: "12px", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "4px" }}>Génération personnelle</p>
+              <h1 className="amf-serif amf-ink" style={{ fontSize: "22px", lineHeight: 1.2, marginTop: 0, marginBottom: "16px" }}>Générer vos propres questions</h1>
+            </div>
+            <img src="/assets/amf-exam-icon-192.png" alt="" width="48" height="48" style={{ borderRadius: "10px", flexShrink: 0 }} />
+          </div>
           <p className="amf-secondary" style={{ fontSize: "13px", marginBottom: "20px" }}>
             Utilisez votre propre clé API (compatible OpenAI). Les questions générées sont associées à votre compte Google et vous suivent d'une session à l'autre.
           </p>
@@ -785,9 +790,12 @@ function AMFExam() {
       <div className="amf-app">
         <GlobalStyles />
         <div className="amf-header" style={{ position: "sticky", top: 0, zIndex: 20, padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div>
-            <p className="amf-headersub" style={{ fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", margin: 0 }}>Examen blanc AMF</p>
-            <p className="amf-mono" style={{ fontSize: "14px", margin: 0 }}>Question {current + 1} / {questions.length}</p>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <img src="/assets/amf-exam-icon-192.png" alt="" width="28" height="28" style={{ borderRadius: "6px", flexShrink: 0 }} />
+            <div>
+              <p className="amf-headersub" style={{ fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", margin: 0 }}>Examen blanc AMF</p>
+              <p className="amf-mono" style={{ fontSize: "14px", margin: 0 }}>Question {current + 1} / {questions.length}</p>
+            </div>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <div className={`amf-mono ${remaining < 600 ? "amf-warn" : "amf-headersub"}`} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "14px" }}>

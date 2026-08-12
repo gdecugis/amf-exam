@@ -177,6 +177,12 @@ const server = http.createServer((req, res) => {
       contentType = 'text/html';
     } else if (filePath.endsWith('.css')) {
       contentType = 'text/css';
+    } else if (filePath.endsWith('.svg')) {
+      contentType = 'image/svg+xml';
+    } else if (filePath.endsWith('.png')) {
+      contentType = 'image/png';
+    } else if (filePath.endsWith('.webmanifest') || filePath.endsWith('.json')) {
+      contentType = 'application/json';
     }
     res.writeHead(200, { 'Content-Type': contentType });
     res.end(fs.readFileSync(filePath));
