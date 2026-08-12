@@ -492,27 +492,33 @@ function AMFExam() {
     const byo = { apiKey: byoApiKey.trim(), apiBase: byoApiBase.trim(), model: byoModel.trim() || undefined };
 
     setProgress({ done: 0, total: batches.length, label: "Initialisation" });
-    const generated = [];
+    let savedCount = 0;
+    let canonical = false;
 
+    // Save each batch to D1 as soon as it's generated, rather than
+    // accumulating everything in memory and saving once at the end — a
+    // crash/interruption partway through then only loses the in-flight
+    // batch (up to 4 questions) instead of the whole run.
     try {
       for (let i = 0; i < batches.length; i++) {
         setProgress({ done: i, total: batches.length, label: batches[i].theme });
         const qs = await generateBatchWithRetry(batches[i], byo);
-        generated.push(...qs);
+
+        const res = await fetch("/api/personal", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${auth.idToken}` },
+          body: JSON.stringify({ questions: qs }),
+        });
+        if (!res.ok) throw new Error(`Échec de l'enregistrement du lot ${i + 1}/${batches.length} (HTTP ${res.status})`);
+        const saved = await res.json();
+        savedCount += saved.inserted || 0;
+        canonical = Boolean(saved.canonical);
       }
       setProgress({ done: batches.length, total: batches.length, label: "Terminé" });
-
-      const res = await fetch("/api/personal", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${auth.idToken}` },
-        body: JSON.stringify({ questions: generated }),
-      });
-      if (!res.ok) throw new Error(`Échec de l'enregistrement (HTTP ${res.status})`);
-      const saved = await res.json();
-      setGeneratedCanonical(Boolean(saved.canonical));
+      setGeneratedCanonical(canonical);
       setScreen("generate-done");
     } catch (e) {
-      setGenError(`Échec de la génération — ${e.message || e}`);
+      setGenError(`Échec de la génération après ${savedCount} question(s) enregistrée(s) — ${e.message || e}`);
       setScreen("generate-setup");
     }
   };
