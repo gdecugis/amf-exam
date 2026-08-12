@@ -46,14 +46,48 @@ CONTRAINTE CRITIQUE : réponds UNIQUEMENT avec un JSON valide, sans texte avant 
   ]
 }`;
 
-function buildBatches() {
+// Proportional per-theme A/C distribution for an arbitrary target size,
+// scaled off the official 120-question programme in THEMES.
+function calculateRequirements(totalTarget) {
+  let allocated = 0;
+  const reqs = {};
+  const remainders = [];
+
+  THEMES.forEach((theme) => {
+    const scaleA = (theme.totalA * totalTarget) / 120;
+    const scaleC = (theme.totalC * totalTarget) / 120;
+    const floorA = Math.floor(scaleA);
+    const floorC = Math.floor(scaleC);
+
+    reqs[theme.id] = { A: floorA, C: floorC };
+    allocated += floorA + floorC;
+
+    remainders.push({ id: theme.id, type: "A", value: scaleA - floorA });
+    remainders.push({ id: theme.id, type: "C", value: scaleC - floorC });
+  });
+
+  remainders.sort((a, b) => b.value - a.value);
+  let idx = 0;
+  while (allocated < totalTarget && idx < remainders.length) {
+    const item = remainders[idx];
+    reqs[item.id][item.type]++;
+    allocated++;
+    idx++;
+  }
+
+  return reqs;
+}
+
+// Turns a { themeId: { A, C } } requirements map into chunked generation batches.
+function batchesFromRequirements(requirements) {
   const CHUNK_SIZE = 4;
   const batches = [];
   THEMES.forEach((theme) => {
-    const items = [
-      ...Array(theme.totalA).fill("A"),
-      ...Array(theme.totalC).fill("C"),
-    ];
+    const neededA = requirements[theme.id]?.A || 0;
+    const neededC = requirements[theme.id]?.C || 0;
+    if (neededA === 0 && neededC === 0) return;
+
+    const items = [...Array(neededA).fill("A"), ...Array(neededC).fill("C")];
     const numChunks = Math.ceil(items.length / CHUNK_SIZE);
     const chunks = Array.from({ length: numChunks }, () => []);
     items.forEach((t, i) => chunks[i % numChunks].push(t));
@@ -71,7 +105,7 @@ function buildBatches() {
   return batches;
 }
 
-async function generateBatch(batch) {
+async function generateBatch(batch, byo) {
   const userMsg = `Thème : "${batch.theme}".
 Génère exactement ${batch.aCount} question(s) de type A et ${batch.cCount} question(s) de type C sur ce thème (total ${batch.aCount + batch.cCount} questions).`;
 
@@ -80,6 +114,9 @@ Génère exactement ${batch.aCount} question(s) de type A et ${batch.cCount} que
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       temperature: 0.1,
+      apiKey: byo?.apiKey,
+      apiBase: byo?.apiBase,
+      model: byo?.model,
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: userMsg }
@@ -129,11 +166,11 @@ function shuffleChoices(q) {
   return { ...q, choices, correctIndex };
 }
 
-async function generateBatchWithRetry(batch, attempts = 2) {
+async function generateBatchWithRetry(batch, byo, attempts = 2) {
   let lastErr;
   for (let i = 0; i < attempts; i++) {
     try {
-      return await generateBatch(batch);
+      return await generateBatch(batch, byo);
     } catch (e) {
       lastErr = e;
     }
@@ -230,8 +267,54 @@ function Seal({ label, tone = "ink" }) {
   );
 }
 
+const shuffleArray = (arr) => arr.sort(() => Math.random() - 0.5);
+const GOOGLE_CLIENT_ID = "39593401062-8631alu4ia2ev60jmjdrs23qd6ku8hm2.apps.googleusercontent.com";
+
+async function fetchPersonalQuestions(idToken) {
+  if (!idToken) return [];
+  const res = await fetch("/api/personal", { headers: { Authorization: `Bearer ${idToken}` } });
+  if (!res.ok) return [];
+  const data = await res.json();
+  return data.questions || [];
+}
+
+// Without this, any uncaught render error unmounts the whole tree and the
+// user just sees a blank white page with no way back. Catch it, show what
+// broke, and offer a reload instead.
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { error };
+  }
+  componentDidCatch(error, info) {
+    console.error("AMFExam crashed:", error, info);
+  }
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="amf-app" style={{ padding: "24px" }}>
+          <GlobalStyles />
+          <div className="amf-card" style={{ maxWidth: "480px", margin: "24px auto", padding: "32px" }}>
+            <h1 className="amf-serif amf-fail" style={{ fontSize: "20px", marginBottom: "12px" }}>Une erreur est survenue</h1>
+            <p className="amf-secondary" style={{ fontSize: "13px", marginBottom: "16px", wordBreak: "break-word" }}>
+              {String(this.state.error && this.state.error.message || this.state.error)}
+            </p>
+            <button onClick={() => window.location.reload()} className="amf-btn-primary" style={{ width: "100%", padding: "12px", borderRadius: "3px", fontSize: "14px" }}>
+              Recharger la page
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 function AMFExam() {
-  const [screen, setScreen] = useState("start");
+  const [screen, setScreen] = useState("home");
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
   const [current, setCurrent] = useState(0);
@@ -241,15 +324,51 @@ function AMFExam() {
   const [remaining, setRemaining] = useState(7200);
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const timerRef = useRef(null);
+  const googleButtonRef = useRef(null);
 
-  const [dbSize, setDbSize] = useState(0);
-  const [examSize, setExamSize] = useState(120);
-  const [generateCount, setGenerateCount] = useState(120);
+  // Google sign-in state — personal questions are synced to D1, keyed by
+  // the signed-in user's verified email, so they follow the user across
+  // sessions/devices instead of living only in this browser.
+  const [auth, setAuth] = useState(() => (window.GoogleAuth ? window.GoogleAuth.getState() : { idToken: null, email: null }));
+  const [authTick, setAuthTick] = useState(0);
 
-  // Automatically keep generateCount within bounds of the selected examSize
   useEffect(() => {
-    setGenerateCount(prev => Math.min(prev, examSize));
-  }, [examSize]);
+    if (window.GoogleAuth) {
+      window.GoogleAuth.init(GOOGLE_CLIENT_ID);
+      window.GoogleAuth.onChange((state) => {
+        setAuth(state);
+        setAuthTick((t) => t + 1); // forces the button-render effect below to re-check, even if email didn't change
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    const showsSignIn = (screen === "home" || screen === "generate-setup") && !auth.email;
+    if (showsSignIn && googleButtonRef.current && window.GoogleAuth) {
+      window.GoogleAuth.renderButton(googleButtonRef.current);
+    }
+  }, [screen, auth.email, authTick]);
+
+  // Canonical pool (Cloudflare D1, via /api/db) and personal pool (D1, via
+  // /api/personal, scoped to the signed-in user)
+  const [canonicalCount, setCanonicalCount] = useState(0);
+  const [personalCount, setPersonalCount] = useState(0);
+  const [examSize, setExamSize] = useState(120);
+  const [personalMixCount, setPersonalMixCount] = useState(0);
+
+  // BYO-key generation form state
+  const [byoApiKey, setByoApiKey] = useState("");
+  const [byoApiBase, setByoApiBase] = useState("");
+  const [byoModel, setByoModel] = useState("");
+  const [generateSize, setGenerateSize] = useState(30);
+  const [generatedCanonical, setGeneratedCanonical] = useState(false);
+
+  const personalMax = Math.min(examSize, personalCount);
+
+  // Keep the personal-mix slider within bounds as examSize/personalCount change
+  useEffect(() => {
+    setPersonalMixCount((prev) => Math.min(prev, personalMax));
+  }, [personalMax]);
 
   useEffect(() => {
     if (screen === "exam") {
@@ -261,182 +380,146 @@ function AMFExam() {
   }, [screen]);
 
   useEffect(() => {
-    // Fetch database size from the server on load
+    if (screen !== "test-setup") return;
     fetch("/api/db")
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data && Array.isArray(data.questions)) {
-          setDbSize(data.questions.length);
+          setCanonicalCount(data.questions.length);
         }
       })
-      .catch(err => console.error("Could not fetch DB info", err));
-  }, [screen]);
+      .catch((err) => console.error("Could not fetch canonical DB info", err));
+    fetchPersonalQuestions(auth.idToken)
+      .then((qs) => setPersonalCount(qs.length))
+      .catch((err) => console.error("Could not read personal question store", err));
+  }, [screen, auth.idToken]);
 
-  // Proportional distribution calculator
-  const calculateRequirements = (totalTarget) => {
-    // 1. Get base floor values
-    let allocated = 0;
-    const reqs = {};
-    const remainders = [];
-
-    THEMES.forEach(theme => {
-      const scaleA = (theme.totalA * totalTarget) / 120;
-      const scaleC = (theme.totalC * totalTarget) / 120;
-
-      const floorA = Math.floor(scaleA);
-      const floorC = Math.floor(scaleC);
-
-      reqs[theme.id] = { A: floorA, C: floorC };
-      allocated += (floorA + floorC);
-
-      remainders.push({ id: theme.id, type: 'A', value: scaleA - floorA });
-      remainders.push({ id: theme.id, type: 'C', value: scaleC - floorC });
-    });
-
-    // 2. Distribute remainders to top fractional parts to reach exact target
-    remainders.sort((a, b) => b.value - a.value);
-    let idx = 0;
-    while (allocated < totalTarget && idx < remainders.length) {
-      const item = remainders[idx];
-      reqs[item.id][item.type]++;
-      allocated++;
-      idx++;
-    }
-
-    return reqs;
-  };
-
-  const startGeneration = async () => {
-    setScreen("generating");
+  // Assemble a test purely from stored questions (canonical D1 + personal
+  // D1, scoped to the signed-in user) — no LLM calls happen on this path.
+  const startTest = async () => {
     setGenError(null);
 
-    // 1. Fetch the full questions database
-    let dbQuestions = [];
+    let canonicalQuestions = [];
+    let personalQuestions = [];
     try {
       const res = await fetch("/api/db");
       const data = await res.json();
-      dbQuestions = data.questions || [];
+      canonicalQuestions = data.questions || [];
     } catch (e) {
-      console.warn("Could not load local database", e);
+      console.warn("Could not load canonical database", e);
+    }
+    try {
+      personalQuestions = await fetchPersonalQuestions(auth.idToken);
+    } catch (e) {
+      console.warn("Could not load personal question store", e);
     }
 
-    // 2. Map available DB questions by Theme ID and Type (A/C)
-    const dbMap = {};
-    THEMES.forEach(t => {
-      dbMap[t.id] = { A: [], C: [] };
-    });
-    dbQuestions.forEach(q => {
-      let matchedTheme = THEMES.find(t => t.id === q.themeId);
-      if (!matchedTheme && q.theme) {
-        matchedTheme = THEMES.find(t => t.name.toLowerCase().trim() === q.theme.toLowerCase().trim());
-      }
-      
-      if (matchedTheme && (q.type === 'A' || q.type === 'C')) {
-        dbMap[matchedTheme.id][q.type].push({ ...q, themeId: matchedTheme.id });
-      }
-    });
+    const mapByThemeType = (list) => {
+      const map = {};
+      THEMES.forEach((t) => { map[t.id] = { A: [], C: [] }; });
+      list.forEach((q) => {
+        let matchedTheme = THEMES.find((t) => t.id === q.themeId);
+        if (!matchedTheme && q.theme) {
+          matchedTheme = THEMES.find((t) => t.name.toLowerCase().trim() === q.theme.toLowerCase().trim());
+        }
+        if (matchedTheme && (q.type === "A" || q.type === "C")) {
+          map[matchedTheme.id][q.type].push({ ...q, themeId: matchedTheme.id });
+        }
+      });
+      return map;
+    };
 
-    // Determine how many questions are fetched from DB vs generated
-    const fillFromDbCount = examSize - generateCount;
-    let filledFromDb = 0;
-    
-    const chosenDbQuestions = [];
     const requirements = calculateRequirements(examSize);
+    const chosen = [];
 
-    // Randomly pick from DB questions if we still have budget for DB fill
-    // Shuffle helper
-    const shuffleArray = (arr) => arr.sort(() => Math.random() - 0.5);
-
-    // Attempt to pull questions from DB for each theme/type
-    if (fillFromDbCount > 0) {
-      // Collect all potential DB targets
+    const fillFrom = (map, budget) => {
+      let filled = 0;
+      if (budget <= 0) return filled;
       const pool = [];
-      THEMES.forEach(theme => {
-        ['A', 'C'].forEach(type => {
-          const list = dbMap[theme.id][type];
-          list.forEach(q => {
-            pool.push({ themeId: theme.id, type, questionObj: q });
-          });
+      THEMES.forEach((theme) => {
+        ["A", "C"].forEach((type) => {
+          map[theme.id][type].forEach((q) => pool.push({ themeId: theme.id, type, questionObj: q }));
         });
       });
-
       shuffleArray(pool);
-
-      for (let item of pool) {
-        if (filledFromDb >= fillFromDbCount) break;
+      for (const item of pool) {
+        if (filled >= budget) break;
         const req = requirements[item.themeId];
         if (req[item.type] > 0) {
           req[item.type]--;
-          chosenDbQuestions.push({
-            ...item.questionObj,
-            theme: THEMES.find(t => t.id === item.themeId).name,
-            themeId: item.themeId
-          });
-          filledFromDb++;
+          chosen.push({ ...item.questionObj, theme: THEMES.find((t) => t.id === item.themeId).name, themeId: item.themeId });
+          filled++;
         }
       }
+      return filled;
+    };
+
+    // Personal questions first, bounded by the slider; canonical fills the rest.
+    fillFrom(mapByThemeType(personalQuestions), personalMixCount);
+    fillFrom(mapByThemeType(canonicalQuestions), examSize - chosen.length);
+
+    if (chosen.length < examSize) {
+      setGenError(`Seulement ${chosen.length}/${examSize} questions disponibles pour cette configuration (BDD canonique + personnelle insuffisantes).`);
     }
 
-    // Now, we must generate what is left in the requirements map!
-    const batchesToGenerate = [];
-    THEMES.forEach(theme => {
-      const neededA = requirements[theme.id].A;
-      const neededC = requirements[theme.id].C;
+    shuffleArray(chosen);
+    chosen.forEach((q, idx) => { q.id = idx + 1; });
+    setQuestions(chosen);
+    setAnswers({});
+    setCurrent(0);
+    setRemaining(7200);
+    setScreen("exam");
+  };
 
-      if (neededA > 0 || neededC > 0) {
-        // Build batches of CHUNK_SIZE = 4
-        const items = [
-          ...Array(neededA).fill("A"),
-          ...Array(neededC).fill("C"),
-        ];
-        const CHUNK_SIZE = 4;
-        const numChunks = Math.ceil(items.length / CHUNK_SIZE);
-        const chunks = Array.from({ length: numChunks }, () => []);
-        items.forEach((t, i) => chunks[i % numChunks].push(t));
-        
-        chunks.forEach((types) => {
-          if (types.length > 0) {
-            batchesToGenerate.push({
-              theme: theme.name,
-              themeId: theme.id,
-              aCount: types.filter((t) => t === "A").length,
-              cCount: types.filter((t) => t === "C").length,
-            });
-          }
-        });
-      }
-    });
-
-    if (batchesToGenerate.length === 0) {
-      shuffleArray(chosenDbQuestions);
-      chosenDbQuestions.forEach((q, idx) => { q.id = idx + 1; });
-      setQuestions(chosenDbQuestions);
-      setScreen("exam");
+  // BYO-key generation — writes results to D1 via the authenticated
+  // /api/personal endpoint. The server decides where they land: the app
+  // owner's account writes straight into the canonical pool, everyone
+  // else's stay scoped to their own email and sync across sessions/devices.
+  const startPersonalGeneration = async () => {
+    if (!auth.idToken) {
+      setGenError("Connectez-vous avec Google avant de générer des questions.");
       return;
     }
+    if (!byoApiKey.trim() || !byoApiBase.trim()) {
+      setGenError("Merci de renseigner votre clé API et l'URL de base.");
+      return;
+    }
+    setGenError(null);
+    setScreen("generating-personal");
 
-    setProgress({ done: 0, total: batchesToGenerate.length, label: "Initialisation" });
-    const allGen = [...chosenDbQuestions];
-    let idCounter = allGen.length + 1;
+    const requirements = calculateRequirements(generateSize);
+    const batches = batchesFromRequirements(requirements);
+    const byo = { apiKey: byoApiKey.trim(), apiBase: byoApiBase.trim(), model: byoModel.trim() || undefined };
 
+    setProgress({ done: 0, total: batches.length, label: "Initialisation" });
+    let savedCount = 0;
+    let canonical = false;
+
+    // Save each batch to D1 as soon as it's generated, rather than
+    // accumulating everything in memory and saving once at the end — a
+    // crash/interruption partway through then only loses the in-flight
+    // batch (up to 4 questions) instead of the whole run.
     try {
-      for (let i = 0; i < batchesToGenerate.length; i++) {
-        setProgress({ done: i, total: batchesToGenerate.length, label: batchesToGenerate[i].theme });
-        const qs = await generateBatchWithRetry(batchesToGenerate[i]);
-        qs.forEach((q) => allGen.push({ ...q, id: idCounter++ }));
+      for (let i = 0; i < batches.length; i++) {
+        setProgress({ done: i, total: batches.length, label: batches[i].theme });
+        const qs = await generateBatchWithRetry(batches[i], byo);
+
+        const res = await fetch("/api/personal", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${auth.idToken}` },
+          body: JSON.stringify({ questions: qs }),
+        });
+        if (!res.ok) throw new Error(`Échec de l'enregistrement du lot ${i + 1}/${batches.length} (HTTP ${res.status})`);
+        const saved = await res.json();
+        savedCount += saved.inserted || 0;
+        canonical = Boolean(saved.canonical);
       }
-      setProgress({ done: batchesToGenerate.length, total: batchesToGenerate.length, label: "Terminé" });
-
-      // Shuffle final set of 120 questions to mix DB and generated ones
-      shuffleArray(allGen);
-      // Re-index IDs
-      allGen.forEach((q, idx) => { q.id = idx + 1; });
-
-      setQuestions(allGen);
-      setScreen("exam");
+      setProgress({ done: batches.length, total: batches.length, label: "Terminé" });
+      setGeneratedCanonical(canonical);
+      setScreen("generate-done");
     } catch (e) {
-      setGenError(`Échec de la génération — ${e.message || e}`);
-      setScreen("start");
+      setGenError(`Échec de la génération après ${savedCount} question(s) enregistrée(s) — ${e.message || e}`);
+      setScreen("generate-setup");
     }
   };
 
@@ -469,8 +552,51 @@ function AMFExam() {
     return { scored, aQs, cQs, aCorrect, cCorrect, aPct, cPct, passed, byTheme };
   }, [screen, questions, answers]);
 
-  // ---------------------------------------------------------------- START
-  if (screen === "start") {
+  // ---------------------------------------------------------------- HOME
+  if (screen === "home") {
+    return (
+      <div className="amf-app" style={{ padding: "24px" }}>
+        <GlobalStyles />
+        <div className="amf-card" style={{ maxWidth: "480px", margin: "24px auto", padding: "32px" }}>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "24px", gap: "16px" }}>
+            <div>
+              <p className="amf-accent" style={{ fontSize: "12px", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "4px" }}>Examen blanc</p>
+              <h1 className="amf-serif amf-ink" style={{ fontSize: "26px", lineHeight: 1.2, margin: 0 }}>Certification AMF</h1>
+            </div>
+            <Seal label="Spécimen d'examen" tone="ink" />
+          </div>
+
+          <div style={{ marginBottom: "20px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
+            {auth.email ? (
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+                <span className="amf-secondary" style={{ fontSize: "13px" }}>Connecté : <strong className="amf-ink">{auth.email}</strong></span>
+                <button onClick={() => window.GoogleAuth.signOut()} className="amf-btn-outline" style={{ padding: "6px 12px", borderRadius: "3px", fontSize: "12px" }}>
+                  Déconnexion
+                </button>
+              </div>
+            ) : (
+              <div>
+                <p className="amf-secondary" style={{ fontSize: "13px", marginBottom: "10px" }}>
+                  Connectez-vous avec Google pour retrouver vos questions personnelles d'une session à l'autre.
+                </p>
+                <div ref={googleButtonRef}></div>
+              </div>
+            )}
+          </div>
+
+          <button onClick={() => setScreen("test-setup")} className="amf-btn-primary" style={{ width: "100%", padding: "14px", borderRadius: "3px", fontSize: "14px", letterSpacing: "0.02em", marginBottom: "12px" }}>
+            Passer un examen
+          </button>
+          <button onClick={() => { setGenError(null); setScreen("generate-setup"); }} className="amf-btn-outline" style={{ width: "100%", padding: "12px", borderRadius: "3px", fontSize: "13px" }}>
+            Générer vos propres questions
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ---------------------------------------------------------------- TEST SETUP
+  if (screen === "test-setup") {
     return (
       <div className="amf-app" style={{ padding: "24px" }}>
         <GlobalStyles />
@@ -486,16 +612,17 @@ function AMFExam() {
             <Row label="Format" value={`${examSize} questions à choix multiple, 3 propositions`} />
             <Row label="Seuil de réussite" value="80% sur le bloc A et 80% sur le bloc C, sans compensation" />
             <Row label="Durée" value="2 heures (chronomètre indicatif)" />
-            <Row label="Base de données locale" value={`${dbSize} question(s) enregistrée(s)`} />
+            <Row label="Base canonique" value={`${canonicalCount} question(s)`} />
+            <Row label="Vos questions personnelles" value={`${personalCount} question(s)`} />
           </div>
 
           <div style={{ marginBottom: "20px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
             <label className="amf-ink" style={{ fontSize: "13px", fontWeight: "600", display: "block", marginBottom: "8px" }}>
               Taille de l'examen :
             </label>
-            <select 
-              value={examSize} 
-              onChange={(e) => setExamSize(Number(e.target.value))} 
+            <select
+              value={examSize}
+              onChange={(e) => setExamSize(Number(e.target.value))}
               style={{ width: "100%", padding: "8px", borderRadius: "3px", border: "1px solid #D8DAD7", background: "#FFFFFF", cursor: "pointer", fontSize: "13px" }}
             >
               <option value="10">10 questions (Entraînement rapide)</option>
@@ -506,45 +633,123 @@ function AMFExam() {
             </select>
           </div>
 
-          {dbSize > 0 && (
+          {!auth.email && (
+            <p className="amf-muted" style={{ fontSize: "12px", marginBottom: "16px", fontStyle: "italic" }}>
+              Connectez-vous avec Google depuis l'accueil pour inclure vos questions personnelles.
+            </p>
+          )}
+
+          {personalCount > 0 && (
             <div style={{ marginBottom: "24px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
               <label className="amf-ink" style={{ fontSize: "13px", fontWeight: "600", display: "block", marginBottom: "8px" }}>
-                Source des questions :
+                Mélange canonique / personnel :
               </label>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: "13px", marginBottom: "8px" }}>
-                <span className="amf-secondary">Générer avec l'IA : <strong>{generateCount}</strong></span>
-                <span className="amf-secondary">Piocher dans la BDD : <strong>{examSize - generateCount}</strong></span>
+                <span className="amf-secondary">Vos questions : <strong>{personalMixCount}</strong></span>
+                <span className="amf-secondary">Base canonique : <strong>{examSize - personalMixCount}</strong></span>
               </div>
-              <input 
-                type="range" 
-                min={Math.max(0, examSize - dbSize)} 
-                max={examSize} 
-                value={generateCount} 
-                onChange={(e) => setGenerateCount(Number(e.target.value))} 
-                style={{ width: "100%", cursor: "pointer", accentColor: "#9C7A3C" }} 
+              <input
+                type="range"
+                min={0}
+                max={personalMax}
+                value={personalMixCount}
+                onChange={(e) => setPersonalMixCount(Number(e.target.value))}
+                style={{ width: "100%", cursor: "pointer", accentColor: "#9C7A3C" }}
               />
               <p className="amf-muted" style={{ fontSize: "11px", marginTop: "8px", fontStyle: "italic" }}>
-                Génère de nouvelles questions en complétant avec les questions existantes de votre BDD.
+                Limité à {personalMax} question(s), selon le nombre de questions personnelles disponibles pour cette taille d'examen.
               </p>
             </div>
           )}
 
           {genError && <p className="amf-fail" style={{ fontSize: "13px", marginBottom: "16px", wordBreak: "break-word" }}>{genError}</p>}
-          <button onClick={startGeneration} className="amf-btn-primary" style={{ width: "100%", padding: "12px", borderRadius: "3px", fontSize: "14px", letterSpacing: "0.02em" }}>
-            {generateCount === 0 ? `Lancer l'examen (${examSize} questions, 100% BDD)` : `Générer l'examen (${generateCount} IA / ${examSize - generateCount} BDD)`}
+          <button onClick={startTest} className="amf-btn-primary" style={{ width: "100%", padding: "12px", borderRadius: "3px", fontSize: "14px", letterSpacing: "0.02em" }}>
+            Lancer l'examen ({examSize} questions)
           </button>
-          {generateCount > 0 && (
-            <p className="amf-muted" style={{ fontSize: "11px", marginTop: "12px", textAlign: "center" }}>
-              La génération des questions IA prendra environ {Math.ceil(generateCount / 4 * 4)} secondes.
-            </p>
-          )}
+          <button onClick={() => setScreen("home")} className="amf-btn-outline" style={{ width: "100%", padding: "10px", borderRadius: "3px", fontSize: "13px", marginTop: "12px" }}>
+            Retour
+          </button>
         </div>
       </div>
     );
   }
 
-  // ---------------------------------------------------------------- GENERATING
-  if (screen === "generating") {
+  // ---------------------------------------------------------------- GENERATE SETUP
+  if (screen === "generate-setup" || screen === "generate-done") {
+    return (
+      <div className="amf-app" style={{ padding: "24px" }}>
+        <GlobalStyles />
+        <div className="amf-card" style={{ maxWidth: "480px", margin: "24px auto", padding: "32px" }}>
+          <p className="amf-accent" style={{ fontSize: "12px", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "4px" }}>Génération personnelle</p>
+          <h1 className="amf-serif amf-ink" style={{ fontSize: "22px", lineHeight: 1.2, marginTop: 0, marginBottom: "16px" }}>Générer vos propres questions</h1>
+          <p className="amf-secondary" style={{ fontSize: "13px", marginBottom: "20px" }}>
+            Utilisez votre propre clé API (compatible OpenAI). Les questions générées sont associées à votre compte Google et vous suivent d'une session à l'autre.
+          </p>
+
+          {!auth.email && screen === "generate-setup" && (
+            <div style={{ marginBottom: "20px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
+              <p className="amf-secondary" style={{ fontSize: "13px", marginBottom: "10px" }}>Connexion Google requise avant de générer.</p>
+              <div ref={googleButtonRef}></div>
+            </div>
+          )}
+
+          {screen === "generate-done" ? (
+            <div style={{ marginBottom: "20px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
+              <p className="amf-success" style={{ fontSize: "13px", margin: 0 }}>
+                {generatedCanonical
+                  ? "Questions générées et ajoutées à la base canonique (compte propriétaire)."
+                  : "Questions générées et enregistrées sur votre compte."}
+              </p>
+            </div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
+              <label style={{ fontSize: "13px" }}>
+                <span className="amf-ink" style={{ fontWeight: "600", display: "block", marginBottom: "4px" }}>Clé API</span>
+                <input type="password" value={byoApiKey} onChange={(e) => setByoApiKey(e.target.value)} placeholder="sk-..." style={{ width: "100%", padding: "8px", borderRadius: "3px", border: "1px solid #D8DAD7", fontSize: "13px" }} />
+              </label>
+              <label style={{ fontSize: "13px" }}>
+                <span className="amf-ink" style={{ fontWeight: "600", display: "block", marginBottom: "4px" }}>URL de base (compatible OpenAI)</span>
+                <input type="text" value={byoApiBase} onChange={(e) => setByoApiBase(e.target.value)} placeholder="https://api.openai.com/v1" style={{ width: "100%", padding: "8px", borderRadius: "3px", border: "1px solid #D8DAD7", fontSize: "13px" }} />
+              </label>
+              <label style={{ fontSize: "13px" }}>
+                <span className="amf-ink" style={{ fontWeight: "600", display: "block", marginBottom: "4px" }}>Modèle (optionnel)</span>
+                <input type="text" value={byoModel} onChange={(e) => setByoModel(e.target.value)} placeholder="gpt-4o-mini" style={{ width: "100%", padding: "8px", borderRadius: "3px", border: "1px solid #D8DAD7", fontSize: "13px" }} />
+              </label>
+              <label style={{ fontSize: "13px" }}>
+                <span className="amf-ink" style={{ fontWeight: "600", display: "block", marginBottom: "4px" }}>Nombre de questions à générer</span>
+                <select value={generateSize} onChange={(e) => setGenerateSize(Number(e.target.value))} style={{ width: "100%", padding: "8px", borderRadius: "3px", border: "1px solid #D8DAD7", fontSize: "13px" }}>
+                  <option value="10">10 questions</option>
+                  <option value="30">30 questions</option>
+                  <option value="60">60 questions</option>
+                  <option value="120">120 questions</option>
+                  <option value="240">240 questions</option>
+                  <option value="480">480 questions</option>
+                </select>
+              </label>
+            </div>
+          )}
+
+          {genError && <p className="amf-fail" style={{ fontSize: "13px", marginBottom: "16px", wordBreak: "break-word" }}>{genError}</p>}
+
+          {screen === "generate-done" ? (
+            <button onClick={() => setScreen("home")} className="amf-btn-primary" style={{ width: "100%", padding: "12px", borderRadius: "3px", fontSize: "14px" }}>
+              Retour à l'accueil
+            </button>
+          ) : (
+            <button onClick={startPersonalGeneration} className="amf-btn-primary" style={{ width: "100%", padding: "12px", borderRadius: "3px", fontSize: "14px" }}>
+              Générer {generateSize} question(s)
+            </button>
+          )}
+          <button onClick={() => setScreen("home")} className="amf-btn-outline" style={{ width: "100%", padding: "10px", borderRadius: "3px", fontSize: "13px", marginTop: "12px" }}>
+            Retour
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ---------------------------------------------------------------- GENERATING (personal)
+  if (screen === "generating-personal") {
     const pct = progress.total ? Math.round((progress.done / progress.total) * 100) : 0;
     return (
       <div className="amf-app" style={{ padding: "24px" }}>
@@ -552,7 +757,7 @@ function AMFExam() {
         <div className="amf-card" style={{ maxWidth: "480px", margin: "24px auto", padding: "32px", textAlign: "center" }}>
           <Loader2 className="amf-ink" style={{ width: "32px", height: "32px", margin: "0 auto 16px", animation: "spin 1s linear infinite" }} />
           <style>{`@keyframes spin { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }`}</style>
-          <h2 className="amf-serif amf-ink" style={{ fontSize: "18px", marginBottom: "8px" }}>Génération de l'examen</h2>
+          <h2 className="amf-serif amf-ink" style={{ fontSize: "18px", marginBottom: "8px" }}>Génération de vos questions</h2>
           <p className="amf-secondary" style={{ fontSize: "14px", marginBottom: "24px" }}>{progress.label || "Préparation…"}</p>
           <div className="amf-track" style={{ width: "100%", height: "6px", borderRadius: "999px", overflow: "hidden", marginBottom: "8px" }}>
             <div className="amf-fill-accent" style={{ height: "100%", width: `${pct}%`, transition: "width 0.3s" }} />
@@ -587,7 +792,7 @@ function AMFExam() {
           <div className="amf-fill-accent" style={{ height: "100%", width: `${((current + 1) / questions.length) * 100}%` }} />
         </div>
 
-        <div style={{ maxWidth: "640px", margin: "0 auto", padding: "20px", paddingBottom: "128px" }}>
+        <div style={{ maxWidth: "640px", margin: "0 auto", padding: "20px", paddingBottom: "12px" }}>
           <div className="amf-card" style={{ padding: "24px", marginTop: "16px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
               <span className="amf-badge amf-mono" style={{ fontSize: "11px", padding: "2px 8px", borderRadius: "3px" }}>Type {q.type}</span>
@@ -648,7 +853,7 @@ function AMFExam() {
           </p>
         </div>
 
-        <div className="amf-card" style={{ position: "fixed", bottom: 0, left: 0, right: 0, borderRadius: 0, padding: "12px 16px", display: "flex", alignItems: "center", gap: "8px" }}>
+        <div className="amf-card" style={{ position: "sticky", bottom: 0, maxWidth: "640px", margin: "0 auto", borderRadius: 0, padding: "12px 16px", display: "flex", alignItems: "center", gap: "8px" }}>
           <button onClick={() => setCurrent((c) => Math.max(0, c - 1))} disabled={current === 0} className="amf-icon-btn" style={{ padding: "10px", borderRadius: "3px" }}>
             <ChevronLeft style={{ width: "16px", height: "16px" }} />
           </button>
@@ -711,7 +916,7 @@ function AMFExam() {
 
   // ---------------------------------------------------------------- RESULTS
   if (screen === "results" && results) {
-    return <ResultsScreen results={results} />;
+    return <ResultsScreen results={results} onHome={() => setScreen("home")} />;
   }
 
   return null;
@@ -726,7 +931,7 @@ function Row({ label, value }) {
   );
 }
 
-function ResultsScreen({ results }) {
+function ResultsScreen({ results, onHome }) {
   const { scored, aCorrect, cCorrect, aQs, cQs, aPct, cPct, passed, byTheme } = results;
   const [filter, setFilter] = useState("errors");
   const shown = filter === "errors" ? scored.filter((s) => !s.isCorrect) : scored;
@@ -745,6 +950,10 @@ function ResultsScreen({ results }) {
             <p className="amf-secondary" style={{ fontSize: "14px", marginTop: "4px" }}>Seuil requis : 80% sur chaque bloc, sans compensation.</p>
           </div>
         </div>
+
+        <button onClick={onHome} className="amf-btn-primary" style={{ width: "100%", padding: "12px", borderRadius: "3px", fontSize: "14px", marginBottom: "16px" }}>
+          Retour à l'accueil
+        </button>
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "16px" }}>
           <ScoreCard label="Bloc A — Réglementaire" correct={aCorrect} total={aQs.length} pct={aPct} />
