@@ -269,6 +269,7 @@ function Seal({ label, tone = "ink" }) {
 
 const shuffleArray = (arr) => arr.sort(() => Math.random() - 0.5);
 const GOOGLE_CLIENT_ID = "39593401062-8631alu4ia2ev60jmjdrs23qd6ku8hm2.apps.googleusercontent.com";
+const CANONICAL_OWNER_EMAIL = "gdecugis@gmail.com";
 
 async function fetchPersonalQuestions(idToken) {
   if (!idToken) return [];
@@ -331,6 +332,7 @@ function AMFExam() {
   // sessions/devices instead of living only in this browser.
   const [auth, setAuth] = useState(() => (window.GoogleAuth ? window.GoogleAuth.getState() : { idToken: null, email: null }));
   const [authTick, setAuthTick] = useState(0);
+  const isOwner = Boolean(auth.email) && auth.email.toLowerCase() === CANONICAL_OWNER_EMAIL;
 
   useEffect(() => {
     if (window.GoogleAuth) {
@@ -480,7 +482,7 @@ function AMFExam() {
       setGenError("Connectez-vous avec Google avant de générer des questions.");
       return;
     }
-    if (!byoApiKey.trim() || !byoApiBase.trim()) {
+    if (!isOwner && (!byoApiKey.trim() || !byoApiBase.trim())) {
       setGenError("Merci de renseigner votre clé API et l'URL de base.");
       return;
     }
@@ -693,6 +695,14 @@ function AMFExam() {
             </div>
           )}
 
+          {isOwner && screen === "generate-setup" && (
+            <div style={{ marginBottom: "20px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
+              <p className="amf-secondary" style={{ fontSize: "13px", margin: 0 }}>
+                Connecté en tant que propriétaire — les identifiants du serveur (variables d'environnement Cloudflare) seront utilisés automatiquement si vous laissez les champs ci-dessous vides.
+              </p>
+            </div>
+          )}
+
           {screen === "generate-done" ? (
             <div style={{ marginBottom: "20px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
               <p className="amf-success" style={{ fontSize: "13px", margin: 0 }}>
@@ -704,12 +714,12 @@ function AMFExam() {
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
               <label style={{ fontSize: "13px" }}>
-                <span className="amf-ink" style={{ fontWeight: "600", display: "block", marginBottom: "4px" }}>Clé API</span>
-                <input type="password" value={byoApiKey} onChange={(e) => setByoApiKey(e.target.value)} placeholder="sk-..." style={{ width: "100%", padding: "8px", borderRadius: "3px", border: "1px solid #D8DAD7", fontSize: "13px" }} />
+                <span className="amf-ink" style={{ fontWeight: "600", display: "block", marginBottom: "4px" }}>Clé API{isOwner ? " (optionnel)" : ""}</span>
+                <input type="password" value={byoApiKey} onChange={(e) => setByoApiKey(e.target.value)} placeholder={isOwner ? "Optionnel — identifiants serveur utilisés si vide" : "sk-..."} style={{ width: "100%", padding: "8px", borderRadius: "3px", border: "1px solid #D8DAD7", fontSize: "13px" }} />
               </label>
               <label style={{ fontSize: "13px" }}>
-                <span className="amf-ink" style={{ fontWeight: "600", display: "block", marginBottom: "4px" }}>URL de base (compatible OpenAI)</span>
-                <input type="text" value={byoApiBase} onChange={(e) => setByoApiBase(e.target.value)} placeholder="https://api.openai.com/v1" style={{ width: "100%", padding: "8px", borderRadius: "3px", border: "1px solid #D8DAD7", fontSize: "13px" }} />
+                <span className="amf-ink" style={{ fontWeight: "600", display: "block", marginBottom: "4px" }}>URL de base (compatible OpenAI){isOwner ? " (optionnel)" : ""}</span>
+                <input type="text" value={byoApiBase} onChange={(e) => setByoApiBase(e.target.value)} placeholder={isOwner ? "Optionnel — identifiants serveur utilisés si vide" : "https://api.openai.com/v1"} style={{ width: "100%", padding: "8px", borderRadius: "3px", border: "1px solid #D8DAD7", fontSize: "13px" }} />
               </label>
               <label style={{ fontSize: "13px" }}>
                 <span className="amf-ink" style={{ fontWeight: "600", display: "block", marginBottom: "4px" }}>Modèle (optionnel)</span>
