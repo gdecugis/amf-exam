@@ -33,6 +33,7 @@ Today, "generate" and "test" are fused: starting an exam can trigger synchronous
 - Reads canonical questions from D1 (via a `functions/api/db.js` query, replacing the current hardcoded array).
 - Reads personal questions from IndexedDB (if any exist).
 - Blends both pools per the existing theme/count distribution logic — same mixing UX as today's slider, but source is "canonical vs personal" instead of "DB vs fresh-AI-generate."
+- **Slider bound**: the personal-questions slider max is `min(test_size, count_of_available_personal_questions_for_selected_themes)`, recalculated whenever test size or theme selection changes. The user can't drag the slider past what their personal pool can actually supply — no silent fallback to canonical when personal questions run short.
 
 ---
 
@@ -64,6 +65,20 @@ Today, "generate" and "test" are fused: starting an exam can trigger synchronous
 
 ---
 
+## Hosting & access control
+
+### Public URL
+Cloudflare Pages gives every project a free `<project-name>.pages.dev` HTTPS subdomain automatically (plus `<branch>.<project-name>.pages.dev` previews) — no custom domain or DNS setup required. This is already what `wrangler pages deploy` provisions today; no change needed to get a stable public URL.
+
+### Restricting canonical-DB writes to the owner
+Only the app owner should be able to write to the canonical D1 pool (e.g. an admin path to add curated questions, distinct from the BYO-key personal-generation path which never touches D1). Recommended approach: **Cloudflare Access (Zero Trust)**, not app-level OAuth.
+- Put the canonical-write endpoint(s) behind a Cloudflare Access application, with a policy allowing only the owner's Google account to authenticate.
+- Cloudflare handles the entire Google OAuth flow at the edge, before the request reaches the Pages Function — zero application code, ~15 minutes of dashboard configuration.
+- Free tier covers up to 50 users, far beyond what's needed here.
+- Alternative (hand-rolled Google OAuth token verification + session cookies inside a Pages Function) is possible but unnecessary extra surface for a single-owner gate — only worth it if a real multi-user login system is wanted later.
+
+---
+
 ## Open implementation questions to resolve during build
 - Exact D1 query shape for "N random questions per theme/type" (D1/SQLite `ORDER BY RANDOM() LIMIT n` per theme, or fetch-all-then-shuffle client-side given dataset size ~171KB/~a few hundred rows).
 - Whether the BYO-key generate call goes straight from browser to the user's API base URL (simplest, no proxy needed, but requires that API to allow CORS from the app's origin) or through a thin Pages Function proxy (adds a hop but avoids CORS issues) — **recommend the proxy**, since the current `functions/api/generate.js` pattern already does this and arbitrary third-party CORS support can't be guaranteed.
@@ -75,4 +90,5 @@ Today, "generate" and "test" are fused: starting an exam can trigger synchronous
 3. Split UI: Home → Take Test / Generate screens.
 4. Add IndexedDB layer for personal questions (generate screen writes, take-test screen reads + blends).
 5. Update `functions/api/generate.js` to accept user-supplied key/base URL as request params instead of `env.LLM_API_KEY`/`env.OPENAI_API_BASE` (only for the personal-generation path; keep server-side env vars if you still want an owner-side generation capability for adding to canonical DB directly).
-6. Update README to reflect the new architecture and Cloudflare D1 setup steps.
+6. Configure Cloudflare Access on the owner-only canonical-write path (Google login, restricted to owner's email).
+7. Update README to reflect the new architecture, Cloudflare D1 setup steps, and Access configuration.
