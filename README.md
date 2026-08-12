@@ -13,6 +13,9 @@ Question generation and test-taking are separate flows:
 - **Decoupled generation**: Taking a test is instant, reading only from stored questions. Generating new questions is a separate, deliberate action.
 - **Canonical + personal question pools**: Tests blend the shared canonical database with any questions you've personally generated, with a slider capped by how many personal questions you actually have.
 - **BYO-key generation, synced by account**: Sign in with Google, then generate your own additional questions with your own OpenAI-compatible API key/base URL — no cost to the app owner. Your questions are stored in D1 keyed by your verified email, so they follow you across sessions and devices. The app owner's own account is special-cased: anything they generate while signed in is written straight into the shared canonical pool instead of a personal one.
+- **Bulk generation, 10 to 480 questions**: The generate screen offers 10 / 30 / 60 / 120 / 240 / 480 as target sizes. Requirements are distributed proportionally across the 12 themes and chunked into LLM calls of up to 4 questions each *per theme* — so batching efficiency scales with volume: at 10 questions most themes only need 0–1, so each call ends up requesting just 1 question; by 120+ most calls hit close to the full 4-question batch. This is inherent to keeping each prompt thematically coherent, not a limitation of the size itself.
+- **Crash-resilient saving**: Each generated batch is written to D1 immediately after that batch's LLM call completes, not accumulated in memory and saved once at the end — an interruption mid-run only risks the one in-flight batch (≤4 questions), not the whole generation.
+- **Error boundary**: An uncaught render error shows a recoverable error card with the actual message and a reload button, instead of silently unmounting to a blank page.
 - **Instant Correction & Feedback**: Instantly reveals the correct answer (in green), your selected answer (in red if incorrect), and the explanation block right after clicking a choice.
 - **Zero Complex Build Tools**: Designed as a standalone Single Page App (SPA) compiled directly in the browser.
 
@@ -29,7 +32,7 @@ Question generation and test-taking are separate flows:
 - `functions/api/personal.js`: Authenticated (Google ID token) read/write of a signed-in user's own questions. Writes from the app owner's account (`CANONICAL_OWNER_EMAIL`) land with `owner_email = NULL`, i.e. straight into canonical.
 - `functions/api/generate.js`: Proxies LLM calls (BYO key or server env) — never writes to D1 itself.
 - `functions/_googleAuth.js`: Shared server-side helper that verifies a Google ID token via Google's `tokeninfo` endpoint (checks audience + `email_verified`). Not a route (`_`-prefixed).
-- `d1/schema.sql`: Table schema (fresh installs). `d1/migrate-001-owner-email.sql`: adds the `owner_email` column to an already-seeded database. `d1/seed.sql` / `d1/seed-chunks/*.sql`: canonical seed data generated from `questions_db.json`.
+- `d1/schema.sql`: Table schema (fresh installs). `created_at` is stored as `TEXT` (SQLite/D1 has no native timestamp type — an ISO-8601 string via `datetime('now')` is SQLite's own documented convention: sortable and human-readable directly in the D1 console). `d1/migrate-001-owner-email.sql`: adds the `owner_email` column to an already-seeded database. `d1/seed.sql` / `d1/seed-chunks/*.sql`: canonical seed data generated from `questions_db.json`.
 - `scripts/generate-d1-seed.js`, `scripts/split-d1-seed.js`: Regenerate the seed file(s) from `questions_db.json`.
 - `wrangler.toml`: Cloudflare Pages/D1 project configuration.
 

@@ -722,6 +722,8 @@ function AMFExam() {
                   <option value="30">30 questions</option>
                   <option value="60">60 questions</option>
                   <option value="120">120 questions</option>
+                  <option value="240">240 questions</option>
+                  <option value="480">480 questions</option>
                 </select>
               </label>
             </div>
