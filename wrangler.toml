@@ -1,0 +1,9 @@
+name = "amf-exam"
+pages_build_output_dir = "."
+
+# Create the DB with: wrangler d1 create amf-questions
+# Then paste the returned database_id below.
+[[d1_databases]]
+binding = "DB"
+database_name = "amf-questions"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"

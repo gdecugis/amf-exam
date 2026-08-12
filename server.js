@@ -51,22 +51,39 @@ const server = http.createServer((req, res) => {
     req.on('end', async () => {
       try {
         const payload = JSON.parse(body);
-        const basetenRes = await fetch(`${env.OPENAI_API_BASE}/chat/completions`, {
+
+        // BYO-key path (personal generation): caller's own key/base URL, used
+        // only for this request. Falls back to the local .env for the
+        // owner-only path that also persists into questions_db.json below.
+        const apiKey = payload.apiKey || env.LLM_API_KEY;
+        const apiBase = payload.apiBase || env.OPENAI_API_BASE;
+        const model = payload.model || env.LLM_MODEL || 'deepseek-ai/DeepSeek-V4-Flash-0731';
+        const isByoKey = Boolean(payload.apiKey);
+
+        if (!apiKey || !apiBase) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Missing API key or base URL' }));
+          return;
+        }
+
+        const basetenRes = await fetch(`${apiBase}/chat/completions`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${env.LLM_API_KEY}`
+            'Authorization': `Bearer ${apiKey}`
           },
           body: JSON.stringify({
-            model: env.LLM_MODEL || 'deepseek-ai/DeepSeek-V4-Flash-0731',
+            model,
             messages: payload.messages,
             temperature: payload.temperature || 0.1
           })
         });
         const data = await basetenRes.json();
-        
+
         // Persist newly generated questions to local questions_db.json file
-        if (data.choices && data.choices[0] && data.choices[0].message && typeof data.choices[0].message.content === 'string') {
+        // (owner-only path — BYO-key personal questions stay client-side in
+        // the browser's IndexedDB and are never written here).
+        if (!isByoKey && data.choices && data.choices[0] && data.choices[0].message && typeof data.choices[0].message.content === 'string') {
           try {
             const text = data.choices[0].message.content;
             let clean = text.replace(/```json|```/g, "").trim();

@@ -3,8 +3,24 @@ export async function onRequestPost(context) {
   
   try {
     const payload = await request.json();
-    const apiKey = env.LLM_API_KEY;
-    const apiBase = env.OPENAI_API_BASE;
+
+    // BYO-key path (personal question generation): the caller supplies their
+    // own OpenAI-compatible key/base URL, used only for this request — never
+    // logged or persisted. Falls back to the server's own env vars, which is
+    // the owner-only path used to seed/extend the canonical DB.
+    const apiKey = payload.apiKey || env.LLM_API_KEY;
+    const apiBase = payload.apiBase || env.OPENAI_API_BASE;
+    const model = payload.model || env.LLM_MODEL || 'deepseek-ai/DeepSeek-V4-Flash-0731';
+
+    if (!apiKey || !apiBase) {
+      return new Response(JSON.stringify({ error: 'Missing API key or base URL' }), {
+        status: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }
+      });
+    }
 
     const response = await fetch(`${apiBase}/chat/completions`, {
       method: 'POST',
@@ -13,7 +29,7 @@ export async function onRequestPost(context) {
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: env.LLM_MODEL || 'deepseek-ai/DeepSeek-V4-Flash-0731',
+        model,
         messages: payload.messages,
         temperature: payload.temperature || 0.1
       })
