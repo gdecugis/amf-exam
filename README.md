@@ -32,7 +32,7 @@ Question generation and test-taking are separate flows:
 - `functions/api/personal.js`: Authenticated (Google ID token) read/write of a signed-in user's own questions. Writes from the app owner's account (`CANONICAL_OWNER_EMAIL`) land with `owner_email = NULL`, i.e. straight into canonical.
 - `functions/api/generate.js`: Proxies LLM calls (BYO key or server env) — never writes to D1 itself.
 - `functions/_googleAuth.js`: Shared server-side helper that verifies a Google ID token via Google's `tokeninfo` endpoint (checks audience + `email_verified`). Not a route (`_`-prefixed).
-- `d1/schema.sql`: Table schema (fresh installs). `created_at` is stored as `TEXT` (SQLite/D1 has no native timestamp type — an ISO-8601 string via `datetime('now')` is SQLite's own documented convention: sortable and human-readable directly in the D1 console). `d1/migrate-001-owner-email.sql`: adds the `owner_email` column to an already-seeded database. `d1/seed.sql` / `d1/seed-chunks/*.sql`: canonical seed data generated from `questions_db.json`.
+- `d1/schema.sql`: Table schema (fresh installs). `created_at` is stored as `TEXT` (SQLite/D1 has no native timestamp type — an ISO-8601 string via `datetime('now')` is SQLite's own documented convention: sortable and human-readable directly in the D1 console). `d1/migrate-001-owner-email.sql`: adds the `owner_email` column to an already-seeded database (already applied in production; kept for reference/other environments). `d1/seed.sql`: canonical seed data generated from `questions_db.json` — the source of truth for the deployed canonical pool.
 - `scripts/generate-d1-seed.js`, `scripts/split-d1-seed.js`: Regenerate the seed file(s) from `questions_db.json`.
 - `wrangler.toml`: Cloudflare Pages/D1 project configuration.
 
@@ -79,9 +79,9 @@ Copy the returned `database_id` into `wrangler.toml` (`database_id = "..."`). (A
 npx wrangler d1 execute amf-questions --file=d1/schema.sql --remote
 npx wrangler d1 execute amf-questions --file=d1/seed.sql --remote
 ```
-If your account only has D1 dashboard **Console** access (no file import, no CLI), paste `d1/schema.sql` first, then paste each `d1/seed-chunks/00N.sql` file in order.
+If your account only has D1 dashboard **Console** access (no file import, no CLI), paste `d1/schema.sql` first. `d1/seed.sql` (~160KB) is usually too big to paste in one go — run `node scripts/split-d1-seed.js` to regenerate `d1/seed-chunks/00N.sql` (console-sized, ~20KB each; not committed, since it's fully derived from `d1/seed.sql`) and paste each in order.
 
-If you've edited `questions_db.json`, regenerate seed files first with `node scripts/generate-d1-seed.js` (and `node scripts/split-d1-seed.js` if you need console-sized chunks again).
+If you've edited `questions_db.json`, regenerate `d1/seed.sql` first with `node scripts/generate-d1-seed.js`.
 
 **Already-seeded database?** Run `d1/migrate-001-owner-email.sql` once (Console or CLI) to add the `owner_email` column used for personal question ownership.
 
