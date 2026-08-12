@@ -20,6 +20,26 @@ const THEMES = [
   { id: 12, name: "Bases comptables et financières", totalA: 0, totalC: 10 },
 ];
 
+// Non-exhaustive subtopic hints per theme, used only as inspiration in the
+// generation prompt — the model is explicitly told it can explore other
+// relevant angles too, this is not a rigid rotation/coverage guarantee.
+const SUBTOPICS = {
+  1: ["Rôle et pouvoirs de l'AMF", "Autres autorités (ACPR, ESMA, Banque de France)", "Hiérarchie des normes", "Statuts des acteurs régulés (PSI, SGP, CIF)", "Marchés réglementés vs SMN", "Sanctions et recours"],
+  2: ["Fonction conformité (RCCI)", "Conflits d'intérêts", "Opérations personnelles des collaborateurs", "Cadeaux et avantages, anti-corruption", "Principe de proportionnalité", "Certification professionnelle AMF"],
+  3: ["Vigilance/KYC, bénéficiaire effectif", "Déclaration de soupçon (Tracfin)", "Approche par les risques", "Gel des avoirs et embargos", "Conservation documentaire", "Rôle des autorités (Tracfin, DG Trésor)"],
+  4: ["Information privilégiée", "Manquement vs délit d'initié", "Manipulation de marché (spoofing, wash trading)", "Déclarations PDMR et franchissements de seuils", "Règlement MAR, diffusion d'information", "Sondages de marché, listes d'initiés"],
+  5: ["Adéquation vs appropriation", "DIC PRIIPs, DICI, prospectus", "Gouvernance produit, marché cible", "Meilleure exécution", "Types d'ordres de bourse", "Rétrocessions et inducements"],
+  6: ["Catégorisation des clients", "Information et transparence des frais", "Réclamations et médiation", "Mandats de gestion", "Devoir de conseil", "Traitement des ordres"],
+  7: ["Actions, obligations, dérivés (bases)", "Security tokens vs utility tokens", "Stablecoins et risques", "Réglementation MiCA", "DEX et smart contracts", "Capitalisation et volatilité des crypto-actifs"],
+  8: ["Dépositaire vs société de gestion", "Valeur liquidative, centralisation", "OPCVM, FIA, SICAV, FCP", "Ratios réglementaires, dispersion des risques", "Ségrégation des actifs (compte de tiers)", "Frais de gestion"],
+  9: ["Types d'ordres, carnet d'ordres", "Négociation continue vs fixing", "Indices boursiers (pondération)", "Contrepartie centrale (CCP)", "Efficience des marchés, spread", "Liquidité et formation des prix"],
+  10: ["Règlement-livraison, DVP", "Dépositaires centraux (Euroclear)", "Compensation et contrepartie centrale", "Infrastructures européennes (T2S)", "Risque de contrepartie, collatéral", "Cycle de vie d'une transaction"],
+  11: ["Introduction en bourse (IPO), prospectus", "Augmentation de capital, DPS", "Opérations sur titres (dividendes, splits, fusions)", "Offres publiques (OPA/OPE, retrait obligatoire)", "Émissions obligataires", "Teneur de livre, syndication bancaire"],
+  12: ["Bilan et compte de résultat", "Ratios financiers de base", "Calculs actuariels simples (VAN, TRI)", "Risque et rendement", "Fiscalité de base des produits financiers", "Diversification de portefeuille"],
+};
+
+const GENERATION_TEMPERATURE = 0.3;
+
 const SYSTEM_PROMPT = `Tu es un générateur de questions pour un examen blanc de la Certification AMF (Autorité des Marchés Financiers), dans des conditions au moins aussi exigeantes que l'examen officiel réel.
 
 RÈGLES DE FORMAT :
@@ -27,10 +47,11 @@ RÈGLES DE FORMAT :
 - Respecte strictement le nombre de questions de type A et de type C demandé pour ce lot.
 - Reste concis : question en une phrase, chaque proposition en moins de 15 mots, explication en une phrase courte. La réponse doit rester compacte, sans texte superflu.
 - Varie la position de la bonne réponse (correctIndex 0, 1 ou 2) de façon équilibrée d'une question à l'autre — ne mets pas systématiquement la bonne réponse en position 0.
+- N'utilise jamais de guillemets droits (") à l'intérieur des textes (question, propositions, explication) : ils cassent le format JSON. Si une citation ou une mise en emphase est nécessaire, utilise des guillemets français « » à la place.
 
 STYLE DES QUESTIONS (calibre la difficulté au moins au niveau de l'examen réel, ne génère jamais de question triviale) :
-- Type A : précises et factuelles — définitions réglementaires exactes, obligations légales d'un acteur, rôle d'une autorité, seuils et délais. Registre proche de : "Une société de gestion est tenue à certaines obligations en matière d'information : quelle proposition est exacte ?"
-- Type C : culture financière et technique — mécanismes de marché, calculs simples, notions économiques. Registre proche de : "Un ordre à cours limité garantit-il l'exécution ?"
+- Type A : précises et factuelles — définitions réglementaires exactes, obligations légales d'un acteur, rôle d'une autorité, seuils et délais. Registre proche de : « Une société de gestion est tenue à certaines obligations en matière d'information : quelle proposition est exacte ? »
+- Type C : culture financière et technique — mécanismes de marché, calculs simples, notions économiques. Registre proche de : « Un ordre à cours limité garantit-il l'exécution ? »
 - Les distracteurs doivent être plausibles et proches de la bonne réponse, jamais absurdes. Utilise les pièges classiques : négation inversée, exception à une règle générale, confusion entre deux notions voisines, seuil ou délai légèrement erroné.
 - N'invente aucun numéro d'article réglementaire précis — reste sur le fond des règles.
 
@@ -107,14 +128,18 @@ function batchesFromRequirements(requirements) {
 }
 
 async function generateBatch(batch, byo) {
+  const subtopics = SUBTOPICS[batch.themeId];
+  const subtopicHint = subtopics
+    ? `\nSous-thèmes possibles à titre d'exemple (non exhaustif — n'hésite pas à explorer d'autres angles pertinents du thème) : ${subtopics.join(", ")}.`
+    : "";
   const userMsg = `Thème : "${batch.theme}".
-Génère exactement ${batch.aCount} question(s) de type A et ${batch.cCount} question(s) de type C sur ce thème (total ${batch.aCount + batch.cCount} questions).`;
+Génère exactement ${batch.aCount} question(s) de type A et ${batch.cCount} question(s) de type C sur ce thème (total ${batch.aCount + batch.cCount} questions).${subtopicHint}`;
 
   const response = await fetch("/api/generate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      temperature: 0.1,
+      temperature: GENERATION_TEMPERATURE,
       apiKey: byo?.apiKey,
       apiBase: byo?.apiBase,
       model: byo?.model,
@@ -167,7 +192,7 @@ function shuffleChoices(q) {
   return { ...q, choices, correctIndex };
 }
 
-async function generateBatchWithRetry(batch, byo, attempts = 2) {
+async function generateBatchWithRetry(batch, byo, attempts = 3) {
   let lastErr;
   for (let i = 0; i < attempts; i++) {
     try {
@@ -365,6 +390,7 @@ function AMFExam() {
   const [byoModel, setByoModel] = useState("");
   const [generateSize, setGenerateSize] = useState(30);
   const [generatedCanonical, setGeneratedCanonical] = useState(false);
+  const [generationWarning, setGenerationWarning] = useState(null);
 
   const personalMax = Math.min(examSize, personalCount);
 
@@ -488,6 +514,7 @@ function AMFExam() {
       return;
     }
     setGenError(null);
+    setGenerationWarning(null);
     setScreen("generating-personal");
 
     const requirements = calculateRequirements(generateSize);
@@ -497,14 +524,21 @@ function AMFExam() {
     setProgress({ done: 0, total: batches.length, label: "Initialisation" });
     let savedCount = 0;
     let canonical = false;
+    const failedBatches = [];
 
     // Save each batch to D1 as soon as it's generated, rather than
     // accumulating everything in memory and saving once at the end — a
     // crash/interruption partway through then only loses the in-flight
     // batch (up to 4 questions) instead of the whole run.
-    try {
-      for (let i = 0; i < batches.length; i++) {
-        setProgress({ done: i, total: batches.length, label: batches[i].theme });
+    //
+    // The try/catch is per-batch (not around the whole loop) so that one
+    // batch failing — e.g. the model emitting malformed JSON even after
+    // retries — doesn't discard every other batch that would otherwise
+    // have succeeded. Failures are collected and reported at the end
+    // instead of aborting the run.
+    for (let i = 0; i < batches.length; i++) {
+      setProgress({ done: i, total: batches.length, label: batches[i].theme });
+      try {
         const qs = await generateBatchWithRetry(batches[i], byo);
 
         const res = await fetch("/api/personal", {
@@ -512,18 +546,31 @@ function AMFExam() {
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${auth.idToken}` },
           body: JSON.stringify({ questions: qs }),
         });
-        if (!res.ok) throw new Error(`Échec de l'enregistrement du lot ${i + 1}/${batches.length} (HTTP ${res.status})`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const saved = await res.json();
         savedCount += saved.inserted || 0;
-        canonical = Boolean(saved.canonical);
+        canonical = canonical || Boolean(saved.canonical);
+      } catch (e) {
+        failedBatches.push({ theme: batches[i].theme, error: e.message || String(e) });
       }
-      setProgress({ done: batches.length, total: batches.length, label: "Terminé" });
-      setGeneratedCanonical(canonical);
-      setScreen("generate-done");
-    } catch (e) {
-      setGenError(`Échec de la génération après ${savedCount} question(s) enregistrée(s) — ${e.message || e}`);
-      setScreen("generate-setup");
     }
+
+    setProgress({ done: batches.length, total: batches.length, label: "Terminé" });
+
+    if (savedCount === 0) {
+      const detail = failedBatches[0] ? ` — ${failedBatches[0].theme} : ${failedBatches[0].error}` : "";
+      setGenError(`Échec de la génération, aucune question enregistrée${detail}`);
+      setScreen("generate-setup");
+      return;
+    }
+
+    if (failedBatches.length > 0) {
+      setGenerationWarning(
+        `${savedCount} question(s) enregistrée(s) avec succès — ${failedBatches.length} lot(s) ignoré(s) après échec (ex. ${failedBatches[0].theme} : ${failedBatches[0].error}).`
+      );
+    }
+    setGeneratedCanonical(canonical);
+    setScreen("generate-done");
   };
 
   const selectAnswer = (qId, idx) => {
@@ -716,6 +763,11 @@ function AMFExam() {
                   ? "Questions générées et ajoutées à la base canonique (compte propriétaire)."
                   : "Questions générées et enregistrées sur votre compte."}
               </p>
+              {generationWarning && (
+                <p className="amf-secondary" style={{ fontSize: "12px", marginTop: "8px", marginBottom: 0 }}>
+                  {generationWarning}
+                </p>
+              )}
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
