@@ -788,7 +788,7 @@ function AMFExam() {
 
   // ---------------------------------------------------------------- RESULTS
   if (screen === "results" && results) {
-    return <ResultsScreen results={results} />;
+    return <ResultsScreen results={results} onHome={() => setScreen("home")} />;
   }
 
   return null;
@@ -803,7 +803,7 @@ function Row({ label, value }) {
   );
 }
 
-function ResultsScreen({ results }) {
+function ResultsScreen({ results, onHome }) {
   const { scored, aCorrect, cCorrect, aQs, cQs, aPct, cPct, passed, byTheme } = results;
   const [filter, setFilter] = useState("errors");
   const shown = filter === "errors" ? scored.filter((s) => !s.isCorrect) : scored;
@@ -822,6 +822,10 @@ function ResultsScreen({ results }) {
             <p className="amf-secondary" style={{ fontSize: "14px", marginTop: "4px" }}>Seuil requis : 80% sur chaque bloc, sans compensation.</p>
           </div>
         </div>
+
+        <button onClick={onHome} className="amf-btn-primary" style={{ width: "100%", padding: "12px", borderRadius: "3px", fontSize: "14px", marginBottom: "16px" }}>
+          Retour à l'accueil
+        </button>
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "16px" }}>
           <ScoreCard label="Bloc A — Réglementaire" correct={aCorrect} total={aQs.length} pct={aPct} />
