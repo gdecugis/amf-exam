@@ -3937,5 +3937,2436 @@
     "explanation": "Les frais d'entrée de 3 % sur 5 000 € représentent 150 €, donc le montant net est de 4 850 €.",
     "theme": "Relations avec les clients",
     "themeId": 6
+  },
+  {
+    "type": "A",
+    "question": "Selon la réglementation européenne (MIFID II), quelle est la classification correcte des clients par un prestataire de services d'investissement ?",
+    "choices": [
+      "Un client professionnel est réputé disposer de l'expérience et des connaissances nécessaires pour évaluer les risques.",
+      "Un client non professionnel est automatiquement requalifié en professionnel s'il investit plus de 500 000 euros.",
+      "La catégorisation des clients est définitive et ne peut être modifiée à la demande du client."
+    ],
+    "correctIndex": 0,
+    "explanation": "La directive MIFID II définit le client professionnel comme disposant de l'expérience et des connaissances requises.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Quelle obligation réglementaire s'impose à une société de gestion de portefeuille ?",
+    "choices": [
+      "Elle doit publier quotidiennement la valeur liquidative de chacun de ses fonds.",
+      "Elle doit établir un programme d'activité détaillant son organisation, ses moyens et ses procédures.",
+      "Elle est dispensée de déclarer à l'AMF tout changement de dirigeant."
+    ],
+    "correctIndex": 1,
+    "explanation": "Le programme d'activité est une exigence clé de l'agrément AMF pour les sociétés de gestion.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la conséquence d'un ordre à cours limité 'Achat' sur une action ?",
+    "choices": [
+      "Il garantit l'exécution au prix limité ou à un prix meilleur.",
+      "Il est exécuté immédiatement au meilleur prix disponible, quel que soit le cours.",
+      "Il n'est exécuté que si le cours atteint le prix limité ou un prix inférieur."
+    ],
+    "correctIndex": 2,
+    "explanation": "Un ordre à cours limité ne garantit pas l'exécution, mais uniquement le prix maximum d'achat.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "C",
+    "question": "En gestion des risques, que mesure la Value-at-Risk (VaR) ?",
+    "choices": [
+      "La perte maximale potentielle sur un horizon donné avec un niveau de confiance donné.",
+      "Le rendement moyen d'un portefeuille sur une période donnée.",
+      "La volatilité historique des actifs."
+    ],
+    "correctIndex": 0,
+    "explanation": "La VaR est une mesure statistique de la perte potentielle maximale dans des conditions normales de marché.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Selon le règlement MAR, dans quel délai l'émetteur doit-il notifier à l'autorité compétente les opérations réalisées par ses dirigeants ?",
+    "choices": [
+      "3 jours ouvrés après l'opération",
+      "5 jours ouvrés après l'opération",
+      "10 jours ouvrés après l'opération"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le délai est de 3 jours ouvrés après l'opération selon le règlement MAR.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "En application de la directive MIFID II, quelle est la durée minimale de conservation des enregistrements téléphoniques et communications électroniques liés à l'exécution d'ordres ?",
+    "choices": [
+      "3 ans",
+      "5 ans",
+      "10 ans"
+    ],
+    "correctIndex": 1,
+    "explanation": "MIFID II impose une conservation minimale de 5 ans pour ces enregistrements.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "C",
+    "question": "Un investisseur achète une action à 100 €, perçoit un dividende de 2 €, puis la revend à 120 €. Quel est son rendement total en pourcentage ?",
+    "choices": [
+      "20%",
+      "22%",
+      "24%"
+    ],
+    "correctIndex": 2,
+    "explanation": "Rendement = (120+2-100)/100 = 22%, donc la bonne réponse est 22%.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Quelle est la durée de conservation des enregistrements téléphoniques et des communications électroniques relatifs aux ordres pour un prestataire de services d'investissement ?",
+    "choices": [
+      "5 ans",
+      "3 ans",
+      "10 ans"
+    ],
+    "correctIndex": 0,
+    "explanation": "Selon MiFID II, les enregistrements doivent être conservés pendant 5 ans.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Quelle autorité est chargée de la surveillance des marchés financiers et de la protection de l'épargne investie en instruments financiers ?",
+    "choices": [
+      "ACPR",
+      "AMF",
+      "ESMA"
+    ],
+    "correctIndex": 1,
+    "explanation": "L'AMF est l'autorité compétente pour la surveillance des marchés et la protection de l'épargne.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Une société de gestion doit-elle mettre en place une politique de prévention des conflits d'intérêts ?",
+    "choices": [
+      "Non, sauf si elle gère des OPCVM",
+      "Oui, uniquement si elle exerce une activité de conseil",
+      "Oui, elle doit identifier, prévenir et gérer les conflits d'intérêts"
+    ],
+    "correctIndex": 2,
+    "explanation": "Toute société de gestion doit mettre en place une politique efficace de prévention des conflits d'intérêts.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "Quel est le rôle du responsable de la conformité dans un prestataire de services d'investissement ?",
+    "choices": [
+      "Il est chargé de la surveillance des marchés financiers",
+      "Il veille au respect des obligations réglementaires et déontologiques",
+      "Il gère exclusivement les plaintes des clients"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le responsable de la conformité contrôle le respect des règles internes et externes, y compris déontologiques.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la conséquence d'un manquement à l'obligation de meilleure exécution ?",
+    "choices": [
+      "Aucune sanction si l'ordre est exécuté",
+      "Une sanction disciplinaire et une possible réparation du préjudice",
+      "Une simple recommandation de l'AMF"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le non-respect de la meilleure exécution expose à des sanctions disciplinaires et à des dommages-intérêts.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "C",
+    "question": "Dans le cadre de la lutte contre le blanchiment, quel seuil déclenche une déclaration de soupçon ?",
+    "choices": [
+      "Toute opération, même inférieure à 10 000 euros, si elle est inhabituelle",
+      "Uniquement les opérations supérieures à 15 000 euros",
+      "Aucune déclaration si le client est connu"
+    ],
+    "correctIndex": 0,
+    "explanation": "La déclaration de soupçon est obligatoire pour toute opération inhabituelle, sans seuil minimal.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "Quelle est l'obligation d'une société de gestion concernant la gestion des conflits d'intérêts ?",
+    "choices": [
+      "Elle doit les supprimer systématiquement",
+      "Elle doit les identifier et les gérer pour prévenir tout impact sur les clients",
+      "Elle peut les ignorer si elle les déclare à l'AMF"
+    ],
+    "correctIndex": 1,
+    "explanation": "La réglementation impose d'identifier, prévenir et gérer les conflits d'intérêts pour protéger les clients.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "Quelle est la durée minimale de conservation des enregistrements téléphoniques exigée pour les prestataires de services d'investissement ?",
+    "choices": [
+      "5 ans",
+      "3 ans",
+      "10 ans"
+    ],
+    "correctIndex": 0,
+    "explanation": "La directive MiFID II impose une conservation d'au moins 5 ans, extensible à 7 ans sur demande de l'autorité.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "C",
+    "question": "En matière de conformité, que signifie le 'meilleur intérêt du client' pour un conseiller en investissement ?",
+    "choices": [
+      "Proposer les produits les plus rentables pour lui-même",
+      "Recommander des produits adaptés au profil et aux objectifs du client",
+      "Choisir systématiquement le produit le moins cher"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le conseiller doit agir au mieux des intérêts du client, en tenant compte de son profil, de ses objectifs et de sa tolérance au risque.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "Un conseiller en investissements financiers (CIF) est soumis à des obligations déontologiques. Quelle proposition est exacte ?",
+    "choices": [
+      "Il peut exercer sans adhérer à une association agréée s'il est mandaté par un établissement de crédit.",
+      "Il doit adhérer à une association agréée et souscrire une assurance en responsabilité civile professionnelle.",
+      "Il est dispensé de l'obligation de formation continue s'il justifie de 10 ans d'expérience."
+    ],
+    "correctIndex": 1,
+    "explanation": "Le CIF doit être adhérent d'une association agréée et disposer d'une assurance RC professionnelle.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "En matière de lutte contre le blanchiment, quelle est l'obligation d'un prestataire de services d'investissement ?",
+    "choices": [
+      "Déclarer à Tracfin toute opération dont il soupçonne qu'elle provient d'une infraction.",
+      "Signaler à l'AMF toute opération inhabituelle d'un montant supérieur à 10 000 euros.",
+      "Conserver les documents relatifs aux opérations pendant 5 ans."
+    ],
+    "correctIndex": 0,
+    "explanation": "Les PSI doivent déclarer à Tracfin les opérations suspectes de blanchiment.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "C",
+    "question": "Selon la réglementation MIFID II, que signifie l'obligation de 'meilleure exécution' pour un prestataire de services d'investissement ?",
+    "choices": [
+      "Exécuter les ordres dans un délai maximal de 3 jours ouvrés.",
+      "Exécuter les ordres uniquement sur les marchés réglementés.",
+      "Exécuter les ordres aux conditions les plus favorables pour le client en termes de prix, coûts, rapidité et probabilité d'exécution."
+    ],
+    "correctIndex": 2,
+    "explanation": "La meilleure exécution impose de prendre en compte plusieurs critères pour obtenir le meilleur résultat possible pour le client.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "En matière de lutte contre le blanchiment, quelle est l'obligation d'une société de gestion concernant les bénéficiaires effectifs ?",
+    "choices": [
+      "Identifier et vérifier l'identité des bénéficiaires effectifs avant toute relation d'affaires.",
+      "Ne vérifier que si le montant initial dépasse un seuil réglementaire.",
+      "S'exempter si le client est une personne morale cotée sur un marché réglementé."
+    ],
+    "correctIndex": 0,
+    "explanation": "L'identification des bénéficiaires effectifs est systématique, sans seuil ni exemption pour les sociétés cotées.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Dans le cadre des embargos, quelle est la responsabilité d'un prestataire de services d'investissement ?",
+    "choices": [
+      "Signaler toute transaction suspecte à l'AMF.",
+      "Geler les avoirs des personnes désignées par les règlements européens.",
+      "Refuser toute opération vers un pays tiers sans exception."
+    ],
+    "correctIndex": 1,
+    "explanation": "Le gel des avoirs est une obligation directe issue des règlements européens, distincte du signalement Tracfin.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la conséquence d'une violation des mesures de gel des avoirs ?",
+    "choices": [
+      "Une sanction pénale uniquement.",
+      "Aucune sanction si l'opération est annulée à temps.",
+      "Une sanction administrative et pénale possible."
+    ],
+    "correctIndex": 2,
+    "explanation": "Les violations peuvent entraîner des sanctions administratives (AMF) et pénales, même si l'opération est annulée.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "C",
+    "question": "Qu'est-ce qu'une personne politiquement exposée (PPE) ?",
+    "choices": [
+      "Toute personne exerçant une fonction publique importante, comme un chef d'État ou un ministre.",
+      "Un client dont les fonds proviennent de l'étranger.",
+      "Un actionnaire détenant plus de 25% du capital d'une société."
+    ],
+    "correctIndex": 0,
+    "explanation": "La définition des PPE inclut les fonctions publiques importantes, indépendamment de l'origine des fonds ou du capital.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Une banque qui constate une opération inhabituelle d'un montant de 5 000 euros doit-elle la déclarer à Tracfin ?",
+    "choices": [
+      "Oui, si elle paraît inhabituelle et liée à une infraction",
+      "Non, car le seuil de déclaration est fixé à 10 000 euros",
+      "Oui, uniquement si le client est une personne politiquement exposée"
+    ],
+    "correctIndex": 0,
+    "explanation": "La déclaration de soupçon est obligatoire dès qu'une opération paraît inhabituelle, sans seuil minimal.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Quelle mesure de vigilance doit appliquer une société de gestion à l'égard d'une personne politiquement exposée (PPE) ?",
+    "choices": [
+      "Vigilance simplifiée",
+      "Vigilance renforcée",
+      "Vigilance standard sans particularité"
+    ],
+    "correctIndex": 1,
+    "explanation": "Les PPE font l'objet d'une vigilance renforcée en raison du risque de corruption.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "C",
+    "question": "Quel est l'effet immédiat d'une décision de gel des avoirs sur les fonds d'une personne désignée ?",
+    "choices": [
+      "Ils sont confisqués au profit de l'État",
+      "Ils sont transférés sur un compte séquestre",
+      "Ils sont bloqués et aucune opération n'est possible sans autorisation"
+    ],
+    "correctIndex": 2,
+    "explanation": "Le gel des avoirs interdit toute opération sur les fonds, sauf autorisation dérogatoire.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Selon la réglementation LCB-FT, quelle est la durée de conservation des documents relatifs à la relation d'affaire ?",
+    "choices": [
+      "3 ans après la fin de la relation",
+      "5 ans après la fin de la relation",
+      "10 ans après la fin de la relation"
+    ],
+    "correctIndex": 1,
+    "explanation": "La réglementation impose une conservation de 5 ans après la fin de la relation d'affaire.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "C",
+    "question": "Qu'est-ce qu'un gel des avoirs dans le cadre d'un embargo ?",
+    "choices": [
+      "Interdiction de transférer des fonds ou ressources économiques à une personne désignée",
+      "Saisie définitive des biens de la personne visée",
+      "Restriction des échanges commerciaux avec un pays"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le gel des avoirs interdit tout mouvement de fonds ou de ressources économiques au profit de personnes désignées.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "C",
+    "question": "Quelle proposition est exacte concernant les embargos et sanctions sectorielles ?",
+    "choices": [
+      "Les sanctions sectorielles interdisent tout échange avec un pays",
+      "L'embargo ne vise que les transactions financières",
+      "L'embargo est une interdiction générale des échanges, les sanctions sectorielles ciblent des domaines spécifiques"
+    ],
+    "correctIndex": 2,
+    "explanation": "L'embargo est une interdiction totale des échanges, tandis que les sanctions sectorielles visent des secteurs économiques particuliers.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Selon le règlement européen sur les abus de marché (MAR), qu'est-ce qui constitue une information privilégiée ?",
+    "choices": [
+      "Une information précise, publique, mais susceptible d'influencer les décisions d'un investisseur raisonnable.",
+      "Une information précise, non publique, concernant directement ou indirectement un émetteur, et qui, si elle était rendue publique, serait susceptible d'avoir une incidence sensible sur les cours.",
+      "Une information non précise mais non publique, susceptible d'affecter les cours."
+    ],
+    "correctIndex": 1,
+    "explanation": "L'information privilégiée est précise, non publique et susceptible d'influencer les cours.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "A",
+    "question": "Quelle est l'obligation d'une personne qui exécute des ordres sur instruments financiers en cas de suspicion de manipulation de marché ?",
+    "choices": [
+      "Elle doit en informer l'émetteur concerné.",
+      "Elle doit signaler immédiatement ses soupçons à l'AMF.",
+      "Elle doit attendre la confirmation de l'AMF avant de signaler."
+    ],
+    "correctIndex": 2,
+    "explanation": "Les professionnels doivent déclarer sans délai les transactions suspectes à l'AMF.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la différence fondamentale entre une rumeur et une information privilégiée ?",
+    "choices": [
+      "Une rumeur est toujours fausse, une information privilégiée est toujours vraie.",
+      "Une information privilégiée est précise et non publique, alors qu'une rumeur est imprécise et souvent publique.",
+      "Une information privilégiée est connue de tous, une rumeur est confidentielle."
+    ],
+    "correctIndex": 1,
+    "explanation": "L'information privilégiée est précise et non publique, contrairement à une rumeur.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "A",
+    "question": "Selon le règlement MAR, quelle information est considérée comme une information privilégiée ?",
+    "choices": [
+      "Information précise et publique, mais susceptible d'influencer les cours",
+      "Information précise, non publique, susceptible d'influencer sensiblement les cours",
+      "Information non précise mais non publique"
+    ],
+    "correctIndex": 1,
+    "explanation": "L'information privilégiée doit être précise, non publique et avoir une incidence sensible sur les cours.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "A",
+    "question": "Quelle obligation incombe à une société de gestion en cas de suspicion de transaction suspecte ?",
+    "choices": [
+      "La déclarer à l'AMF sans délai",
+      "La déclarer à l'AMF sous 5 jours ouvrés",
+      "La déclarer à l'émetteur concerné"
+    ],
+    "correctIndex": 0,
+    "explanation": "Toute transaction suspecte doit être déclarée sans délai à l'AMF.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "C",
+    "question": "Quel mécanisme caractérise une manipulation de cours par 'wash trade' ?",
+    "choices": [
+      "Transmission d'ordres avec intention d'annuler avant exécution",
+      "Diffusion de fausses informations via les médias",
+      "Achat et vente simultanés par le même investisseur sans transfert de propriété"
+    ],
+    "correctIndex": 2,
+    "explanation": "Le wash trade consiste en des opérations sans changement de bénéficiaire économique pour créer une activité artificielle.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "A",
+    "question": "Selon le règlement MAR, quelle est la durée minimale de conservation de la liste des initiés par un émetteur ?",
+    "choices": [
+      "2 ans",
+      "5 ans",
+      "10 ans"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le règlement MAR impose une conservation de la liste des initiés pendant au moins 5 ans.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la logique économique principale de l'interdiction des opérations d'initiés ?",
+    "choices": [
+      "Protéger les investisseurs contre les pertes",
+      "Assurer l'égalité d'accès à l'information et la confiance dans les marchés",
+      "Réduire la volatilité des cours"
+    ],
+    "correctIndex": 0,
+    "explanation": "L'interdiction vise à garantir l'égalité d'accès à l'information, renforçant ainsi l'intégrité et la confiance dans les marchés.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "C",
+    "question": "Selon l'hypothèse d'efficience des marchés, quel est l'effet de la publication d'une information privilégiée sur le prix d'un actif ?",
+    "choices": [
+      "Le prix s'ajuste instantanément",
+      "Le prix s'ajuste progressivement",
+      "Le prix ne change pas"
+    ],
+    "correctIndex": 2,
+    "explanation": "Dans un marché efficient, les prix reflètent immédiatement toute information nouvelle, donc l'ajustement est instantané.",
+    "theme": "Réglementation abus de marché",
+    "themeId": 4
+  },
+  {
+    "type": "A",
+    "question": "Un prestataire de services d'investissement commercialise des instruments financiers. Quelle est la durée minimale de conservation des enregistrements des communications commerciales ?",
+    "choices": [
+      "3 ans",
+      "5 ans",
+      "7 ans"
+    ],
+    "correctIndex": 1,
+    "explanation": "La réglementation MiFID II impose une conservation de 5 ans pour les communications commerciales.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "A",
+    "question": "Pour une offre au public de titres financiers, quel est le montant total de l'offre sur 12 mois au-delà duquel un prospectus doit être approuvé par l'AMF ?",
+    "choices": [
+      "8 millions d'euros",
+      "5 millions d'euros",
+      "10 millions d'euros"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le règlement Prospectus fixe le seuil à 8 millions d'euros sur 12 mois.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "C",
+    "question": "Un ordre à cours limité d'achat à 50 € est passé alors que le meilleur prix vendeur est à 49,90 €. Que se passe-t-il ?",
+    "choices": [
+      "L'ordre reste en carnet",
+      "L'ordre est exécuté à 50 €",
+      "L'ordre est exécuté à 49,90 €"
+    ],
+    "correctIndex": 2,
+    "explanation": "Un ordre à cours limité est exécuté au prix limité ou à un prix meilleur, donc ici à 49,90 €.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "C",
+    "question": "Quel est l'effet d'une augmentation de la liquidité d'un marché sur l'écart entre le prix acheteur et le prix vendeur ?",
+    "choices": [
+      "L'écart s'élargit",
+      "L'écart se réduit",
+      "L'écart reste inchangé"
+    ],
+    "correctIndex": 1,
+    "explanation": "Une liquidité accrue réduit l'écart de cotation car le carnet d'ordres est plus dense.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "A",
+    "question": "Lors de la commercialisation d'un produit d'investissement packagé de détail (PRIIP) à un client non professionnel, quelle obligation s'impose au distributeur ?",
+    "choices": [
+      "Remettre au client le document d'informations clés (DIC) avant la conclusion du contrat.",
+      "Fournir une fiche de renseignements personnalisée sur les frais.",
+      "Obtenir une attestation de connaissance des risques signée."
+    ],
+    "correctIndex": 0,
+    "explanation": "Le DIC doit être remis avant la conclusion pour permettre une décision éclairée.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "A",
+    "question": "Selon la réglementation MIFID II, quelle est la règle applicable à la réception d'avantages (incitations) par un prestataire de services d'investissement dans le cadre de la commercialisation de produits ?",
+    "choices": [
+      "Toute incitation est interdite, quel que soit le service fourni.",
+      "Les incitations sont autorisées si elles visent à améliorer la qualité du service et sont divulguées.",
+      "Les incitations sont autorisées sans condition si elles proviennent de l'émetteur."
+    ],
+    "correctIndex": 1,
+    "explanation": "Les incitations sont permises si elles améliorent la qualité du service et sont clairement divulguées au client.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "C",
+    "question": "Un ordre de souscription sur un OPCVM est reçu après l'heure limite de centralisation. À quelle valeur liquidative sera-t-il exécuté ?",
+    "choices": [
+      "À la valeur liquidative du jour même, avec une décote.",
+      "À la valeur liquidative du jour même, majorée de pénalités.",
+      "À la valeur liquidative du jour ouvré suivant."
+    ],
+    "correctIndex": 2,
+    "explanation": "L'ordre est exécuté à la prochaine valeur liquidative calculée après l'heure limite.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "A",
+    "question": "Lors de la fourniture d'un conseil en investissement portant sur des instruments financiers, quelle obligation spécifique le prestataire doit-il respecter ?",
+    "choices": [
+      "Recueillir des informations sur les connaissances et l'expérience du client en matière d'investissement",
+      "Évaluer l'adéquation de l'instrument au profil du client, notamment sa tolérance au risque",
+      "Informer le client des coûts et frais liés à la transaction"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le conseil en investissement requiert une évaluation de l'adéquation (suitability) au profil du client.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "A",
+    "question": "Dans le cadre de la commercialisation d'instruments financiers, quelle condition est requise pour qu'un prestataire puisse accepter des incitations (rétrocessions) versées par un tiers ?",
+    "choices": [
+      "Elles doivent améliorer la qualité du service et ne pas nuire à l'intérêt du client",
+      "Elles doivent être supérieures à un seuil réglementaire fixé par l'AMF",
+      "Elles doivent être intégralement reversées au client"
+    ],
+    "correctIndex": 0,
+    "explanation": "Les incitations ne sont autorisées que si elles améliorent la qualité du service et ne portent pas atteinte à l'intérêt du client.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "C",
+    "question": "Un ordre à cours limité d'achat est passé avec une limite de 100 €. Le marché s'établit à 105 €. Que se passe-t-il ?",
+    "choices": [
+      "L'ordre est exécuté au prix de 105 €",
+      "L'ordre est exécuté au prix de 100 €",
+      "L'ordre n'est pas exécuté car le prix est supérieur à la limite"
+    ],
+    "correctIndex": 2,
+    "explanation": "Un ordre à cours limité ne s'exécute qu'au prix limite ou à un prix plus favorable ; ici le prix est supérieur.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "A",
+    "question": "Selon la directive MIFID, qu'est-ce qu'une entreprise d'investissement doit faire avant de fournir un service de conseil en investissement ?",
+    "choices": [
+      "Évaluer l'adéquation du service au client en recueillant des informations sur ses connaissances et son expérience",
+      "Évaluer le caractère approprié du service en se basant uniquement sur la situation financière du client",
+      "Obtenir un accord écrit du client pour chaque transaction"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le conseil en investissement exige une évaluation de l'adéquation (suitability) basée sur les connaissances, l'expérience, la situation financière et les objectifs.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "A",
+    "question": "Quel est le délai maximal pour répondre à une réclamation d'un client selon les règles de l'AMF ?",
+    "choices": [
+      "10 jours ouvrés",
+      "2 mois",
+      "3 mois"
+    ],
+    "correctIndex": 1,
+    "explanation": "L'entreprise doit répondre à une réclamation dans un délai maximal de 2 mois.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "C",
+    "question": "Un ordre d'achat à cours limité est exécuté uniquement si le cours de l'actif :",
+    "choices": [
+      "est égal au prix limite à la clôture",
+      "atteint ou dépasse le prix limite",
+      "atteint ou descend en dessous du prix limite"
+    ],
+    "correctIndex": 2,
+    "explanation": "Pour un ordre d'achat à cours limité, l'exécution n'a lieu que si le cours est inférieur ou égal au prix limite.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "C",
+    "question": "Que signifie l'obligation de meilleure exécution pour une entreprise d'investissement ?",
+    "choices": [
+      "Exécuter l'ordre au prix le plus bas possible pour le client",
+      "Prendre toutes les mesures suffisantes pour obtenir le meilleur résultat possible pour le client",
+      "Exécuter l'ordre sur le marché principal de l'actif"
+    ],
+    "correctIndex": 1,
+    "explanation": "La meilleure exécution exige de prendre des mesures suffisantes pour obtenir le meilleur résultat possible en termes de prix, coûts, rapidité, etc.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "A",
+    "question": "Quelle obligation s'impose à un prestataire de services d'investissement lors d'un conseil en investissement à un client non professionnel ?",
+    "choices": [
+      "Évaluer la situation financière, les objectifs d'investissement et les connaissances du client.",
+      "Recueillir uniquement les informations sur les connaissances et l'expérience du client.",
+      "Se contenter de fournir une information claire et non trompeuse sur les risques."
+    ],
+    "correctIndex": 0,
+    "explanation": "Le devoir de conseil impose une évaluation complète du profil du client (situation, objectifs, connaissances).",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "A",
+    "question": "Quel est le délai maximal réglementaire pour répondre à une réclamation écrite d'un client ?",
+    "choices": [
+      "1 mois",
+      "2 mois",
+      "3 mois"
+    ],
+    "correctIndex": 1,
+    "explanation": "La réglementation impose une réponse sous deux mois à toute réclamation écrite.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "A",
+    "question": "Dans le cadre du conseil en investissement, quelle obligation incombe à l'entreprise d'investissement envers un client non professionnel ?",
+    "choices": [
+      "Évaluer l'adéquation du service en recueillant des informations sur les connaissances, l'expérience, la situation financière et les objectifs.",
+      "Évaluer le caractère approprié du service en vérifiant uniquement les connaissances et l'expérience du client.",
+      "S'abstenir de toute évaluation, le client étant réputé autonome."
+    ],
+    "correctIndex": 0,
+    "explanation": "Le conseil en investissement requiert une évaluation d'adéquation incluant connaissances, expérience, situation financière et objectifs.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "C",
+    "question": "Un ordre à cours limité avec une limite d'achat à 100 € :",
+    "choices": [
+      "Sera exécuté à tout prix supérieur à 100 €.",
+      "Ne sera exécuté qu'à un prix inférieur ou égal à 100 €.",
+      "Sera exécuté uniquement si le prix atteint exactement 100 €."
+    ],
+    "correctIndex": 1,
+    "explanation": "Un ordre à cours limité ne s'exécute qu'au prix limite ou meilleur, sans garantie d'exécution.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "C",
+    "question": "Pour déterminer la meilleure exécution, quels facteurs l'entreprise doit-elle prendre en compte ?",
+    "choices": [
+      "Uniquement le prix et les coûts.",
+      "La rapidité et la probabilité d'exécution, sans tenir compte du prix.",
+      "Le prix, les coûts, la rapidité, la probabilité d'exécution et le règlement-livraison."
+    ],
+    "correctIndex": 2,
+    "explanation": "La meilleure exécution impose de considérer prix, coûts, rapidité, probabilité d'exécution et règlement-livraison.",
+    "theme": "Relations avec les clients",
+    "themeId": 6
+  },
+  {
+    "type": "C",
+    "question": "Un ordre d'achat de 10 bitcoins à cours limité de 50 000 € est passé. Le carnet affiche un vendeur à 49 500 € pour 5 bitcoins et un autre à 50 100 € pour 10 bitcoins. Que se passe-t-il ?",
+    "choices": [
+      "Exécution totale à 50 000 € pour 10 bitcoins",
+      "Exécution partielle à 49 500 € pour 5 bitcoins",
+      "Aucune exécution car le prix est trop élevé"
+    ],
+    "correctIndex": 1,
+    "explanation": "L'ordre à cours limité s'exécute au meilleur prix disponible jusqu'à concurrence du prix limite, ici partiel à 49 500 €.",
+    "theme": "Instruments financiers et crypto-actifs",
+    "themeId": 7
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la principale différence entre un jeton ERC-20 et un NFT ?",
+    "choices": [
+      "La fongibilité",
+      "La valeur marchande",
+      "La technologie blockchain utilisée"
+    ],
+    "correctIndex": 0,
+    "explanation": "Un jeton ERC-20 est fongible, chaque unité est identique, tandis qu'un NFT est unique.",
+    "theme": "Instruments financiers et crypto-actifs",
+    "themeId": 7
+  },
+  {
+    "type": "C",
+    "question": "Dans un prêt de crypto-actifs, quel est le rôle du collatéral ?",
+    "choices": [
+      "Déterminer le taux d'intérêt",
+      "Assurer la liquidité du marché",
+      "Garantir le remboursement du prêt"
+    ],
+    "correctIndex": 2,
+    "explanation": "Le collatéral sert de garantie en cas de défaut de l'emprunteur.",
+    "theme": "Instruments financiers et crypto-actifs",
+    "themeId": 7
+  },
+  {
+    "type": "C",
+    "question": "Quel est l'effet du 'halving' sur l'offre de bitcoins ?",
+    "choices": [
+      "L'offre de nouveaux bitcoins diminue",
+      "L'offre de nouveaux bitcoins augmente",
+      "L'offre reste constante"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le halving réduit de moitié la récompense de minage, donc moins de bitcoins créés.",
+    "theme": "Instruments financiers et crypto-actifs",
+    "themeId": 7
+  },
+  {
+    "type": "C",
+    "question": "Quelle caractéristique distingue un jeton utilitaire (utility token) d'un jeton de sécurité (security token) ?",
+    "choices": [
+      "Le jeton utilitaire confère des droits de vote dans la gouvernance du projet",
+      "Le jeton utilitaire donne accès à un produit ou service, sans droit financier",
+      "Le jeton de sécurité est toujours émis par une banque centrale"
+    ],
+    "correctIndex": 1,
+    "explanation": "Un utility token sert à accéder à un service, tandis qu'un security token représente un investissement financier.",
+    "theme": "Instruments financiers et crypto-actifs",
+    "themeId": 7
+  },
+  {
+    "type": "C",
+    "question": "Dans le cadre d'une offre au public de jetons (ICO), quel est l'effet du règlement européen MiCA sur les émetteurs ?",
+    "choices": [
+      "Les émetteurs doivent publier un livre blanc approuvé par l'AMF",
+      "Les émetteurs sont exemptés de toute obligation si le montant est inférieur à 5 millions d'euros",
+      "Les émetteurs doivent obligatoirement obtenir une licence bancaire"
+    ],
+    "correctIndex": 0,
+    "explanation": "MiCA impose la publication d'un livre blanc (whitepaper) pour les offres de jetons, avec contrôle par l'autorité compétente.",
+    "theme": "Instruments financiers et crypto-actifs",
+    "themeId": 7
+  },
+  {
+    "type": "C",
+    "question": "Un ordre à cours limité d'achat de 100 actions à 50 € est passé alors que le meilleur prix vendeur est à 51 €. Que se passe-t-il ?",
+    "choices": [
+      "L'ordre est exécuté immédiatement à 51 €",
+      "L'ordre reste en carnet d'ordres en attente d'un vendeur à 50 € ou moins",
+      "L'ordre est rejeté par le système de négociation"
+    ],
+    "correctIndex": 1,
+    "explanation": "Un ordre à cours limité n'est exécuté qu'au prix limité ou meilleur, sinon il reste en attente.",
+    "theme": "Instruments financiers et crypto-actifs",
+    "themeId": 7
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la principale différence entre un stablecoin adossé à une monnaie fiduciaire et un stablecoin algorithmique ?",
+    "choices": [
+      "Le stablecoin algorithmique est toujours plus volatil que le stablecoin adossé",
+      "Le stablecoin adossé est garanti par des réserves, l'algorithmique repose sur des mécanismes de marché",
+      "Le stablecoin adossé n'est pas régulé, contrairement à l'algorithmique"
+    ],
+    "correctIndex": 1,
+    "explanation": "Un stablecoin adossé détient des réserves de monnaie fiduciaire, tandis qu'un stablecoin algorithmique utilise des incitations et des arbitrages pour maintenir sa parité.",
+    "theme": "Instruments financiers et crypto-actifs",
+    "themeId": 7
+  },
+  {
+    "type": "C",
+    "question": "Dans le cadre d'une offre au public de jetons (ICO), quel est le rôle du livre blanc (white paper) ?",
+    "choices": [
+      "Il garantit le remboursement des investisseurs en cas d'échec du projet",
+      "Il décrit le projet, les droits attachés aux jetons et les risques pour les investisseurs",
+      "Il est obligatoirement approuvé par l'AMF avant toute émission"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le livre blanc fournit une information détaillée sur le projet et les risques, mais n'offre aucune garantie de remboursement ni d'approbation réglementaire préalable.",
+    "theme": "Instruments financiers et crypto-actifs",
+    "themeId": 7
+  },
+  {
+    "type": "C",
+    "question": "Un investisseur détient un bitcoin acheté à 30 000 € et le vend à 45 000 €. Quel est le taux de plus-value réalisée ?",
+    "choices": [
+      "33,33 %",
+      "50 %",
+      "66,67 %"
+    ],
+    "correctIndex": 1,
+    "explanation": "La plus-value est de 15 000 €, soit 50 % du prix d'achat (15 000 / 30 000 = 0,5).",
+    "theme": "Instruments financiers et crypto-actifs",
+    "themeId": 7
+  },
+  {
+    "type": "C",
+    "question": "Lorsqu'un investisseur rachète des parts d'un OPCVM, le prix de rachat est généralement égal à...",
+    "choices": [
+      "la valeur liquidative diminuée des frais de rachat",
+      "la valeur liquidative augmentée des frais de rachat",
+      "la valeur liquidative sans aucun frais"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le rachat s'effectue à la valeur liquidative, éventuellement réduite des frais de rachat.",
+    "theme": "Gestion collective / compte de tiers",
+    "themeId": 8
+  },
+  {
+    "type": "C",
+    "question": "Dans un compte de tiers, les actifs d'un client sont...",
+    "choices": [
+      "regroupés avec les actifs du dépositaire",
+      "séparés des actifs du dépositaire",
+      "investis dans des titres du dépositaire"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le compte de tiers assure la ségrégation des actifs pour protéger les clients.",
+    "theme": "Gestion collective / compte de tiers",
+    "themeId": 8
+  },
+  {
+    "type": "C",
+    "question": "La valeur liquidative d'un OPCVM est calculée en divisant l'actif net par...",
+    "choices": [
+      "le nombre de parts en circulation",
+      "le nombre de parts souscrites depuis la création",
+      "le nombre de parts rachetées"
+    ],
+    "correctIndex": 2,
+    "explanation": "L'actif net divisé par le nombre de parts en circulation donne la valeur liquidative.",
+    "theme": "Gestion collective / compte de tiers",
+    "themeId": 8
+  },
+  {
+    "type": "C",
+    "question": "Un fonds indiciel coté (ETF) se négocie en bourse ; son prix de marché peut s'écarter de sa valeur liquidative. Cet écart s'appelle...",
+    "choices": [
+      "le spread",
+      "la prime/décote",
+      "le slippage"
+    ],
+    "correctIndex": 0,
+    "explanation": "L'écart entre le prix de marché et la valeur liquidative est appelé prime ou décote.",
+    "theme": "Gestion collective / compte de tiers",
+    "themeId": 8
+  },
+  {
+    "type": "C",
+    "question": "Un ordre de souscription sur un OPCVM est passé à 10h00. Selon le principe du 'forward pricing', à quel prix l'ordre sera-t-il exécuté ?",
+    "choices": [
+      "La valeur liquidative du jour ouvré précédent",
+      "La prochaine valeur liquidative calculée après l'ordre",
+      "Le cours moyen pondéré du jour"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le forward pricing impose l'exécution à la prochaine VL calculée après réception de l'ordre.",
+    "theme": "Gestion collective / compte de tiers",
+    "themeId": 8
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la principale différence entre une SICAV et un FCP ?",
+    "choices": [
+      "La SICAV est une société anonyme, le FCP est une copropriété de valeurs mobilières",
+      "La SICAV est un fonds indiciel, le FCP est un fonds actif",
+      "La SICAV est gérée par une société de gestion, le FCP est géré par la banque dépositaire"
+    ],
+    "correctIndex": 0,
+    "explanation": "La SICAV a une personnalité morale (SA), le FCP est une copropriété sans personnalité juridique.",
+    "theme": "Gestion collective / compte de tiers",
+    "themeId": 8
+  },
+  {
+    "type": "C",
+    "question": "En cas de faillite du dépositaire d'un OPCVM, les actifs du fonds sont-ils protégés ?",
+    "choices": [
+      "Non, car ils sont confondus avec ceux du dépositaire",
+      "Oui, car ils sont inscrits dans un compte de tiers séparé",
+      "Oui, car le dépositaire est toujours solvable"
+    ],
+    "correctIndex": 1,
+    "explanation": "Les actifs sont détenus dans un compte de tiers séparé, donc non saisissables en cas de faillite du dépositaire.",
+    "theme": "Gestion collective / compte de tiers",
+    "themeId": 8
+  },
+  {
+    "type": "C",
+    "question": "Dans un FCP, qui est propriétaire des actifs du fonds ?",
+    "choices": [
+      "Les porteurs de parts",
+      "La société de gestion",
+      "Le dépositaire"
+    ],
+    "correctIndex": 0,
+    "explanation": "Dans un FCP, les porteurs de parts sont copropriétaires des actifs du fonds.",
+    "theme": "Gestion collective / compte de tiers",
+    "themeId": 8
+  },
+  {
+    "type": "C",
+    "question": "Quel est le rôle du dépositaire dans un OPCVM ?",
+    "choices": [
+      "Garantir la performance du fonds",
+      "Conserver les actifs et contrôler la régularité des décisions",
+      "Déterminer la valeur liquidative"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le dépositaire a une mission de conservation et de surveillance, pas de gestion de performance.",
+    "theme": "Gestion collective / compte de tiers",
+    "themeId": 8
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la conséquence d'un ordre de souscription reçu avant l'heure limite de centralisation ?",
+    "choices": [
+      "Il est exécuté à la prochaine VL",
+      "Il est exécuté à la VL du jour",
+      "Il est annulé"
+    ],
+    "correctIndex": 2,
+    "explanation": "Un ordre reçu avant la centralisation bénéficie de la VL du jour, sinon de la suivante.",
+    "theme": "Gestion collective / compte de tiers",
+    "themeId": 8
+  },
+  {
+    "type": "C",
+    "question": "Quel est le rôle principal d'un teneur de marché (market maker) ?",
+    "choices": [
+      "Fournir de la liquidité en affichant en permanence des prix acheteur et vendeur",
+      "Exécuter les ordres des clients sans risque",
+      "Fixer les cours de clôture"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le teneur de marché s'engage à coter en continu, apportant ainsi de la liquidité au marché.",
+    "theme": "Fonctionnement et organisation des marchés",
+    "themeId": 9
+  },
+  {
+    "type": "C",
+    "question": "Comment un indice boursier comme le CAC 40 est-il généralement calculé ?",
+    "choices": [
+      "Moyenne simple des cours des 40 actions",
+      "Capitalisation boursière pondérée des 40 actions",
+      "Moyenne pondérée des volumes échangés"
+    ],
+    "correctIndex": 1,
+    "explanation": "Les indices majeurs sont pondérés par la capitalisation boursière flottante des titres composants.",
+    "theme": "Fonctionnement et organisation des marchés",
+    "themeId": 9
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la différence entre une séance de négociation en continu et une séance de négociation à prix d'équilibre (fixing) ?",
+    "choices": [
+      "En continu, les ordres sont exécutés dès qu'ils sont compatibles ; en fixing, ils sont regroupés à des horaires précis",
+      "En continu, les prix sont fixés par le régulateur ; en fixing, par les membres",
+      "En continu, seuls les ordres au marché sont acceptés ; en fixing, seuls les ordres limites"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le fixing centralise les ordres à des moments définis pour déterminer un prix unique, contrairement au continu.",
+    "theme": "Fonctionnement et organisation des marchés",
+    "themeId": 9
+  },
+  {
+    "type": "C",
+    "question": "Un ordre au marché (ordre à tout prix) est exécuté...",
+    "choices": [
+      "immédiatement au meilleur prix disponible",
+      "uniquement si le prix atteint le cours limite",
+      "à la clôture de la séance"
+    ],
+    "correctIndex": 0,
+    "explanation": "L'ordre au marché est exécuté immédiatement au meilleur prix offert, sans limite de prix.",
+    "theme": "Fonctionnement et organisation des marchés",
+    "themeId": 9
+  },
+  {
+    "type": "C",
+    "question": "La capitalisation boursière d'une société est calculée en multipliant le cours de l'action par...",
+    "choices": [
+      "le nombre d'actions autorisées",
+      "le nombre d'actions en circulation",
+      "le nombre d'actions émises"
+    ],
+    "correctIndex": 1,
+    "explanation": "La capitalisation boursière se base sur les actions effectivement en circulation sur le marché.",
+    "theme": "Fonctionnement et organisation des marchés",
+    "themeId": 9
+  },
+  {
+    "type": "C",
+    "question": "Dans un carnet d'ordres, la priorité de prix pour un ordre d'achat est donnée à...",
+    "choices": [
+      "l'ordre le plus récent",
+      "l'ordre le plus important en volume",
+      "l'ordre au prix le plus élevé"
+    ],
+    "correctIndex": 2,
+    "explanation": "Pour les ordres d'achat, le prix le plus élevé est prioritaire, puis l'antériorité.",
+    "theme": "Fonctionnement et organisation des marchés",
+    "themeId": 9
+  },
+  {
+    "type": "C",
+    "question": "Sur un carnet d'ordres, un ordre d'achat à cours limité placé sous le meilleur prix vendeur est :",
+    "choices": [
+      "exécuté immédiatement au prix limité",
+      "inscrit en attente dans le carnet",
+      "rejeté par le système"
+    ],
+    "correctIndex": 1,
+    "explanation": "Un ordre limité sous le meilleur vendeur reste en attente jusqu'à ce que le prix soit atteint.",
+    "theme": "Fonctionnement et organisation des marchés",
+    "themeId": 9
+  },
+  {
+    "type": "C",
+    "question": "Quel est le rôle principal d'un teneur de marché sur un marché organisé ?",
+    "choices": [
+      "Apporter de la liquidité en cotant en continu",
+      "Fixer les prix des titres",
+      "Centraliser les ordres des clients"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le teneur de marché s'engage à coter des prix acheteur et vendeur pour fournir de la liquidité.",
+    "theme": "Fonctionnement et organisation des marchés",
+    "themeId": 9
+  },
+  {
+    "type": "C",
+    "question": "Le délai standard de règlement-livraison pour les actions sur les marchés européens est de :",
+    "choices": [
+      "J+1",
+      "J+3",
+      "J+2"
+    ],
+    "correctIndex": 2,
+    "explanation": "Depuis 2014, le règlement-livraison standard est à J+2 sur les marchés européens.",
+    "theme": "Fonctionnement et organisation des marchés",
+    "themeId": 9
+  },
+  {
+    "type": "C",
+    "question": "Quel est le rôle de la novation dans la compensation centrale ?",
+    "choices": [
+      "Le CCP devient contrepartie unique de chaque acheteur et vendeur.",
+      "Le CCP annule les contrats sans créer de nouvelles obligations.",
+      "Le CCP garantit uniquement le risque de règlement-livraison."
+    ],
+    "correctIndex": 0,
+    "explanation": "La novation substitue le CCP comme contrepartie centrale, interposant entre les parties.",
+    "theme": "Post-marché et infrastructures de marché",
+    "themeId": 10
+  },
+  {
+    "type": "C",
+    "question": "Depuis 2014, quel est le délai standard de règlement-livraison pour les actions en Europe ?",
+    "choices": [
+      "J+1 (un jour ouvré après la transaction).",
+      "J+3 (trois jours ouvrés après la transaction).",
+      "J+2 (deux jours ouvrés après la transaction)."
+    ],
+    "correctIndex": 2,
+    "explanation": "Le règlement-livraison standard est T+2 en Europe depuis 2014.",
+    "theme": "Post-marché et infrastructures de marché",
+    "themeId": 10
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la fonction principale d'un dépositaire central (CSD) ?",
+    "choices": [
+      "La tenue des comptes titres et la conservation des titres.",
+      "La compensation des positions entre membres.",
+      "La garantie des transactions sur dérivés."
+    ],
+    "correctIndex": 0,
+    "explanation": "Le CSD assure la conservation des titres et la tenue des comptes, pas la compensation.",
+    "theme": "Post-marché et infrastructures de marché",
+    "themeId": 10
+  },
+  {
+    "type": "C",
+    "question": "Quel est le délai de règlement-livraison standard pour les transactions sur titres dans l'Union européenne ?",
+    "choices": [
+      "T+1",
+      "T+2",
+      "T+3"
+    ],
+    "correctIndex": 1,
+    "explanation": "Depuis 2014, le règlement-livraison s'effectue en T+2.",
+    "theme": "Post-marché et infrastructures de marché",
+    "themeId": 10
+  },
+  {
+    "type": "C",
+    "question": "Qu'est-ce que Target2-Securities (T2S) ?",
+    "choices": [
+      "Un système de paiement de gros montants en euros",
+      "Une plateforme de règlement-livraison de titres en monnaie de banque centrale",
+      "Un registre central des actionnaires pour les sociétés cotées"
+    ],
+    "correctIndex": 2,
+    "explanation": "T2S est une plateforme européenne de règlement-livraison de titres.",
+    "theme": "Post-marché et infrastructures de marché",
+    "themeId": 10
+  },
+  {
+    "type": "C",
+    "question": "Quel est l'objectif principal du mécanisme de livraison contre paiement (DVP) ?",
+    "choices": [
+      "Éliminer le risque de principal",
+      "Accélérer la compensation",
+      "Réduire les frais de conservation"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le DVP lie le transfert de titres au paiement, supprimant le risque de non-livraison ou de non-paiement.",
+    "theme": "Post-marché et infrastructures de marché",
+    "themeId": 10
+  },
+  {
+    "type": "C",
+    "question": "Dans le post-marché, quelle est la fonction d'une contrepartie centrale (CCP) ?",
+    "choices": [
+      "Conserver les titres",
+      "S'interposer entre acheteurs et vendeurs",
+      "Compenser les flux de trésorerie"
+    ],
+    "correctIndex": 1,
+    "explanation": "La CCP devient l'acheteur de chaque vendeur et le vendeur de chaque acheteur, garantissant la transaction.",
+    "theme": "Post-marché et infrastructures de marché",
+    "themeId": 10
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la spécificité de Target2-Securities (T2S) ?",
+    "choices": [
+      "Négociation d'actions en continu",
+      "Compensation des dérivés OTC",
+      "Règlement-livraison en monnaie de banque centrale"
+    ],
+    "correctIndex": 2,
+    "explanation": "T2S est un système de règlement-livraison de titres en monnaie de banque centrale en Europe.",
+    "theme": "Post-marché et infrastructures de marché",
+    "themeId": 10
+  },
+  {
+    "type": "C",
+    "question": "Lors d'une augmentation de capital avec maintien du droit préférentiel de souscription, que peut faire un actionnaire existant qui ne souhaite pas souscrire ?",
+    "choices": [
+      "Vendre ses droits sur le marché",
+      "Perdre ses droits sans compensation",
+      "Souscrire obligatoirement pour éviter la dilution"
+    ],
+    "correctIndex": 0,
+    "explanation": "L'actionnaire peut céder ses droits préférentiels de souscription sur le marché pour compenser la dilution.",
+    "theme": "Émissions et opérations sur titres",
+    "themeId": 11
+  },
+  {
+    "type": "C",
+    "question": "Quel est l'effet d'une division du nominal d'une action (split) sur le capital social d'une société ?",
+    "choices": [
+      "Le capital social augmente",
+      "Le capital social reste inchangé",
+      "Le capital social diminue"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le split modifie le nombre d'actions et le nominal, mais le capital social total reste identique.",
+    "theme": "Émissions et opérations sur titres",
+    "themeId": 11
+  },
+  {
+    "type": "C",
+    "question": "Une action cotée 50 € verse un dividende annuel de 2 € par action. Quel est le rendement du dividende ?",
+    "choices": [
+      "4%",
+      "2%",
+      "5%"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le rendement est le rapport dividende/cours, soit 2/50 = 4%.",
+    "theme": "Émissions et opérations sur titres",
+    "themeId": 11
+  },
+  {
+    "type": "C",
+    "question": "Lors d'une émission obligataire à taux fixe, que se passe-t-il si les taux d'intérêt du marché augmentent après l'émission ?",
+    "choices": [
+      "La valeur de marché de l'obligation augmente",
+      "La valeur de marché reste inchangée",
+      "La valeur de marché de l'obligation diminue"
+    ],
+    "correctIndex": 2,
+    "explanation": "Une hausse des taux entraîne une baisse de la valeur des obligations existantes à taux fixe.",
+    "theme": "Émissions et opérations sur titres",
+    "themeId": 11
+  },
+  {
+    "type": "C",
+    "question": "Lors d'une augmentation de capital avec droit préférentiel de souscription (DPS), un actionnaire qui ne souhaite pas souscrire peut :",
+    "choices": [
+      "vendre ses DPS sur le marché",
+      "les exercer pour acheter plus d'actions",
+      "les laisser expirer sans effet"
+    ],
+    "correctIndex": 0,
+    "explanation": "Les DPS sont négociables et peuvent être cédés pour compenser la dilution.",
+    "theme": "Émissions et opérations sur titres",
+    "themeId": 11
+  },
+  {
+    "type": "C",
+    "question": "Le jour du détachement du coupon, le cours de l'action a tendance à :",
+    "choices": [
+      "monter du montant du dividende",
+      "baisser du montant du dividende",
+      "rester inchangé"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le prix s'ajuste mécaniquement à la baisse du montant du dividende versé.",
+    "theme": "Émissions et opérations sur titres",
+    "themeId": 11
+  },
+  {
+    "type": "C",
+    "question": "Un split de 2 pour 1 sur une action cotée 100 € entraîne :",
+    "choices": [
+      "un prix de 50 € et un nombre de titres doublé",
+      "un prix de 50 € et un nombre de titres inchangé",
+      "un prix de 200 € et un nombre de titres divisé par deux"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le nominal est divisé par deux, le nombre de titres double, la capitalisation reste identique.",
+    "theme": "Émissions et opérations sur titres",
+    "themeId": 11
+  },
+  {
+    "type": "C",
+    "question": "Lors d'une division du nominal d'une action (split), quel est l'effet immédiat sur le capital social de la société ?",
+    "choices": [
+      "Il augmente proportionnellement",
+      "Il diminue proportionnellement",
+      "Il reste inchangé"
+    ],
+    "correctIndex": 2,
+    "explanation": "Le split modifie le nombre d'actions et le nominal, mais le capital social total reste identique.",
+    "theme": "Émissions et opérations sur titres",
+    "themeId": 11
+  },
+  {
+    "type": "C",
+    "question": "Dans une augmentation de capital par émission de nouvelles actions avec droit préférentiel de souscription, que se passe-t-il pour un actionnaire qui ne souhaite pas souscrire ?",
+    "choices": [
+      "Il perd automatiquement ses droits",
+      "Il peut vendre ses droits sur le marché",
+      "Il reçoit une compensation en espèces"
+    ],
+    "correctIndex": 1,
+    "explanation": "Les droits préférentiels de souscription sont négociables et peuvent être cédés sur le marché.",
+    "theme": "Émissions et opérations sur titres",
+    "themeId": 11
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la conséquence d'une émission d'obligations convertibles en actions sur le nombre d'actions en circulation ?",
+    "choices": [
+      "Il augmente immédiatement",
+      "Il augmente lors de la conversion",
+      "Il reste constant"
+    ],
+    "correctIndex": 0,
+    "explanation": "Les obligations convertibles ne deviennent des actions qu'à la conversion, augmentant alors le nombre d'actions.",
+    "theme": "Émissions et opérations sur titres",
+    "themeId": 11
+  },
+  {
+    "type": "C",
+    "question": "Quelle méthode d'amortissement répartit le coût d'un actif de manière linéaire sur sa durée de vie ?",
+    "choices": [
+      "Amortissement dégressif",
+      "Amortissement linéaire",
+      "Amortissement variable"
+    ],
+    "correctIndex": 1,
+    "explanation": "L'amortissement linéaire répartit le coût uniformément sur la durée d'utilisation.",
+    "theme": "Bases comptables et financières",
+    "themeId": 12
+  },
+  {
+    "type": "C",
+    "question": "Le ratio de liquidité générale se calcule en divisant l'actif circulant par quoi ?",
+    "choices": [
+      "Le passif non courant",
+      "Les capitaux propres",
+      "Le passif circulant"
+    ],
+    "correctIndex": 2,
+    "explanation": "Le ratio de liquidité générale = actif circulant / passif circulant.",
+    "theme": "Bases comptables et financières",
+    "themeId": 12
+  },
+  {
+    "type": "C",
+    "question": "Dans un compte de résultat, le résultat net est obtenu après déduction de quoi ?",
+    "choices": [
+      "Uniquement le coût des ventes",
+      "Toutes les charges, y compris les impôts",
+      "Uniquement les charges financières"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le résultat net est le bénéfice après toutes les charges, y compris impôts et intérêts.",
+    "theme": "Bases comptables et financières",
+    "themeId": 12
+  },
+  {
+    "type": "C",
+    "question": "Une augmentation des dotations aux amortissements a quel effet sur le résultat net et la trésorerie d'une entreprise ?",
+    "choices": [
+      "Résultat net inchangé, trésorerie en hausse",
+      "Résultat net en baisse, trésorerie en hausse",
+      "Résultat net en baisse, trésorerie en baisse"
+    ],
+    "correctIndex": 1,
+    "explanation": "L'amortissement réduit le résultat mais génère une économie d'impôt qui améliore la trésorerie.",
+    "theme": "Bases comptables et financières",
+    "themeId": 12
+  },
+  {
+    "type": "C",
+    "question": "Pour une obligation à taux fixe, une hausse des taux d'intérêt du marché entraîne quelle variation du prix de l'obligation ?",
+    "choices": [
+      "Le prix de l'obligation baisse.",
+      "Le prix de l'obligation monte.",
+      "Le prix de l'obligation reste stable."
+    ],
+    "correctIndex": 0,
+    "explanation": "La hausse des taux réduit la valeur actualisée des flux futurs, donc le prix baisse.",
+    "theme": "Bases comptables et financières",
+    "themeId": 12
+  },
+  {
+    "type": "C",
+    "question": "En période de hausse des prix, la méthode d'évaluation des stocks FIFO, par rapport à la méthode du coût moyen pondéré, a quel effet sur le résultat net ?",
+    "choices": [
+      "Le résultat net est plus faible.",
+      "Le résultat net est identique.",
+      "Le résultat net est plus élevé."
+    ],
+    "correctIndex": 2,
+    "explanation": "FIFO sort les coûts les plus anciens (plus bas), donc un coût des ventes plus faible et un résultat plus élevé.",
+    "theme": "Bases comptables et financières",
+    "themeId": 12
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la conséquence d'une augmentation du délai de paiement accordé aux clients ?",
+    "choices": [
+      "Le BFR diminue",
+      "Le BFR augmente",
+      "Le BFR reste inchangé"
+    ],
+    "correctIndex": 1,
+    "explanation": "Un délai client plus long accroît les créances, donc le BFR augmente.",
+    "theme": "Bases comptables et financières",
+    "themeId": 12
+  },
+  {
+    "type": "C",
+    "question": "Quel est l'amortissement linéaire annuel d'un actif de 100 000 € sur 5 ans avec une valeur résiduelle de 10 000 € ?",
+    "choices": [
+      "18 000 €",
+      "20 000 €",
+      "22 000 €"
+    ],
+    "correctIndex": 0,
+    "explanation": "Amortissement = (100 000 - 10 000) / 5 = 18 000 €.",
+    "theme": "Bases comptables et financières",
+    "themeId": 12
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la différence entre la marge brute et la marge nette ?",
+    "choices": [
+      "La marge brute inclut les charges de personnel",
+      "La marge nette exclut les charges financières",
+      "La marge nette inclut toutes les charges"
+    ],
+    "correctIndex": 2,
+    "explanation": "La marge nette est calculée après toutes les charges, y compris financières et exceptionnelles.",
+    "theme": "Bases comptables et financières",
+    "themeId": 12
+  },
+  {
+    "type": "A",
+    "question": "Selon la réglementation MIFID II, quelle est la fréquence minimale d'envoi des relevés de portefeuille aux clients pour une gestion sous mandat ?",
+    "choices": [
+      "Trimestrielle",
+      "Semestrielle",
+      "Annuelle"
+    ],
+    "correctIndex": 0,
+    "explanation": "MIFID II impose un relevé trimestriel pour les portefeuilles gérés.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Quelle est la principale exigence relative à la fonction de conformité dans une société de gestion ?",
+    "choices": [
+      "Elle doit être obligatoirement externalisée",
+      "Elle doit être indépendante et permanente",
+      "Elle doit être assurée par le dirigeant"
+    ],
+    "correctIndex": 1,
+    "explanation": "La fonction de conformité doit être indépendante et permanente pour garantir le respect des obligations.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "C",
+    "question": "Un ordre à cours limité d'achat garantit :",
+    "choices": [
+      "L'exécution au prix limite ou en dessous",
+      "Le prix maximum d'achat mais pas l'exécution",
+      "L'exécution immédiate au meilleur prix disponible"
+    ],
+    "correctIndex": 2,
+    "explanation": "Un ordre à cours limité fixe un prix maximal mais ne garantit pas l'exécution.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Selon la directive MIF 2, quelle catégorie de clients bénéficie du niveau de protection le plus élevé ?",
+    "choices": [
+      "Clients professionnels",
+      "Clients non professionnels",
+      "Contreparties éligibles"
+    ],
+    "correctIndex": 1,
+    "explanation": "Les clients non professionnels (retail) bénéficient de la protection maximale en raison de leur moindre connaissance des marchés.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Quelle est la condition pour qu'un prospectus soit valablement diffusé dans le cadre d'une offre au public de titres financiers ?",
+    "choices": [
+      "L'obtention du visa de l'AMF",
+      "L'enregistrement auprès de l'ESMA",
+      "La publication au Journal officiel"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le prospectus doit recevoir le visa de l'AMF avant toute diffusion au public.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "C",
+    "question": "Dans le cadre d'une transaction sur un marché réglementé, quel est le rôle principal d'une contrepartie centrale (CCP) ?",
+    "choices": [
+      "Fixer les prix des titres",
+      "Émettre les titres",
+      "Garantir la bonne fin des transactions"
+    ],
+    "correctIndex": 2,
+    "explanation": "La CCP s'interpose entre acheteurs et vendeurs pour garantir l'exécution des transactions.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Selon la réglementation MiFID II, quelle est la durée minimale de conservation des enregistrements téléphoniques relatifs aux transactions ?",
+    "choices": [
+      "3 ans",
+      "5 ans",
+      "10 ans"
+    ],
+    "correctIndex": 1,
+    "explanation": "La directive MiFID II impose une conservation de 5 ans pour les enregistrements téléphoniques.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Quelle autorité est responsable de la protection de la clientèle des banques et des assurances en France ?",
+    "choices": [
+      "AMF",
+      "ACPR",
+      "ESMA"
+    ],
+    "correctIndex": 1,
+    "explanation": "L'ACPR est chargée de la surveillance des banques et assurances pour la protection de la clientèle.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "C",
+    "question": "Quel est l'effet d'une augmentation du taux sans risque sur le prix d'une option d'achat (call) européenne ?",
+    "choices": [
+      "Diminution",
+      "Aucun effet",
+      "Augmentation"
+    ],
+    "correctIndex": 2,
+    "explanation": "Une hausse du taux sans risque augmente la valeur d'un call selon le modèle de Black-Scholes.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Quel est le champ de compétence de l'AMF ?",
+    "choices": [
+      "La surveillance des produits d'épargne réglementée",
+      "La régulation des marchés de capitaux et la protection de l'épargne investie en produits financiers",
+      "Le contrôle prudentiel des banques"
+    ],
+    "correctIndex": 1,
+    "explanation": "L'AMF régule les marchés de capitaux et protège l'épargne investie en produits financiers.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Quelle est la durée de validité d'un agrément délivré par l'AMF à une société de gestion ?",
+    "choices": [
+      "Illimitée, sous réserve de respect continu des conditions",
+      "Cinq ans, renouvelable",
+      "Dix ans, avec réexamen périodique"
+    ],
+    "correctIndex": 0,
+    "explanation": "L'agrément est permanent tant que la société respecte les conditions réglementaires.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la portée d'un règlement européen par rapport à une directive ?",
+    "choices": [
+      "Il est directement applicable dans les États membres",
+      "Il nécessite une transposition en droit national",
+      "Il est soumis à l'approbation du Parlement national"
+    ],
+    "correctIndex": 0,
+    "explanation": "Un règlement est directement applicable dans tous les États membres sans transposition.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "C",
+    "question": "Quelle autorité est responsable de la surveillance des agences de notation en Europe ?",
+    "choices": [
+      "L'ESMA",
+      "L'AMF",
+      "La BCE"
+    ],
+    "correctIndex": 0,
+    "explanation": "L'ESMA a compétence exclusive pour superviser les agences de notation.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Quelle proposition est exacte concernant le rôle de l'Autorité des marchés financiers (AMF) dans la supervision des sociétés de gestion ?",
+    "choices": [
+      "Elle est chargée de la surveillance prudentielle et de la résolution des crises.",
+      "Elle délivre l'agrément et contrôle le respect des règles de conduite.",
+      "Elle est responsable de la politique monétaire et de la stabilité financière."
+    ],
+    "correctIndex": 1,
+    "explanation": "L'AMF agrée et contrôle les sociétés de gestion, la surveillance prudentielle relevant de l'ACPR.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Selon le règlement général de l'AMF, quelle est l'obligation d'une société de gestion en cas de conflit d'intérêts ?",
+    "choices": [
+      "Elle doit les identifier, les prévenir et les gérer, et informer le client si nécessaire.",
+      "Elle doit les supprimer systématiquement.",
+      "Elle doit les déclarer à l'AMF avant toute opération."
+    ],
+    "correctIndex": 0,
+    "explanation": "La société de gestion doit gérer les conflits d'intérêts et informer le client si la gestion ne suffit pas.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la conséquence d'un ordre à cours limité d'achat si le cours de marché est supérieur au prix limite ?",
+    "choices": [
+      "L'ordre est exécuté au prix limite.",
+      "L'ordre est annulé automatiquement.",
+      "L'ordre reste en attente jusqu'à ce que le cours atteigne le prix limite ou moins."
+    ],
+    "correctIndex": 2,
+    "explanation": "Un ordre à cours limité n'est exécuté qu'au prix limite ou à un prix plus favorable.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Quelle autorité est chargée de la surveillance des marchés financiers en France ?",
+    "choices": [
+      "L'AMF",
+      "L'ACPR",
+      "L'ESMA"
+    ],
+    "correctIndex": 0,
+    "explanation": "L'AMF est l'autorité administrative indépendante qui veille à la protection de l'épargne et au bon fonctionnement des marchés.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Quelle autorité est responsable du contrôle prudentiel des établissements de crédit ?",
+    "choices": [
+      "L'AMF",
+      "L'ACPR",
+      "La Banque de France"
+    ],
+    "correctIndex": 1,
+    "explanation": "L'ACPR assure le contrôle prudentiel des banques et des assurances, en lien avec la Banque de France.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la conséquence d'un ordre à cours limité ?",
+    "choices": [
+      "Il garantit l'exécution au prix indiqué",
+      "Il garantit l'exécution au meilleur prix disponible",
+      "Il ne garantit pas l'exécution, mais fixe un prix maximal ou minimal"
+    ],
+    "correctIndex": 2,
+    "explanation": "Un ordre à cours limité n'est exécuté que si le prix du marché atteint le prix limite, sinon il reste en attente.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Quelle obligation de conformité s'applique à une société de gestion de portefeuille ?",
+    "choices": [
+      "Désigner un RCCI agréé par l'AMF.",
+      "Mettre en place une fonction de conformité et de contrôle interne proportionnée à ses activités.",
+      "Publier annuellement un rapport de conformité sur son site internet."
+    ],
+    "correctIndex": 1,
+    "explanation": "La société de gestion doit disposer d'une fonction de conformité et de contrôle interne adaptée à son activité, sans agrément du RCCI.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "C",
+    "question": "Qu'est-ce que la notion d'information privilégiée au sens du règlement européen sur les abus de marché ?",
+    "choices": [
+      "Une information précise, non publique, susceptible d'influencer sensiblement le cours.",
+      "Une information publique mais difficile à obtenir pour les investisseurs.",
+      "Une information relative aux résultats d'une entreprise, même si déjà publiée."
+    ],
+    "correctIndex": 0,
+    "explanation": "Une information privilégiée est précise, non publique et de nature à influencer le cours si elle était divulguée.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "C",
+    "question": "Dans le cadre de la gestion des conflits d'intérêts, quelle mesure est considérée comme appropriée ?",
+    "choices": [
+      "Séparer les activités de gestion et de contrôle pour éviter les fuites d'informations.",
+      "Interdire tout contact entre les collaborateurs et les clients.",
+      "Confier la surveillance des opérations au même service que celui qui les exécute."
+    ],
+    "correctIndex": 0,
+    "explanation": "La séparation des fonctions de gestion et de contrôle est une mesure classique pour prévenir les conflits d'intérêts.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "Quelle est l'obligation d'un conseiller en investissements financiers (CIF) en matière de déclaration à l'AMF ?",
+    "choices": [
+      "Il doit déclarer chaque opération réalisée pour ses clients.",
+      "Il doit déclarer annuellement son activité et ses résultats.",
+      "Il doit déclarer uniquement les modifications de son statut."
+    ],
+    "correctIndex": 1,
+    "explanation": "Le CIF doit remettre chaque année un rapport d'activité à l'AMF.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "Dans une société de gestion de portefeuille, quelle est une exigence relative à la fonction de conformité ?",
+    "choices": [
+      "Elle doit être indépendante des fonctions opérationnelles.",
+      "Elle doit être assurée par le directeur général.",
+      "Elle doit être externalisée obligatoirement."
+    ],
+    "correctIndex": 0,
+    "explanation": "La fonction de conformité doit être indépendante des activités opérationnelles pour garantir son efficacité.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "Quelle obligation incombe à un prestataire de services d'investissement en matière de conflits d'intérêts ?",
+    "choices": [
+      "Identifier, prévenir et gérer les conflits d'intérêts pour éviter qu'ils ne portent préjudice aux clients",
+      "Supprimer tout conflit d'intérêts en refusant toute rémunération tierce",
+      "Divulguer uniquement les conflits d'intérêts avérés, sans politique de gestion"
+    ],
+    "correctIndex": 0,
+    "explanation": "La réglementation impose d'identifier, prévenir et gérer les conflits, pas de les supprimer totalement ni de se limiter à une divulgation partielle.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "Selon les règles de déontologie, qu'est-ce qu'une information privilégiée ?",
+    "choices": [
+      "Une information précise, non publique, qui, si elle était rendue publique, aurait une incidence sensible sur les cours",
+      "Une information publique mais difficile d'accès, susceptible d'influencer les investisseurs",
+      "Une information confidentielle émanant d'une société cotée, quelle que soit son importance"
+    ],
+    "correctIndex": 0,
+    "explanation": "La définition légale exige précision, non-publicité et impact potentiel significatif sur les cours.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la conséquence d'un ordre de bourse passé sans vérification préalable de la capacité financière du client ?",
+    "choices": [
+      "Le prestataire est automatiquement exonéré de responsabilité en cas de perte",
+      "Le prestataire peut être sanctionné pour manquement à son obligation de connaissance du client",
+      "L'ordre est nul de plein droit et le client doit être remboursé"
+    ],
+    "correctIndex": 1,
+    "explanation": "La conformité exige une évaluation de l'adéquation ou du caractère approprié, sinon sanction possible, mais l'ordre reste valable.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "Selon la réglementation LCB-FT, quelle est l'obligation d'une entreprise assujettie en cas de soupçon de blanchiment ?",
+    "choices": [
+      "Déclarer à Tracfin toute opération suspecte sans délai",
+      "Signaler à l'AMF avant toute exécution",
+      "Attendre la confirmation de la transaction avant toute déclaration"
+    ],
+    "correctIndex": 0,
+    "explanation": "Les entreprises assujetties doivent déclarer à Tracfin toute opération suspecte sans délai, avant exécution si possible.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Quelle est la sanction pénale encourue par une personne physique pour défaut de déclaration de soupçon à Tracfin ?",
+    "choices": [
+      "3 ans d'emprisonnement et 150 000 € d'amende",
+      "5 ans d'emprisonnement et 375 000 € d'amende",
+      "Interdiction d'exercer une activité financière pendant 10 ans"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le défaut de déclaration de soupçon est puni de 5 ans d'emprisonnement et 375 000 € d'amende pour les personnes physiques.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "C",
+    "question": "En cas de gel des avoirs, que deviennent les intérêts générés par les fonds gelés ?",
+    "choices": [
+      "Ils sont versés à l'État",
+      "Ils sont automatiquement libérés",
+      "Ils sont également gelés"
+    ],
+    "correctIndex": 2,
+    "explanation": "Le gel des avoirs s'étend aux intérêts et produits générés par les fonds gelés, qui sont également gelés.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la différence entre un gel des avoirs et une confiscation ?",
+    "choices": [
+      "Le gel est temporaire et conservatoire, la confiscation est définitive",
+      "Le gel s'applique aux personnes, la confiscation aux biens",
+      "Le gel est décidé par les autorités judiciaires, la confiscation par les autorités administratives"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le gel est une mesure conservatoire temporaire, tandis que la confiscation est une peine définitive.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Quelle obligation de vigilance incombe à une société de gestion dans le cadre de la LCB-FT ?",
+    "choices": [
+      "Vérifier l'origine des fonds pour toute opération, quel qu'en soit le montant",
+      "Identifier le bénéficiaire effectif de tout client personne morale",
+      "Transmettre à l'AMF un rapport annuel sur les opérations suspectes"
+    ],
+    "correctIndex": 1,
+    "explanation": "La société de gestion doit identifier le bénéficiaire effectif dans le cadre de la due diligence.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Dans le cadre des embargos financiers, quelle est la conséquence d'un gel des avoirs ?",
+    "choices": [
+      "Les fonds sont bloqués et ne peuvent faire l'objet d'aucune opération",
+      "Les fonds sont confisqués au profit de l'État",
+      "Les fonds sont transférés sur un compte séquestre"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le gel des avoirs interdit toute opération sur les fonds concernés.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Selon la réglementation LCB-FT, quelle proposition est exacte concernant les obligations des entreprises d'investissement ?",
+    "choices": [
+      "Elles doivent déclarer à Tracfin toute opération dont le montant est supérieur à 10 000 euros.",
+      "Elles doivent mettre en place une organisation et des procédures internes adaptées à leurs activités.",
+      "Elles sont dispensées de vigilance à l'égard de leurs clients occasionnels."
+    ],
+    "correctIndex": 1,
+    "explanation": "La réglementation impose aux entreprises d'investissement de mettre en place des procédures internes de lutte contre le blanchiment.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la conséquence d'une mesure de gel des avoirs ordonnée par une résolution du Conseil de sécurité des Nations Unies ?",
+    "choices": [
+      "Elle interdit toute transaction avec la personne visée, y compris la mise à disposition de fonds.",
+      "Elle ne s'applique qu'aux banques, pas aux autres institutions financières.",
+      "Elle autorise les transactions si elles sont inférieures à 5 000 euros."
+    ],
+    "correctIndex": 0,
+    "explanation": "Le gel des avoirs interdit toute opération financière avec la personne désignée.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la particularité des personnes politiquement exposées (PPE) dans le dispositif LCB-FT ?",
+    "choices": [
+      "Elles sont exemptées de vigilance renforcée.",
+      "Elles ne sont soumises qu'à une vigilance simple.",
+      "Elles doivent faire l'objet d'une vigilance renforcée en raison de leur exposition potentielle au risque de blanchiment."
+    ],
+    "correctIndex": 2,
+    "explanation": "Les PPE sont soumises à une vigilance renforcée en raison de leur profil de risque.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Quelle proposition concernant les pouvoirs de sanction de l'Autorité des marchés financiers (AMF) est exacte ?",
+    "choices": [
+      "Elle peut prononcer la dissolution d'une société de gestion.",
+      "Elle peut infliger des amendes aux banques pour non-respect des règles prudentielles.",
+      "Elle peut sanctionner les émetteurs pour manquement à leurs obligations d'information."
+    ],
+    "correctIndex": 2,
+    "explanation": "L'AMF peut infliger des sanctions pécuniaires pour manquements aux obligations d'information des émetteurs.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Un conseiller en investissements financiers (CIF) doit gérer les conflits d'intérêts. Quelle proposition est exacte ?",
+    "choices": [
+      "Il doit les prévenir et les gérer pour ne pas nuire aux intérêts du client",
+      "Il peut les ignorer si le client est averti",
+      "Il doit les déclarer à l'AMF avant chaque transaction"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le CIF doit identifier, prévenir et gérer les conflits d'intérêts afin de préserver l'intérêt du client.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "Quelle est la durée minimale de conservation des documents d'identification des clients imposée par la réglementation LCB-FT ?",
+    "choices": [
+      "2 ans après la clôture du compte",
+      "5 ans après la fin de la relation d'affaires",
+      "10 ans après la dernière opération"
+    ],
+    "correctIndex": 1,
+    "explanation": "La réglementation impose une conservation de 5 ans après la fin de la relation d'affaires.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "En matière de commercialisation d'instruments financiers, quelle règle s'applique aux incitations (rétrocessions) perçues par un conseiller en investissements financiers (CIF) ?",
+    "choices": [
+      "Elles sont interdites en toutes circonstances.",
+      "Elles sont autorisées si elles améliorent la qualité du service et sont divulguées au client.",
+      "Elles doivent être reversées intégralement au client."
+    ],
+    "correctIndex": 1,
+    "explanation": "La réglementation MIFID II autorise les incitations si elles visent à améliorer la qualité du service et sont portées à la connaissance du client.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la principale différence entre un stablecoin adossé à des actifs et un stablecoin algorithmique ?",
+    "choices": [
+      "Le stablecoin adossé est garanti par des réserves, l'algorithmique par des mécanismes de marché.",
+      "Le stablecoin algorithmique est toujours plus stable que le stablecoin adossé.",
+      "Le stablecoin adossé est émis par une banque centrale, l'algorithmique par une entreprise privée."
+    ],
+    "correctIndex": 0,
+    "explanation": "Le stablecoin adossé repose sur des réserves, l'algorithmique sur des incitations de marché pour maintenir sa parité.",
+    "theme": "Instruments financiers et crypto-actifs",
+    "themeId": 7
+  },
+  {
+    "type": "C",
+    "question": "En cas de faillite d'une société de gestion, que deviennent les actifs des clients détenus dans un compte de tiers ?",
+    "choices": [
+      "Ils sont saisis par les créanciers de la société.",
+      "Ils sont restitués aux clients car ils sont distincts du patrimoine de la société.",
+      "Ils sont automatiquement transférés à une autre société de gestion."
+    ],
+    "correctIndex": 1,
+    "explanation": "Les actifs détenus pour le compte de tiers sont séparés du patrimoine de la société et ne sont pas affectés par sa faillite.",
+    "theme": "Gestion collective / compte de tiers",
+    "themeId": 8
+  },
+  {
+    "type": "C",
+    "question": "Quel est le principal risque lié à l'exécution d'un ordre au marché sur un titre peu liquide ?",
+    "choices": [
+      "L'ordre peut être annulé par le marché",
+      "Le prix d'exécution peut s'écarter significativement du dernier cours coté",
+      "L'ordre sera exécuté en plusieurs fois sur plusieurs jours"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le manque de liquidité entraîne un dérapage de prix (slippage) entre le cours indicatif et le prix effectif.",
+    "theme": "Fonctionnement et organisation des marchés",
+    "themeId": 9
+  },
+  {
+    "type": "C",
+    "question": "Dans le post-marché, le mécanisme de livraison contre paiement (DVP) vise à éliminer quel type de risque ?",
+    "choices": [
+      "Le risque de principal",
+      "Le risque de liquidité",
+      "Le risque opérationnel"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le DVP garantit la simultanéité de la livraison et du paiement, supprimant le risque de principal.",
+    "theme": "Post-marché et infrastructures de marché",
+    "themeId": 10
+  },
+  {
+    "type": "C",
+    "question": "Quel est l'effet d'un regroupement d'actions sur le capital social d'une société cotée ?",
+    "choices": [
+      "Le capital social augmente proportionnellement à la nouvelle valeur nominale.",
+      "Le capital social reste inchangé, mais le nombre d'actions diminue.",
+      "Le capital social diminue car la valeur nominale est réduite."
+    ],
+    "correctIndex": 1,
+    "explanation": "Le regroupement modifie le nombre et la valeur nominale des actions sans affecter le capital social.",
+    "theme": "Émissions et opérations sur titres",
+    "themeId": 11
+  },
+  {
+    "type": "C",
+    "question": "Quelle proposition décrit correctement l'impact d'une dotation aux amortissements sur le résultat et la trésorerie ?",
+    "choices": [
+      "Elle diminue le résultat mais n'affecte pas la trésorerie",
+      "Elle diminue le résultat et la trésorerie",
+      "Elle augmente le résultat et diminue la trésorerie"
+    ],
+    "correctIndex": 0,
+    "explanation": "L'amortissement est une charge non décaissée, donc il réduit le résultat sans sortie de trésorerie.",
+    "theme": "Bases comptables et financières",
+    "themeId": 12
+  },
+  {
+    "type": "A",
+    "question": "Quelle proposition relative à l'Autorité des Marchés Financiers (AMF) est exacte ?",
+    "choices": [
+      "Elle est chargée de la surveillance prudentielle des banques et des assurances.",
+      "Elle est une autorité administrative indépendante qui protège l'épargne investie en produits financiers.",
+      "Elle est une autorité administrative placée sous la tutelle directe du ministère de l'Économie."
+    ],
+    "correctIndex": 1,
+    "explanation": "L'AMF est une autorité indépendante, distincte de l'ACPR et du ministère, qui veille à la protection de l'épargne et à l'intégrité des marchés.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Selon la réglementation applicable, la fonction de conformité d'une entreprise d'investissement doit être :",
+    "choices": [
+      "indépendante et permanente",
+      "assurée par le responsable des risques",
+      "externalisée sans conditions"
+    ],
+    "correctIndex": 0,
+    "explanation": "La fonction de conformité doit être indépendante et permanente pour garantir une surveillance efficace.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "Une société de gestion constate qu'un de ses clients figure sur une liste de sanctions financières de l'UE. Quelle est son obligation immédiate ?",
+    "choices": [
+      "Geler les avoirs et ne pas exécuter d'opérations",
+      "Informer le client et attendre ses instructions",
+      "Clôturer le compte et restituer les fonds"
+    ],
+    "correctIndex": 0,
+    "explanation": "Le gel des avoirs est immédiat et interdit toute opération.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Dans le cadre de la commercialisation d'instruments financiers, quelle obligation s'impose à un prestataire de services d'investissement vis-à-vis de ses clients non professionnels ?",
+    "choices": [
+      "Fournir une information sur les coûts et frais liés au service.",
+      "Garantir un rendement minimal sur les instruments proposés.",
+      "Obtenir une autorisation préalable de l'AMF pour chaque transaction."
+    ],
+    "correctIndex": 0,
+    "explanation": "Le prestataire doit informer le client sur les coûts et frais, conformément à MIFID II, sans garantir de rendement ni obtenir d'autorisation par transaction.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "C",
+    "question": "Selon la réglementation MiFID II, un crypto-actif peut être qualifié d'instrument financier si :",
+    "choices": [
+      "Il est émis par une banque centrale.",
+      "Il est transférable et négociable sur un marché réglementé.",
+      "Il est adossé à une monnaie fiduciaire."
+    ],
+    "correctIndex": 1,
+    "explanation": "Un crypto-actif est un instrument financier s'il est négociable et transférable sur un marché, selon la définition de valeur mobilière.",
+    "theme": "Instruments financiers et crypto-actifs",
+    "themeId": 7
+  },
+  {
+    "type": "C",
+    "question": "En cas de liquidation judiciaire d'une société de gestion, les actifs des clients détenus sur un compte de tiers sont :",
+    "choices": [
+      "Intégrés à l'actif de la société pour désintéresser les créanciers",
+      "Restitués aux clients, car ils sont la propriété des clients",
+      "Saisis par le liquidateur pour couvrir les frais de procédure"
+    ],
+    "correctIndex": 1,
+    "explanation": "Les actifs des clients sont isolés et ne font pas partie du patrimoine de la société de gestion.",
+    "theme": "Gestion collective / compte de tiers",
+    "themeId": 8
+  },
+  {
+    "type": "C",
+    "question": "Quel est le rôle principal d'une chambre de compensation (CCP) sur un marché organisé ?",
+    "choices": [
+      "Garantir la liquidité en achetant et vendant des titres pour son propre compte.",
+      "Se substituer aux contreparties pour garantir l'exécution des transactions.",
+      "Fixer les prix d'équilibre lors des séances de négociation."
+    ],
+    "correctIndex": 1,
+    "explanation": "La CCP s'interpose entre acheteurs et vendeurs, réduisant le risque de défaut.",
+    "theme": "Fonctionnement et organisation des marchés",
+    "themeId": 9
+  },
+  {
+    "type": "C",
+    "question": "Dans le post-marché, quel est le rôle principal d'une contrepartie centrale (CCP) ?",
+    "choices": [
+      "Assurer la conservation des titres pour le compte des investisseurs",
+      "Se substituer aux parties pour garantir la bonne fin des transactions",
+      "Enregistrer les mouvements de titres dans les comptes des clients"
+    ],
+    "correctIndex": 1,
+    "explanation": "La CCP s'interpose entre acheteurs et vendeurs pour garantir l'exécution des transactions.",
+    "theme": "Post-marché et infrastructures de marché",
+    "themeId": 10
+  },
+  {
+    "type": "C",
+    "question": "Pour une augmentation de capital de 100 000 actions nouvelles pour 200 000 anciennes, prix d'émission 50 €, cours 60 €, quel est le prix théorique après détachement du DPS ?",
+    "choices": [
+      "56,67 €",
+      "55,00 €",
+      "60,00 €"
+    ],
+    "correctIndex": 0,
+    "explanation": "Calcul : (200 000*60 + 100 000*50)/300 000 = 56,67 €.",
+    "theme": "Émissions et opérations sur titres",
+    "themeId": 11
+  },
+  {
+    "type": "C",
+    "question": "Dans l'analyse financière, quelle est la définition exacte du fonds de roulement net global ?",
+    "choices": [
+      "Capitaux propres moins actif immobilisé",
+      "Actif circulant moins passif circulant",
+      "Trésorerie nette moins dettes financières"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le fonds de roulement net global se calcule comme l'actif circulant moins le passif circulant.",
+    "theme": "Bases comptables et financières",
+    "themeId": 12
+  },
+  {
+    "type": "A",
+    "question": "Quelle autorité est compétente pour contrôler l'information financière publiée par les sociétés cotées sur un marché réglementé français ?",
+    "choices": [
+      "L'Autorité des marchés financiers (AMF)",
+      "L'Autorité de contrôle prudentiel et de résolution (ACPR)",
+      "L'Autorité européenne des marchés financiers (ESMA)"
+    ],
+    "correctIndex": 0,
+    "explanation": "L'AMF est chargée de contrôler l'information financière des sociétés cotées en France.",
+    "theme": "Cadre institutionnel et réglementaire",
+    "themeId": 1
+  },
+  {
+    "type": "A",
+    "question": "Selon la réglementation, quelle obligation incombe à un prestataire de services d'investissement en matière de conflits d'intérêts ?",
+    "choices": [
+      "Les ignorer car ils sont inévitables",
+      "Les prévenir et les gérer en priorité pour le client",
+      "Les révéler uniquement sur demande du client"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le prestataire doit prévenir ou gérer les conflits d'intérêts pour protéger les intérêts du client.",
+    "theme": "Déontologie et conformité",
+    "themeId": 2
+  },
+  {
+    "type": "A",
+    "question": "En matière de lutte contre le blanchiment, quelle est la règle applicable à une société de gestion qui soupçonne une opération ?",
+    "choices": [
+      "Elle doit exécuter l'opération puis déclarer le soupçon à Tracfin sous 48 heures.",
+      "Elle doit s'abstenir d'exécuter l'opération et déclarer le soupçon à Tracfin immédiatement.",
+      "Elle doit déclarer le soupçon à Tracfin avant exécution, sauf impossibilité, auquel cas elle déclare immédiatement après."
+    ],
+    "correctIndex": 2,
+    "explanation": "La déclaration de soupçon doit être faite à Tracfin avant l'exécution, sauf si l'opération ne peut être différée, auquel cas elle est faite immédiatement après.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Pour la commercialisation d'un instrument financier complexe à un client non professionnel sans service de conseil, quelle est l'obligation de l'entreprise d'investissement ?",
+    "choices": [
+      "Elle doit effectuer un test d'adéquation et, si le produit ne convient pas, avertir le client.",
+      "Elle doit obtenir une confirmation écrite du client qu'il comprend les risques.",
+      "Elle doit fournir un document d'information clé (DIC) uniquement si le client le demande."
+    ],
+    "correctIndex": 0,
+    "explanation": "Le test d'adéquation est obligatoire pour les services non-conseil sur instruments complexes, avec avertissement en cas de non-adéquation.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "C",
+    "question": "Un crypto-actif est qualifié d'instrument financier lorsque :",
+    "choices": [
+      "Il est émis par une banque centrale",
+      "Il confère des droits similaires à une action ou une obligation",
+      "Il est négocié sur une plateforme d'échange"
+    ],
+    "correctIndex": 1,
+    "explanation": "Un crypto-actif est un instrument financier s'il confère des droits de propriété ou de créance, comme une action ou une obligation.",
+    "theme": "Instruments financiers et crypto-actifs",
+    "themeId": 7
+  },
+  {
+    "type": "C",
+    "question": "Quel est l'effet du mécanisme de 'swing pricing' dans un OPCVM en cas de flux de souscriptions ou de rachats importants ?",
+    "choices": [
+      "Il ajuste la valeur liquidative pour protéger les porteurs existants de la dilution.",
+      "Il augmente les frais de gestion pour compenser les coûts de transaction.",
+      "Il garantit un prix d'exécution fixe pour toutes les souscriptions et rachats."
+    ],
+    "correctIndex": 0,
+    "explanation": "Le swing pricing ajuste la VL en intégrant les coûts de réallocation du portefeuille, protégeant ainsi les porteurs existants.",
+    "theme": "Gestion collective / compte de tiers",
+    "themeId": 8
+  },
+  {
+    "type": "C",
+    "question": "Un ordre d'achat à cours limité est placé à un prix inférieur au prix du marché. Que se passe-t-il ?",
+    "choices": [
+      "Il est exécuté immédiatement au prix du marché",
+      "Il est inscrit au carnet d'ordres en attente d'un prix plus bas",
+      "Il est rejeté par le système"
+    ],
+    "correctIndex": 1,
+    "explanation": "L'ordre reste en attente tant que le prix du marché n'atteint pas le prix limite.",
+    "theme": "Fonctionnement et organisation des marchés",
+    "themeId": 9
+  },
+  {
+    "type": "C",
+    "question": "Dans le cadre du règlement-livraison de titres, que garantit le mécanisme de 'livraison contre paiement' (LCP) ?",
+    "choices": [
+      "La livraison des titres avant le paiement",
+      "Le paiement avant la livraison des titres",
+      "Le transfert simultané des titres et des fonds"
+    ],
+    "correctIndex": 2,
+    "explanation": "Le LCP élimine le risque principal en synchronisant les deux flux, garantissant qu'aucune contrepartie ne subit de perte en capital.",
+    "theme": "Post-marché et infrastructures de marché",
+    "themeId": 10
+  },
+  {
+    "type": "C",
+    "question": "Lors d'une augmentation de capital avec maintien du droit préférentiel de souscription (DPS), un actionnaire existant qui ne souhaite pas souscrire peut :",
+    "choices": [
+      "vendre ses DPS sur le marché pour compenser la dilution",
+      "conserver ses DPS sans impact sur sa participation",
+      "les céder uniquement à un autre actionnaire existant"
+    ],
+    "correctIndex": 0,
+    "explanation": "Les DPS sont négociables et peuvent être vendus pour compenser la dilution.",
+    "theme": "Émissions et opérations sur titres",
+    "themeId": 11
+  },
+  {
+    "type": "C",
+    "question": "Quel est l'effet d'une dotation aux amortissements sur le résultat et la trésorerie d'une entreprise ?",
+    "choices": [
+      "Elle diminue le résultat et n'affecte pas la trésorerie.",
+      "Elle augmente le résultat et diminue la trésorerie.",
+      "Elle n'affecte ni le résultat ni la trésorerie."
+    ],
+    "correctIndex": 0,
+    "explanation": "L'amortissement est une charge non décaissée, réduisant le résultat sans impact sur la trésorerie.",
+    "theme": "Bases comptables et financières",
+    "themeId": 12
+  },
+  {
+    "type": "A",
+    "question": "Selon la réglementation LCB-FT, quelle est l'obligation d'une entreprise d'investissement vis-à-vis des personnes politiquement exposées (PPE) ?",
+    "choices": [
+      "Mettre en place des mesures de vigilance renforcées, incluant l'identification de l'origine des fonds et une surveillance accrue.",
+      "Appliquer des mesures de vigilance simplifiées, car les PPE sont considérées comme à faible risque.",
+      "Refuser systématiquement toute relation d'affaires avec une PPE, sans exception."
+    ],
+    "correctIndex": 0,
+    "explanation": "La réglementation impose une vigilance renforcée pour les PPE, notamment l'origine des fonds et une surveillance continue.",
+    "theme": "Sécurité financière (LCB-FT, embargos)",
+    "themeId": 3
+  },
+  {
+    "type": "A",
+    "question": "Dans le cadre de la commercialisation d'instruments financiers, quelle est l'obligation d'un prestataire de services d'investissement (PSI) lorsqu'il recommande un instrument financier à un client ?",
+    "choices": [
+      "Il doit effectuer un test d'adéquation en recueillant des informations sur les connaissances, la situation financière et les objectifs du client.",
+      "Il doit uniquement informer le client des risques généraux de l'instrument.",
+      "Il doit s'assurer que le client a signé une clause de non-responsabilité."
+    ],
+    "correctIndex": 0,
+    "explanation": "Le test d'adéquation est obligatoire pour le conseil en investissement selon la directive MIF.",
+    "theme": "Commercialisation d'instruments financiers",
+    "themeId": 5
+  },
+  {
+    "type": "C",
+    "question": "Un jeton numérique conférant à son détenteur des droits de participation aux bénéfices d'une société est qualifié, selon la réglementation, de quel type d'actif ?",
+    "choices": [
+      "Jeton utilitaire",
+      "Instrument financier (titre de capital)",
+      "Jeton de monnaie électronique"
+    ],
+    "correctIndex": 1,
+    "explanation": "Un jeton donnant des droits aux bénéfices est assimilé à un titre de capital, donc un instrument financier, exclu du champ de MiCA.",
+    "theme": "Instruments financiers et crypto-actifs",
+    "themeId": 7
+  },
+  {
+    "type": "C",
+    "question": "Un OPCVM a un actif net de 2 000 000 € et 10 000 parts. Un investisseur souscrit 100 000 €. Quelle sera la nouvelle valeur liquidative ?",
+    "choices": [
+      "200 €",
+      "210 €",
+      "190 €"
+    ],
+    "correctIndex": 0,
+    "explanation": "La souscription à la valeur liquidative courante n'affecte pas la VL, qui reste à 200 €.",
+    "theme": "Gestion collective / compte de tiers",
+    "themeId": 8
+  },
+  {
+    "type": "C",
+    "question": "Quelle est la conséquence d'un ordre d'achat à cours limité placé en dessous du meilleur prix vendeur ?",
+    "choices": [
+      "Il est exécuté immédiatement au prix limite",
+      "Il reste en carnet en attendant qu'un vendeur accepte ce prix",
+      "Il est automatiquement annulé à la clôture"
+    ],
+    "correctIndex": 1,
+    "explanation": "Un ordre à cours limité n'est exécuté que si le prix du marché atteint le prix limite ou mieux.",
+    "theme": "Fonctionnement et organisation des marchés",
+    "themeId": 9
+  },
+  {
+    "type": "C",
+    "question": "Quel est l'effet de la novation opérée par une contrepartie centrale (CCP) sur les transactions ?",
+    "choices": [
+      "Elle supprime le risque de contrepartie en annulant les contrats initiaux",
+      "Elle substitue la CCP comme contrepartie unique de chaque acheteur et vendeur",
+      "Elle garantit la livraison des titres en cas de défaut"
+    ],
+    "correctIndex": 1,
+    "explanation": "La novation remplace les contrats bilatéraux par deux contrats avec la CCP, réduisant le risque de contrepartie.",
+    "theme": "Post-marché et infrastructures de marché",
+    "themeId": 10
+  },
+  {
+    "type": "C",
+    "question": "Une société procède à une augmentation de capital de 1 action nouvelle pour 5 anciennes au prix de 20 €, le cours étant de 25 €. Quel est le prix théorique de l'action après détachement du droit ?",
+    "choices": [
+      "24 €",
+      "24,17 €",
+      "25 €"
+    ],
+    "correctIndex": 1,
+    "explanation": "Le prix théorique est la moyenne pondérée : (5×25 + 1×20)/6 = 24,17 €.",
+    "theme": "Émissions et opérations sur titres",
+    "themeId": 11
+  },
+  {
+    "type": "C",
+    "question": "En période d'inflation, l'utilisation de la méthode FIFO (premier entré, premier sorti) par rapport à la méthode LIFO (dernier entré, premier sorti) a pour effet de :",
+    "choices": [
+      "Diminuer le coût des marchandises vendues et augmenter le bénéfice",
+      "Augmenter le coût des marchandises vendues et diminuer le bénéfice",
+      "Ne pas affecter le coût des marchandises vendues"
+    ],
+    "correctIndex": 0,
+    "explanation": "Avec FIFO, les coûts anciens (moins chers) sont imputés au COGS, réduisant celui-ci et augmentant le bénéfice.",
+    "theme": "Bases comptables et financières",
+    "themeId": 12
   }
 ]
