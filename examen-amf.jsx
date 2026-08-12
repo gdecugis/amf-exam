@@ -1,5 +1,6 @@
-// import React, { useState, useEffect, useRef, useMemo } from "react";
-// import { CheckCircle2, XCircle, Clock, LayoutGrid, ChevronLeft, ChevronRight, Loader2, X } from "lucide-react";
+// React and the icon components (CheckCircle2, XCircle, Clock, LayoutGrid,
+// ChevronLeft, ChevronRight, Loader2, X) are exposed globally by index.html
+// — this file has no build step, so no imports here.
 
 // ---------------------------------------------------------------------------
 // Programme officiel : 12 thèmes, répartition réelle 33 questions type A / 87 type C
