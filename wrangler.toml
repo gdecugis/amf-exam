@@ -6,4 +6,4 @@ pages_build_output_dir = "."
 [[d1_databases]]
 binding = "DB"
 database_name = "amf-questions"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "4a792f11-54e4-47b9-aa04-8c4634b3f28d"
