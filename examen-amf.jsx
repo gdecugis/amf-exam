@@ -278,6 +278,41 @@ async function fetchPersonalQuestions(idToken) {
   return data.questions || [];
 }
 
+// Without this, any uncaught render error unmounts the whole tree and the
+// user just sees a blank white page with no way back. Catch it, show what
+// broke, and offer a reload instead.
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { error };
+  }
+  componentDidCatch(error, info) {
+    console.error("AMFExam crashed:", error, info);
+  }
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="amf-app" style={{ padding: "24px" }}>
+          <GlobalStyles />
+          <div className="amf-card" style={{ maxWidth: "480px", margin: "24px auto", padding: "32px" }}>
+            <h1 className="amf-serif amf-fail" style={{ fontSize: "20px", marginBottom: "12px" }}>Une erreur est survenue</h1>
+            <p className="amf-secondary" style={{ fontSize: "13px", marginBottom: "16px", wordBreak: "break-word" }}>
+              {String(this.state.error && this.state.error.message || this.state.error)}
+            </p>
+            <button onClick={() => window.location.reload()} className="amf-btn-primary" style={{ width: "100%", padding: "12px", borderRadius: "3px", fontSize: "14px" }}>
+              Recharger la page
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 function AMFExam() {
   const [screen, setScreen] = useState("home");
   const [questions, setQuestions] = useState([]);
@@ -295,11 +330,15 @@ function AMFExam() {
   // the signed-in user's verified email, so they follow the user across
   // sessions/devices instead of living only in this browser.
   const [auth, setAuth] = useState(() => (window.GoogleAuth ? window.GoogleAuth.getState() : { idToken: null, email: null }));
+  const [authTick, setAuthTick] = useState(0);
 
   useEffect(() => {
     if (window.GoogleAuth) {
       window.GoogleAuth.init(GOOGLE_CLIENT_ID);
-      window.GoogleAuth.onChange(setAuth);
+      window.GoogleAuth.onChange((state) => {
+        setAuth(state);
+        setAuthTick((t) => t + 1); // forces the button-render effect below to re-check, even if email didn't change
+      });
     }
   }, []);
 
@@ -308,7 +347,7 @@ function AMFExam() {
     if (showsSignIn && googleButtonRef.current && window.GoogleAuth) {
       window.GoogleAuth.renderButton(googleButtonRef.current);
     }
-  }, [screen, auth.email]);
+  }, [screen, auth.email, authTick]);
 
   // Canonical pool (Cloudflare D1, via /api/db) and personal pool (D1, via
   // /api/personal, scoped to the signed-in user)
