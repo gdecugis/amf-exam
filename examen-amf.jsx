@@ -127,8 +127,8 @@ function batchesFromRequirements(requirements) {
   return batches;
 }
 
-async function generateBatch(batch, byo) {
-  const subtopics = SUBTOPICS[batch.themeId];
+async function generateBatch(batch, byo, useSubtopics) {
+  const subtopics = useSubtopics ? SUBTOPICS[batch.themeId] : null;
   const subtopicHint = subtopics
     ? `\nSous-thèmes possibles à titre d'exemple (non exhaustif — n'hésite pas à explorer d'autres angles pertinents du thème) : ${subtopics.join(", ")}.`
     : "";
@@ -192,11 +192,11 @@ function shuffleChoices(q) {
   return { ...q, choices, correctIndex };
 }
 
-async function generateBatchWithRetry(batch, byo, attempts = 3) {
+async function generateBatchWithRetry(batch, byo, useSubtopics, attempts = 3) {
   let lastErr;
   for (let i = 0; i < attempts; i++) {
     try {
-      return await generateBatch(batch, byo);
+      return await generateBatch(batch, byo, useSubtopics);
     } catch (e) {
       lastErr = e;
     }
@@ -389,6 +389,7 @@ function AMFExam() {
   const [byoApiBase, setByoApiBase] = useState("");
   const [byoModel, setByoModel] = useState("");
   const [generateSize, setGenerateSize] = useState(30);
+  const [useSubtopicHints, setUseSubtopicHints] = useState(true);
   const [generatedCanonical, setGeneratedCanonical] = useState(false);
   const [generationWarning, setGenerationWarning] = useState(null);
 
@@ -539,7 +540,7 @@ function AMFExam() {
     for (let i = 0; i < batches.length; i++) {
       setProgress({ done: i, total: batches.length, label: batches[i].theme });
       try {
-        const qs = await generateBatchWithRetry(batches[i], byo);
+        const qs = await generateBatchWithRetry(batches[i], byo, useSubtopicHints);
 
         const res = await fetch("/api/personal", {
           method: "POST",
@@ -793,6 +794,12 @@ function AMFExam() {
                   <option value="240">240 questions</option>
                   <option value="480">480 questions</option>
                 </select>
+              </label>
+              <label style={{ fontSize: "13px", display: "flex", alignItems: "flex-start", gap: "8px" }}>
+                <input type="checkbox" checked={useSubtopicHints} onChange={(e) => setUseSubtopicHints(e.target.checked)} style={{ marginTop: "2px" }} />
+                <span className="amf-secondary">
+                  Suggérer des sous-thèmes au modèle (recommandé — améliore la variété des questions générées par thème, sans l'y limiter).
+                </span>
               </label>
             </div>
           )}
