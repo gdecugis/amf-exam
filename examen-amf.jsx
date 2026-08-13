@@ -610,6 +610,24 @@ function AMFExam() {
   const answeredCount = Object.keys(answers).length;
   const q = questions[current];
 
+  // Running A/C accuracy while the test is in progress — out of questions
+  // of that type answered so far, not the total planned for the whole
+  // exam, so it reads as a stable "how am I doing" rather than looking
+  // alarmingly low early on before most questions are even reached.
+  const liveStats = useMemo(() => {
+    if (screen !== "exam") return null;
+    const byType = { A: { correct: 0, answered: 0 }, C: { correct: 0, answered: 0 } };
+    questions.forEach((qq) => {
+      const userAnswer = answers[qq.id];
+      if (userAnswer === undefined) return;
+      const bucket = byType[qq.type];
+      if (!bucket) return;
+      bucket.answered++;
+      if (userAnswer === qq.correctIndex) bucket.correct++;
+    });
+    return byType;
+  }, [screen, questions, answers]);
+
   const results = useMemo(() => {
     if (screen !== "results") return null;
     const scored = questions.map((qq) => ({
@@ -891,23 +909,37 @@ function AMFExam() {
     return (
       <div className="amf-app">
         <GlobalStyles />
-        <div className="amf-header" style={{ position: "sticky", top: 0, zIndex: 20, padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <img src="/assets/amf-exam-icon-192.png" alt="" width="28" height="28" style={{ borderRadius: "6px", flexShrink: 0 }} />
-            <div>
-              <p className="amf-headersub" style={{ fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", margin: 0 }}>Examen blanc AMF</p>
-              <p className="amf-mono" style={{ fontSize: "14px", margin: 0 }}>Question {current + 1} / {questions.length}</p>
+        <div className="amf-header" style={{ position: "sticky", top: 0, zIndex: 20, padding: "12px 16px" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <img src="/assets/amf-exam-icon-192.png" alt="" width="28" height="28" style={{ borderRadius: "6px", flexShrink: 0 }} />
+              <div>
+                <p className="amf-headersub" style={{ fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", margin: 0 }}>Examen blanc AMF</p>
+                <p className="amf-mono" style={{ fontSize: "14px", margin: 0 }}>Question {current + 1} / {questions.length}</p>
+              </div>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <div className={`amf-mono ${remaining < 600 ? "amf-warn" : "amf-headersub"}`} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "14px" }}>
+                <Clock style={{ width: "16px", height: "16px" }} />
+                {formatTime(remaining)}
+              </div>
+              <button onClick={() => setNavOpen(true)} className="amf-icon-btn-dark" style={{ padding: "6px", borderRadius: "3px" }}>
+                <LayoutGrid style={{ width: "16px", height: "16px" }} />
+              </button>
             </div>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <div className={`amf-mono ${remaining < 600 ? "amf-warn" : "amf-headersub"}`} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "14px" }}>
-              <Clock style={{ width: "16px", height: "16px" }} />
-              {formatTime(remaining)}
+          {liveStats && (
+            <div className="amf-mono amf-headersub" style={{ display: "flex", alignItems: "center", gap: "16px", fontSize: "11px", marginTop: "8px" }}>
+              <span>
+                Bloc A : {liveStats.A.correct}/{liveStats.A.answered}
+                {liveStats.A.answered > 0 && ` (${Math.round((liveStats.A.correct / liveStats.A.answered) * 100)}%)`}
+              </span>
+              <span>
+                Bloc C : {liveStats.C.correct}/{liveStats.C.answered}
+                {liveStats.C.answered > 0 && ` (${Math.round((liveStats.C.correct / liveStats.C.answered) * 100)}%)`}
+              </span>
             </div>
-            <button onClick={() => setNavOpen(true)} className="amf-icon-btn-dark" style={{ padding: "6px", borderRadius: "3px" }}>
-              <LayoutGrid style={{ width: "16px", height: "16px" }} />
-            </button>
-          </div>
+          )}
         </div>
         <div className="amf-track-light" style={{ height: "4px" }}>
           <div className="amf-fill-accent" style={{ height: "100%", width: `${((current + 1) / questions.length) * 100}%` }} />
