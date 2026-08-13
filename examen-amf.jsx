@@ -356,7 +356,7 @@ function AMFExam() {
   // Google sign-in state — personal questions are synced to D1, keyed by
   // the signed-in user's verified email, so they follow the user across
   // sessions/devices instead of living only in this browser.
-  const [auth, setAuth] = useState(() => (window.GoogleAuth ? window.GoogleAuth.getState() : { idToken: null, email: null }));
+  const [auth, setAuth] = useState(() => (window.GoogleAuth ? window.GoogleAuth.getState() : { idToken: null, email: null, expired: false, expiringSoon: false }));
   const [authTick, setAuthTick] = useState(0);
   const isOwner = Boolean(auth.email) && auth.email.toLowerCase() === CANONICAL_OWNER_EMAIL;
 
@@ -371,11 +371,11 @@ function AMFExam() {
   }, []);
 
   useEffect(() => {
-    const showsSignIn = (screen === "home" || screen === "generate-setup") && !auth.email;
+    const showsSignIn = (screen === "home" || screen === "generate-setup") && (!auth.email || auth.expired);
     if (showsSignIn && googleButtonRef.current && window.GoogleAuth) {
       window.GoogleAuth.renderButton(googleButtonRef.current);
     }
-  }, [screen, auth.email, authTick]);
+  }, [screen, auth.email, auth.expired, authTick]);
 
   // Canonical pool (Cloudflare D1, via /api/db) and personal pool (D1, via
   // /api/personal, scoped to the signed-in user)
@@ -506,7 +506,13 @@ function AMFExam() {
   // owner's account writes straight into the canonical pool, everyone
   // else's stay scoped to their own email and sync across sessions/devices.
   const startPersonalGeneration = async () => {
-    if (!auth.idToken) {
+    // ensureFreshToken() silently re-authenticates in the background if the
+    // stored token is near/past expiry (Google ID tokens only last ~1h) —
+    // resolves null if the caller was never signed in, or if silent
+    // refresh genuinely isn't possible (e.g. Safari blocking the required
+    // third-party context), in which case a visible re-sign-in is needed.
+    let currentToken = await window.GoogleAuth.ensureFreshToken();
+    if (!currentToken) {
       setGenError("Connectez-vous avec Google avant de générer des questions.");
       return;
     }
@@ -526,6 +532,7 @@ function AMFExam() {
     let savedCount = 0;
     let canonical = false;
     const failedBatches = [];
+    let sessionExpired = false;
 
     // Save each batch to D1 as soon as it's generated, rather than
     // accumulating everything in memory and saving once at the end — a
@@ -536,17 +543,33 @@ function AMFExam() {
     // batch failing — e.g. the model emitting malformed JSON even after
     // retries — doesn't discard every other batch that would otherwise
     // have succeeded. Failures are collected and reported at the end
-    // instead of aborting the run.
+    // instead of aborting the run. The one exception is an expired/invalid
+    // session (HTTP 401): every remaining batch would fail the same way,
+    // so that stops the run immediately instead of burning LLM calls that
+    // can never be saved.
     for (let i = 0; i < batches.length; i++) {
       setProgress({ done: i, total: batches.length, label: batches[i].theme });
+
+      // Re-check freshness each iteration too — a long run (hundreds of
+      // questions) can easily outlast a single token's lifetime.
+      currentToken = await window.GoogleAuth.ensureFreshToken();
+      if (!currentToken) {
+        sessionExpired = true;
+        break;
+      }
+
       try {
         const qs = await generateBatchWithRetry(batches[i], byo, useSubtopicHints);
 
         const res = await fetch("/api/personal", {
           method: "POST",
-          headers: { "Content-Type": "application/json", Authorization: `Bearer ${auth.idToken}` },
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${currentToken}` },
           body: JSON.stringify({ questions: qs }),
         });
+        if (res.status === 401) {
+          sessionExpired = true;
+          break;
+        }
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const saved = await res.json();
         savedCount += saved.inserted || 0;
@@ -557,6 +580,12 @@ function AMFExam() {
     }
 
     setProgress({ done: batches.length, total: batches.length, label: "Terminé" });
+
+    if (sessionExpired) {
+      setGenError(`Session expirée après ${savedCount} question(s) enregistrée(s) — reconnectez-vous pour continuer.`);
+      setScreen("generate-setup");
+      return;
+    }
 
     if (savedCount === 0) {
       const detail = failedBatches[0] ? ` — ${failedBatches[0].theme} : ${failedBatches[0].error}` : "";
@@ -618,7 +647,14 @@ function AMFExam() {
           </div>
 
           <div style={{ marginBottom: "20px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
-            {auth.email ? (
+            {auth.email && auth.expired ? (
+              <div>
+                <p className="amf-fail" style={{ fontSize: "13px", marginBottom: "10px" }}>
+                  Session expirée pour {auth.email} — reconnectez-vous.
+                </p>
+                <div ref={googleButtonRef}></div>
+              </div>
+            ) : auth.email ? (
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
                 <span className="amf-secondary" style={{ fontSize: "13px" }}>Connecté : <strong className="amf-ink">{auth.email}</strong></span>
                 <button onClick={() => window.GoogleAuth.signOut()} className="amf-btn-outline" style={{ padding: "6px 12px", borderRadius: "3px", fontSize: "12px" }}>
@@ -749,7 +785,14 @@ function AMFExam() {
             </div>
           )}
 
-          {isOwner && screen === "generate-setup" && (
+          {auth.email && auth.expired && screen === "generate-setup" && (
+            <div style={{ marginBottom: "20px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
+              <p className="amf-fail" style={{ fontSize: "13px", marginBottom: "10px" }}>Session expirée pour {auth.email} — reconnectez-vous avant de générer.</p>
+              <div ref={googleButtonRef}></div>
+            </div>
+          )}
+
+          {isOwner && !auth.expired && screen === "generate-setup" && (
             <div style={{ marginBottom: "20px", padding: "16px", background: "#F5F6F6", borderRadius: "3px", border: "1px solid #D8DAD7" }}>
               <p className="amf-secondary" style={{ fontSize: "13px", margin: 0 }}>
                 Connecté en tant que propriétaire — les identifiants du serveur (variables d'environnement Cloudflare) seront utilisés automatiquement si vous laissez les champs ci-dessous vides.
